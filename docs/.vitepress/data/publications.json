@@ -41,18 +41,6 @@
       "year": "2022",
       "venue": "Icarus",
       "url": "https://doi.org/10.1016/j.icarus.2021.114808"
-    },
-    {
-      "title": "Rate dependent brittle deformation and fault gouge extrusion: an example from the North-Anatolian fault zone",
-      "year": "2021",
-      "venue": "Tektonik-Strukturgeologie-Kristallingeologie, TSK 18, Köln (webinar), 28.04 …",
-      "url": ""
-    },
-    {
-      "title": "A Study on the Morphology and Geology of Dulovo Crater; Southern Libya Montes, Mars",
-      "year": "2017",
-      "venue": "Mugla Journal of Science and Technology 3 (1), 9-15",
-      "url": ""
     }
   ],
   "abstracts": [
@@ -109,12 +97,6 @@
       "year": "2026",
       "venue": "EGU General Assembly",
       "url": "https://doi.org/10.5194/egusphere-egu26-533"
-    },
-    {
-      "title": "Morphological and Spectrophotometric Analysis of the Moon Using the JANUS LEGA Dataset: Langrenus Crater and the Highland-Mare Transition",
-      "year": "2026",
-      "venue": "57th Lunar and Planetary Science Conference 3160, 1252",
-      "url": ""
     },
     {
       "title": "Advancing Diversity and Inclusion within Europlanet",
@@ -211,48 +193,6 @@
       "year": "2024",
       "venue": "EPSC",
       "url": "https://doi.org/10.5194/epsc2024-358"
-    },
-    {
-      "title": "Clues to the subsurface fault pattern of circum-Tharsis wrinkle ridges",
-      "year": "2022",
-      "venue": "EPSC2022",
-      "url": ""
-    },
-    {
-      "title": "Young stress markers of plume induced compressional stresses on Mars",
-      "year": "2022",
-      "venue": "44th COSPAR Scientific Assembly. Held 16-24 July 44, 398",
-      "url": ""
-    },
-    {
-      "title": "Insights into Circum-Tharsis Wrinkle Ridges",
-      "year": "2022",
-      "venue": "53rd Lunar and Planetary Science Conference 2678, 1032",
-      "url": ""
-    },
-    {
-      "title": "Geodynamic Evolution of Wrinkle Ridges and Rate of Crustal Shortening on Lunae Planum, Mars",
-      "year": "2018",
-      "venue": "European Planetary Science Congress, EPSC2018-1009",
-      "url": ""
-    },
-    {
-      "title": "Feather feature orientations in shocked granitic rocks of Chicxulub's peak ring",
-      "year": "2018",
-      "venue": "EGU General Assembly Conference Abstracts, 13255",
-      "url": ""
-    },
-    {
-      "title": "Structural Mapping of Granitoids in the Peak Ring of the Chicxulub Crater: Damage Distribution and Block Sizes",
-      "year": "2018",
-      "venue": "49th Annual Lunar and Planetary Science Conference, 2009",
-      "url": ""
-    },
-    {
-      "title": "Chronology of wrinkle ridge formation and rate of crustal shortening on Lunae Planum, Mars",
-      "year": "2017",
-      "venue": "EGU General Assembly Conference Abstracts, 1530",
-      "url": ""
     }
   ]
 }
