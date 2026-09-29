@@ -7,46 +7,95 @@ const AUTHOR = 'Oguzcan Karagoz'
 const DEFAULT_DESC = 'Oguzcan Karagoz, planetary scientist studying the structural geology, tectonics and geodynamics of Mars, Venus and the icy moons.'
 const DEFAULT_OG_IMAGE = `${SITE}/images/hero/oguzcan-portrait.png`
 
-// JSON-LD describing the researcher (helps Google / academic knowledge graph)
+// ── Structured data ──
+// A stable @id makes this one entity that every page can point back to,
+// rather than a fresh anonymous Person on each URL. Search engines use the
+// combination of the ORCID identifier, the sameAs profile links and the
+// affiliation to decide that this site, the Scholar profile and the
+// university page all describe the same researcher.
+const PERSON_ID = `${SITE}/#person`
+
 const PERSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': PERSON_ID,
   name: AUTHOR,
   givenName: 'Oguzcan',
   familyName: 'Karagoz',
+  alternateName: 'Oğuzcan Karagöz',
+  honorificPrefix: 'Dr.',
   jobTitle: 'Planetary Scientist',
+  description: DEFAULT_DESC,
   email: 'mailto:oguzcan.karagoz@geologie.uni-freiburg.de',
   url: SITE,
-  image: DEFAULT_OG_IMAGE,
+  image: `${SITE}/images/hero/oguzcan-hero.jpg`,
+  // ORCID as a first-class identifier, not just a link. This is the single
+  // strongest signal for disambiguating an academic.
+  identifier: {
+    '@type': 'PropertyValue',
+    propertyID: 'ORCID',
+    value: '0000-0002-0656-7396',
+    url: 'https://orcid.org/0000-0002-0656-7396',
+  },
   affiliation: {
     '@type': 'CollegeOrUniversity',
     name: 'University of Freiburg',
     department: 'General Geology & Structural Geology, Institute of Earth and Environmental Sciences',
+    url: 'https://www.geologie.uni-freiburg.de/',
   },
-  knowsAbout: [
-    'Planetary tectonics', 'Geodynamics', 'Structural geology',
-    'Mars', 'Venus', 'Ganymede', 'Wrinkle ridges', 'Coronae', 'Numerical modelling',
+  worksFor: {
+    '@type': 'CollegeOrUniversity',
+    name: 'University of Freiburg',
+    url: 'https://uni-freiburg.de/',
+  },
+  alumniOf: [
+    { '@type': 'CollegeOrUniversity', name: 'University of Freiburg' },
+    { '@type': 'CollegeOrUniversity', name: 'Muğla Sıtkı Koçman University' },
   ],
+  knowsAbout: [
+    'Planetary science', 'Planetary tectonics', 'Geodynamics', 'Structural geology',
+    'Remote sensing', 'Analogue modelling', 'Numerical modelling', 'Impact cratering',
+    'Comparative planetology', 'Mars', 'Venus', 'Ganymede', 'Wrinkle ridges', 'Coronae',
+  ],
+  // Every profile that also describes this person. The more of these that
+  // agree with each other, the easier the entity is to resolve.
   sameAs: [
     'https://orcid.org/0000-0002-0656-7396',
     'https://scholar.google.com/citations?user=Byq8LX4AAAAJ',
     'https://www.webofscience.com/wos/author/record/57354059800',
     'https://freidok.uni-freiburg.de/pers/276115',
+    'https://www.researchgate.net/profile/Oguzcan-Karagoz',
+    'https://linkedin.com/in/o-karagoz',
+    'https://bsky.app/profile/did:plc:ekrrgqi5nlb46m34ogwcytcu',
+    'https://www.scopus.com/authid/detail.uri?authorId=57354059800',
   ],
+}
+
+// Declaring the site itself, authored by that same entity.
+const WEBSITE_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE}/#website`,
+  url: SITE,
+  name: AUTHOR,
+  description: DEFAULT_DESC,
+  inLanguage: 'en-US',
+  publisher: { '@id': PERSON_ID },
+  author: { '@id': PERSON_ID },
 }
 
 // ── Time-of-day appearance ──
 // Light during the day, dark at night. Runs before VitePress's own `check-dark-mode`
 // script, so it only has to write the key that script already reads.
-// A manual toggle wins until the period flips (override tonight → light again tomorrow).
-const DAY_START = 7    // 07:00 → light
-const NIGHT_START = 19 // 19:00 → dark
+// A manual toggle wins until the period flips (override tonight -> light again tomorrow).
+const DAY_START = 7    // 07:00 -> light
+const NIGHT_START = 19 // 19:00 -> dark
 const TIME_THEME_SCRIPT = `(()=>{try{
   var K='vitepress-theme-appearance',P='ok-appearance-pin';
   var h=new Date().getHours(),period=(h>=${NIGHT_START}||h<${DAY_START})?'dark':'light';
   var pin=localStorage.getItem(P);
   if(pin===period){return}            // manual choice still inside the period it was made in
-  localStorage.removeItem(P);          // period flipped → resume following the clock
+  localStorage.removeItem(P);          // period flipped -> resume following the clock
   localStorage.setItem(K,period);
 }catch(e){}})();`
 
@@ -79,6 +128,7 @@ export default defineConfig({
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['link', { rel: 'me', href: 'https://orcid.org/0000-0002-0656-7396' }],
     ['script', { type: 'application/ld+json' }, JSON.stringify(PERSON_LD)],
+    ['script', { type: 'application/ld+json' }, JSON.stringify(WEBSITE_LD)],
     ['script', { id: 'ok-time-theme' }, TIME_THEME_SCRIPT],
   ],
 
