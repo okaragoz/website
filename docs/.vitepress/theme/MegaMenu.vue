@@ -22,7 +22,7 @@ let closeTimer = null
 
 function open(i) {
   clearTimeout(closeTimer)
-  if (items[i]?.columns) active.value = i
+  if (items[i]?.columns?.length) active.value = i
   else active.value = null
 }
 
@@ -43,6 +43,7 @@ watch(active, (v) => {
 })
 
 function toggle(i) {
+  if (!items[i]?.columns?.length) return
   active.value = active.value === i ? null : i
 }
 
@@ -80,7 +81,7 @@ onBeforeUnmount(() => {
 <nav class="ok-mega" ref="root" aria-label="Main" @mouseleave="scheduleClose()" @focusout="onFocusOut">
   <ul class="ok-mega__bar">
     <li v-for="(item, i) in items" :key="item.text" class="ok-mega__item">
-      <a v-if="!item.columns" class="ok-mega__top" :href="item.link" @mouseenter="open(i)">{{ item.text }}</a>
+      <a v-if="!item.columns?.length" class="ok-mega__top" :href="item.link" @mouseenter="open(i)">{{ item.text }}</a>
 
       <button v-else
               class="ok-mega__top ok-mega__top--has-panel"
@@ -98,7 +99,7 @@ onBeforeUnmount(() => {
       </button>
 
       <Transition name="ok-mega">
-        <div v-if="item.columns && active === i"
+        <div v-if="item.columns?.length && active === i"
              class="ok-mega__panel"
              :id="`ok-mega-panel-${i}`"
              :aria-labelledby="`ok-mega-trigger-${i}`"
