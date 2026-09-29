@@ -4,7 +4,8 @@ docs/.vitepress/cache/
 .DS_Store
 *.log
 
-# local editor/agent config
-.claude/
-CLAUDE.md
-CLAUDE.local.md
+# local editor / assistant config (not part of the site)
+.agent/
+.assistant/
+AGENTS.md
+*.local.md

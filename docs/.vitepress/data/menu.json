@@ -8,5 +8,37 @@
     { "text": "Publications", "link": "/publications" },
     { "text": "Blog", "link": "/blog/" },
     { "text": "About", "link": "/about" }
+  ],
+
+  "mega": [
+    { "text": "Research", "link": "/research/", "columns": [
+      {
+        "title": "Start here",
+        "links": [
+          { "text": "Research overview", "link": "/research/", "desc": "How the work fits together, world by world" },
+          { "text": "Long-form articles", "link": "/research/articles", "desc": "Explainers written for a wider audience" },
+          { "text": "Publications", "link": "/publications", "desc": "Peer-reviewed papers and conference abstracts" }
+        ]
+      },
+      {
+        "title": "Worlds",
+        "links": [
+          { "text": "Venus", "link": "/research/#ok-venus", "desc": "Coronae, tesserae and single-lid tectonics" },
+          { "text": "Mars", "link": "/research/#ok-mars", "desc": "Wrinkle ridges, plumes and the dichotomy" },
+          { "text": "Ganymede", "link": "/research/#ok-ganymede", "desc": "Ice-shell tectonics and impact cratering" }
+        ]
+      },
+      {
+        "title": "Approaches",
+        "links": [
+          { "text": "Disciplines", "link": "/research/#ok-disciplines", "desc": "The fields planetary science draws on" },
+          { "text": "Methods and tools", "link": "/research/#ok-methods", "desc": "Analogue experiments and numerical codes" },
+          { "text": "Missions", "link": "/research/#ok-missions", "desc": "JUICE, EnVision and BepiColombo" }
+        ]
+      }
+    ] },
+    { "text": "Publications", "link": "/publications" },
+    { "text": "Blog", "link": "/blog/" },
+    { "text": "About", "link": "/about" }
   ]
 }

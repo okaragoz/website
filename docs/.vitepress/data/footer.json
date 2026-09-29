@@ -4,33 +4,77 @@
     {
       "title": "Explore",
       "links": [
-        { "text": "Research", "link": "/research/" },
-        { "text": "Publications", "link": "/publications" },
-        { "text": "Blog", "link": "/blog/" },
-        { "text": "About", "link": "/about" }
+        {
+          "text": "Research",
+          "link": "/research/"
+        },
+        {
+          "text": "Publications",
+          "link": "/publications"
+        },
+        {
+          "text": "Blog",
+          "link": "/blog/"
+        },
+        {
+          "text": "About",
+          "link": "/about"
+        }
       ]
     },
     {
       "title": "Profiles",
       "links": [
-        { "text": "ORCID", "link": "https://orcid.org/0000-0002-0656-7396" },
-        { "text": "Google Scholar", "link": "https://scholar.google.com/citations?user=Byq8LX4AAAAJ" },
-        { "text": "ResearcherID", "link": "https://www.webofscience.com/wos/author/record/57354059800" }
+        {
+          "text": "ORCID",
+          "link": "https://orcid.org/0000-0002-0656-7396"
+        },
+        {
+          "text": "Google Scholar",
+          "link": "https://scholar.google.com/citations?user=Byq8LX4AAAAJ"
+        },
+        {
+          "text": "ResearcherID",
+          "link": "https://www.webofscience.com/wos/author/record/57354059800"
+        }
       ]
     },
     {
       "title": "Connect",
       "links": [
-        { "text": "Email", "link": "mailto:mail@okaragoz.com" },
-        { "text": "University of Freiburg", "link": "https://www.geologie.uni-freiburg.de/" }
+        {
+          "text": "Email",
+          "link": "mailto:oguzcan.karagoz@geologie.uni-freiburg.de"
+        },
+        {
+          "text": "University of Freiburg",
+          "link": "https://www.geologie.uni-freiburg.de/"
+        }
       ]
     }
   ],
   "social": [
-    { "type": "github", "link": "#" },
-    { "type": "x", "link": "#" },
-    { "type": "linkedin", "link": "#" },
-    { "type": "orcid", "link": "https://orcid.org/0000-0002-0656-7396" }
+    {
+      "type": "bsky",
+      "link": "https://bsky.app/profile/did:plc:ekrrgqi5nlb46m34ogwcytcu"
+    },
+    {
+      "type": "linkedin",
+      "link": "https://linkedin.com/in/o-karagoz"
+    },
+    {
+      "type": "rg",
+      "link": "https://www.researchgate.net/profile/Oguzcan-Karagoz"
+    },
+    {
+      "type": "scholar",
+      "link": "https://scholar.google.com/citations?user=Byq8LX4AAAAJ&hl"
+    },
+    {
+      "type": "orcid",
+      "link": "https://orcid.org/0000-0002-0656-7396"
+    }
   ],
-  "copyright": "© 2026 Oguzcan Karagoz. All rights reserved."
+  "copyright": "© 2026 Oguzcan Karagoz. All rights reserved.",
+  "affiliation": "General Geology & Structural Geology\nInstitute of Earth and Environmental Sciences\nUniversity of Freiburg"
 }

@@ -1,0 +1,1241 @@
+/* ============================================================
+   Components
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Components rendered inside a markdown page sit within `.vp-doc`,
+   so the prose image rules in base.css (margin, radius, shadow) leak
+   into card and avatar images. Neutralise that once here; each
+   component sets its own geometry below.
+   ------------------------------------------------------------ */
+.vp-doc :is(.ok-post, .ok-card, .ok-hero, .ok-phero, .ok-faq, .ok-pubs, .ok-research, .ok-ct) img {
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+/* …then re-assert the shapes that are part of the component, at a
+   specificity that clears the reset above. */
+.vp-doc .ok-post .ok-post__avatar,
+.ok-post__avatar { border-radius: var(--ok-r-pill); }
+
+/* The same leak reaches headings and paragraphs. `.vp-doc h3` carries a 55px
+   top margin and `.vp-doc p` a 20px block margin, and both out-specify a
+   component's own `margin: 0`, which is where the gaps inside the list cards
+   came from. `.vp-doc h2`'s rule was also drawing a hairline above component
+   headings. Components own their internal spacing; this hands it back. */
+.vp-doc :is(.ok-post, .ok-card, .ok-idcard, .ok-hero, .ok-phero, .ok-disc,
+            .ok-steps, .ok-more, .ok-worlds, .ok-faq, .ok-pubs, .ok-news,
+            .ok-footer, .ok-ct, .ok-404)
+       :is(p, h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+  padding: 0;
+  border: none;
+  max-width: none;
+}
+
+/* The reset above is blunt, so hand each component its own rhythm back.
+   Two component classes out-specify the reset. Where the parent is already a
+   flex column the spacing is a `gap` instead, which the reset cannot reach
+   at all and is the more durable fix. */
+.vp-doc .ok-post .ok-post__title { margin-bottom: var(--ok-s-3); }
+.vp-doc .ok-phero .ok-phero__eyebrow { margin-bottom: var(--ok-s-4); }
+.vp-doc .ok-phero .ok-phero__lede { margin: var(--ok-s-5) auto 0; max-width: 58ch; }
+.vp-doc .ok-phero .ok-phero__note { margin: var(--ok-s-4) auto 0; }
+.vp-doc .ok-disc .ok-disc__eyebrow { margin-bottom: var(--ok-s-4); }
+.vp-doc .ok-disc .ok-disc__title { margin: 0 auto var(--ok-s-4); max-width: 22ch; }
+.vp-doc .ok-disc .ok-disc__lede { margin: 0 auto var(--ok-s-6); max-width: 62ch; }
+.vp-doc .ok-disc .ok-disc__role { margin-bottom: var(--ok-s-2); }
+.vp-doc .ok-disc .ok-disc__name { margin-bottom: var(--ok-s-3); }
+.vp-doc .ok-disc .ok-disc__body { margin-bottom: var(--ok-s-4); }
+.vp-doc .ok-steps .ok-steps__title { margin-bottom: var(--ok-s-6); }
+.vp-doc .ok-steps .ok-step__name { margin-bottom: var(--ok-s-2); }
+.vp-doc .ok-steps .ok-step__method { margin-bottom: var(--ok-s-3); }
+.vp-doc .ok-faq .ok-faq__title { margin-bottom: var(--ok-s-5); }
+.vp-doc .ok-faq .ok-section__lede { margin-top: var(--ok-s-3); }
+.vp-doc .ok-pubs .ok-pubs__count { margin-bottom: var(--ok-s-3); }
+
+/* Prose list styling leaks the same way. VitePress puts `margin-top: 8px`
+   on `li + li`, which knocked every card after the first out of alignment
+   in the disciplines grid. Component lists carry their own spacing. */
+.vp-doc :is(.ok-disc__grid, .ok-steps__list, .ok-mega__bar, .ok-footer__cols) {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.vp-doc :is(.ok-disc__grid, .ok-steps__list, .ok-mega__bar) > li,
+.vp-doc :is(.ok-disc__grid, .ok-steps__list, .ok-mega__bar) > li + li { margin: 0; }
+
+/* ============================================================
+   Gradient mesh
+   ------------------------------------------------------------
+   The atmospheric wash that anchors the top of every page. Built
+   from overlapping radial gradients at irregular sizes and offsets
+   so the blobs read organic rather than as a flat linear ramp, and
+   masked off at the bottom so it dissolves into the canvas.
+
+   This is the site's depth system on marketing bands: literal
+   shadows stay reserved for cards and floating panels.
+   ============================================================ */
+.ok-mesh {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: var(--ok-mesh-opacity);
+}
+.ok-mesh__layer {
+  position: absolute;
+  inset: -12% 0 0;
+  background-image:
+    radial-gradient(58% 72% at 6% 16%, var(--ok-mesh-cream) 0%, transparent 62%),
+    radial-gradient(44% 58% at 24% 2%, var(--ok-mesh-sherbet) 0%, transparent 64%),
+    radial-gradient(38% 52% at 41% 30%, var(--ok-mesh-rust) 0%, transparent 60%),
+    radial-gradient(52% 68% at 57% 6%, var(--ok-mesh-lavender) 0%, transparent 66%),
+    radial-gradient(46% 64% at 78% 24%, var(--ok-mesh-indigo) 0%, transparent 62%),
+    radial-gradient(50% 70% at 96% 8%, var(--ok-mesh-ice) 0%, transparent 64%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 34%, rgba(0, 0, 0, .5) 68%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 34%, rgba(0, 0, 0, .5) 68%, transparent 100%);
+  will-change: transform;
+}
+/* One slow drift. The only ambient motion on the site. */
+.ok-mesh--drift .ok-mesh__layer { animation: ok-mesh-drift 34s ease-in-out infinite alternate; }
+@keyframes ok-mesh-drift {
+  from { transform: translate3d(-1.2%, 0, 0) scale(1.02); }
+  to   { transform: translate3d(1.2%, -1.4%, 0) scale(1.07); }
+}
+
+/* ============================================================
+   Buttons
+   ------------------------------------------------------------
+   One filled button per band. Everything else is a quiet link or
+   an outline — that scarcity is what makes the voltage read.
+   ============================================================ */
+.ok-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ok-s-2);
+  padding: 10px 18px;
+  border-radius: var(--ok-r-pill);
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-body-sm);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none !important;
+  transition: background var(--ok-dur-fast) ease, border-color var(--ok-dur-fast) ease,
+              color var(--ok-dur-fast) ease, box-shadow var(--ok-dur) ease, transform var(--ok-dur-fast) ease;
+}
+.ok-btn:active { transform: translateY(0.5px); }
+
+.ok-btn--primary {
+  background: var(--ok-primary);
+  color: var(--ok-on-primary);
+  box-shadow: 0 1px 2px rgba(11, 26, 46, .10), 0 6px 16px -8px var(--ok-primary-ring);
+}
+.ok-btn--primary:hover { background: var(--ok-primary-hover); box-shadow: 0 2px 4px rgba(11, 26, 46, .12), 0 10px 22px -8px var(--ok-primary-ring); }
+.ok-btn--primary:active { background: var(--ok-primary-press); }
+
+.ok-btn--secondary {
+  background: var(--ok-surface);
+  color: var(--ok-ink);
+  border-color: var(--ok-hairline-strong);
+  box-shadow: var(--ok-shadow-1);
+}
+.ok-btn--secondary:hover { border-color: var(--ok-ink-3); background: var(--ok-surface-hover); }
+
+/* Quiet text link with a travelling chevron — used where a filled
+   button would be a second voltage in the same band. */
+.ok-btn--quiet {
+  padding-inline: 0;
+  background: none;
+  color: var(--ok-primary-ink);
+  font-weight: 500;
+}
+.ok-btn--quiet .ok-btn__chev { transition: transform var(--ok-dur) var(--ok-ease); }
+.ok-btn--quiet:hover .ok-btn__chev { transform: translateX(3px); }
+
+.ok-btn--lg { padding: 13px 24px; font-size: var(--ok-t-body); }
+
+/* Buttons rendered inside markdown sit under `.vp-doc a`, which is more
+   specific than `.ok-btn--*` and was repainting their labels in the link
+   colour. On the filled button that put indigo text on an indigo fill. */
+.vp-doc a.ok-btn--primary { color: var(--ok-on-primary); }
+.vp-doc a.ok-btn--secondary { color: var(--ok-ink); }
+.vp-doc a.ok-btn--quiet { color: var(--ok-primary-ink); }
+.vp-doc a.ok-btn { text-decoration: none; }
+
+/* VitePress's own brand button (search modal, etc.) */
+.VPButton.brand { background: var(--ok-primary); border: none; color: var(--ok-on-primary); }
+.VPButton.brand:hover { background: var(--ok-primary-hover); }
+
+/* ============================================================
+   Pills, chips, eyebrows
+   ============================================================ */
+.ok-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-s-1);
+  font-size: var(--ok-t-micro);
+  font-weight: 500;
+  line-height: 1;
+  padding: 5px 10px;
+  border-radius: var(--ok-r-pill);
+  background: var(--ok-primary-wash);
+  color: var(--ok-primary-ink);
+  white-space: nowrap;
+}
+.ok-chip--neutral { background: var(--ok-canvas-sunk); color: var(--ok-ink-2); }
+.dark .ok-chip--neutral { background: rgba(255, 255, 255, .07); color: var(--ok-ink-2); }
+
+/* Eyebrow: sentence case, not tracked-out caps. */
+.ok-eyebrow {
+  font-size: var(--ok-t-body-sm);
+  font-weight: 500;
+  color: var(--ok-ink-3);
+  margin: 0 0 var(--ok-s-4);
+  letter-spacing: 0;
+}
+
+/* Outline pill used for profile IDs and the research quick-nav. */
+.ok-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-s-2);
+  padding: 8px 16px;
+  border-radius: var(--ok-r-pill);
+  border: 1px solid var(--ok-hairline-strong);
+  background: var(--ok-surface);
+  color: var(--ok-ink) !important;
+  font-size: var(--ok-t-body-sm);
+  font-weight: 500;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: border-color var(--ok-dur-fast) ease, background var(--ok-dur-fast) ease, color var(--ok-dur-fast) ease;
+}
+.ok-pill:hover { border-color: var(--ok-primary); color: var(--ok-primary-ink) !important; background: var(--ok-primary-wash); }
+
+.ok-ids {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--ok-s-2);
+  margin: 0 auto var(--ok-s-7);
+  max-width: var(--ok-w-page);
+}
+.ok-id {
+  display: inline-flex; align-items: center; gap: var(--ok-s-2);
+  padding: 8px 16px; border-radius: var(--ok-r-pill);
+  border: 1px solid var(--ok-hairline-strong); background: var(--ok-surface);
+  color: var(--ok-ink) !important; font-size: var(--ok-t-body-sm); font-weight: 500;
+  text-decoration: none !important; white-space: nowrap;
+  transition: border-color var(--ok-dur-fast) ease, background var(--ok-dur-fast) ease, color var(--ok-dur-fast) ease;
+}
+.ok-id:hover { border-color: var(--ok-primary); color: var(--ok-primary-ink) !important; background: var(--ok-primary-wash); }
+
+/* ============================================================
+   Nav bar
+   ============================================================ */
+.VPNav { background: transparent; }
+.VPNavBar {
+  background: var(--vp-nav-bg-color);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--ok-dur) ease, background var(--ok-dur) ease;
+}
+.VPNavBar.has-sidebar .content,
+.VPNavBar .container { max-width: var(--ok-w-wide) !important; padding-inline: var(--ok-gutter); margin-inline: auto; }
+/* Transparent while parked at the top, so the mesh runs edge-to-edge
+   beneath the nav; solid with a hairline once the page scrolls.
+   Set through the variable rather than `background`: VitePress paints the
+   bar with `background-color: var(--vp-nav-bg-color)` from a selector with
+   higher specificity than anything reasonable here, so overriding the value
+   is more reliable than trying to outrank the rule. */
+.VPNavBar.top { --vp-nav-bg-color: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.VPNavBar:not(.top) { border-bottom-color: var(--ok-hairline); }
+.VPNavBar .divider { display: none; }
+
+.VPNavBarTitle, .VPNavBarTitle .title { display: flex; align-items: center; height: var(--vp-nav-height); }
+.VPNavBarTitle .title {
+  font-family: var(--ok-font-display) !important;
+  font-size: var(--ok-t-display-md);
+  font-weight: 300 !important;
+  letter-spacing: var(--ok-track-md);
+  color: var(--ok-ink);
+  white-space: nowrap;
+  border-bottom: none !important;
+}
+@media (max-width: 480px) { .VPNavBarTitle .title { font-size: var(--ok-t-heading); } }
+
+.VPNavBarMenuLink,
+.VPNavBarMenuGroup .text {
+  font-size: var(--ok-t-body) !important;
+  font-weight: 500;
+  color: var(--ok-ink-2) !important;
+}
+.DocSearch-Button-Placeholder { font-size: var(--ok-t-body-sm) !important; }
+.VPNavBarMenuLink:hover,
+.VPNavBarMenuLink.active { color: var(--ok-ink) !important; }
+
+@media (min-width: 768px) {
+  .VPNavBar .content-body { align-items: center; gap: var(--ok-s-1); }
+  .VPNavBar .VPNavBarMenu { order: 1; margin-left: auto; }
+  .VPNavBar .VPNavBarAppearance { order: 2; margin-left: var(--ok-s-3); }
+  .VPNavBar .VPNavBarSearch { order: 3; flex-grow: 0 !important; padding-left: var(--ok-s-3); justify-content: flex-end; }
+}
+.DocSearch-Button { border-radius: var(--ok-r-pill) !important; background: var(--ok-canvas-sunk) !important; }
+.dark .DocSearch-Button { background: rgba(255, 255, 255, .06) !important; }
+
+/* Between the hamburger breakpoint and ~960px the wordmark, the full menu
+   and the labelled search box together exceed the container. Shrink the
+   wordmark and collapse the search to its icon through that range. */
+@media (min-width: 768px) and (max-width: 959px) {
+  .VPNavBarTitle .title { font-size: var(--ok-t-heading); }
+  .VPNavBar .VPNavBarSearch { padding-left: var(--ok-s-2); }
+  .VPNavBar .VPNavBarAppearance { margin-left: var(--ok-s-2); }
+  .DocSearch-Button-Placeholder,
+  .DocSearch-Button-Keys { display: none !important; }
+  .DocSearch-Button { padding-inline: 10px !important; }
+}
+
+/* ============================================================
+   Mega menu
+   ------------------------------------------------------------
+   A full-bleed flyout panel on a frosted surface, so the gradient
+   mesh behind it stays legible through the glass. Replaces
+   VitePress's own dropdown at desktop widths; the mobile nav
+   screen is untouched.
+   ============================================================ */
+/* Hide VitePress's menu wherever ours is showing. */
+@media (min-width: 768px) { .VPNavBar .VPNavBarMenu { display: none !important; } }
+@media (max-width: 767px) { .ok-mega { display: none; } }
+
+.ok-mega { order: 1; margin-left: auto; }
+.ok-mega__bar { display: flex; align-items: center; gap: var(--ok-s-3); list-style: none; margin: 0; padding: 0; }
+.ok-mega__item { position: relative; display: flex; }
+
+.ok-mega__top {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-s-1);
+  padding: var(--ok-s-3) var(--ok-s-4);
+  border: none;
+  background: none;
+  border-radius: var(--ok-r-md);
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-body);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--ok-ink-2);
+  text-decoration: none !important;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--ok-dur-fast) ease, background var(--ok-dur-fast) ease;
+}
+.ok-mega__top:hover,
+.ok-mega__top[aria-expanded='true'] { color: var(--ok-ink); }
+.ok-mega__chev { transition: transform var(--ok-dur) var(--ok-ease); }
+.ok-mega__chev.is-open { transform: rotate(180deg); }
+
+.ok-mega__panel {
+  position: fixed;
+  top: var(--vp-nav-height);
+  left: 0;
+  right: 0;
+  z-index: 60;
+  background: color-mix(in srgb, var(--ok-canvas) 94%, transparent);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 1px solid var(--ok-hairline);
+  border-bottom: 1px solid var(--ok-hairline);
+  box-shadow: 0 18px 44px -22px rgba(11, 26, 46, .28);
+}
+.ok-mega__panel-inner {
+  max-width: var(--ok-w-wide);
+  margin-inline: auto;
+  padding: var(--ok-s-6) var(--ok-gutter);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ok-s-6);
+}
+.ok-mega__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-s-2);
+  padding-left: var(--ok-s-6);
+  border-left: 1px solid var(--ok-hairline);
+}
+.ok-mega__col:first-child { padding-left: 0; border-left: none; }
+.ok-mega__coltitle {
+  font-size: var(--ok-t-body-sm);
+  font-weight: 600;
+  color: var(--ok-ink);
+  margin: 0 0 var(--ok-s-3);
+}
+.ok-mega__link {
+  display: block;
+  padding: var(--ok-s-3);
+  margin-inline: calc(-1 * var(--ok-s-3));
+  border-radius: var(--ok-r-md);
+  text-decoration: none !important;
+  transition: background var(--ok-dur-fast) ease;
+}
+.ok-mega__link:hover { background: var(--ok-primary-wash); }
+.ok-mega__linktext {
+  display: block;
+  font-size: var(--ok-t-body-sm);
+  font-weight: 500;
+  color: var(--ok-primary-ink);
+}
+.ok-mega__linkdesc {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--ok-t-caption);
+  line-height: 1.45;
+  color: var(--ok-ink-3);
+}
+
+/* Bokeh: the rest of the page recedes behind the open panel. Blurring the
+   content itself (not a shared ancestor) keeps the fixed panel sharp. */
+.VPContent,
+.ok-footer {
+  transition: filter var(--ok-dur-slow) var(--ok-ease),
+              opacity var(--ok-dur-slow) var(--ok-ease),
+              transform var(--ok-dur-slow) var(--ok-ease);
+}
+.ok-nav-open .VPContent,
+.ok-nav-open .ok-footer {
+  filter: blur(8px) saturate(1.1);
+  opacity: .72;
+  transform: scale(.994);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ok-nav-open .VPContent,
+  .ok-nav-open .ok-footer { filter: none; transform: none; opacity: .6; }
+}
+
+.ok-mega-enter-active,
+.ok-mega-leave-active { transition: opacity var(--ok-dur) ease, transform var(--ok-dur) var(--ok-ease); }
+.ok-mega-enter-from,
+.ok-mega-leave-to { opacity: 0; transform: translateY(-6px); }
+
+@media (max-width: 1000px) {
+  .ok-mega__panel-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ok-s-6); }
+}
+
+/* ============================================================
+   Home hero
+   ------------------------------------------------------------
+   Centred stack: eyebrow, headline, lede, actions. The identity
+   card sits below as one horizontal band, so the portrait can be
+   large without stealing the headline's line width.
+   ============================================================ */
+.ok-hero {
+  position: relative;
+  isolation: isolate;
+  background: var(--ok-canvas);
+  margin-top: calc(-1 * var(--vp-nav-height));
+  padding-top: calc(var(--vp-nav-height) + clamp(34px, 4vw, 72px));
+  padding-bottom: var(--ok-s-7);
+  overflow: hidden;
+}
+.ok-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--ok-w-wide);
+  margin-inline: auto;
+  padding-inline: var(--ok-gutter);
+}
+.ok-hero__text { text-align: center; }
+
+.ok-hero__eyebrow {
+  font-size: var(--ok-t-body-sm);
+  font-weight: 500;
+  color: var(--ok-ink-3);
+  margin: 0 0 var(--ok-s-4);
+}
+.ok-hero__title {
+  font-family: var(--ok-font-display);
+  font-weight: 300;
+  font-size: var(--ok-t-display-xxl);
+  line-height: 1.06;
+  letter-spacing: var(--ok-track-xxl);
+  color: var(--ok-ink);
+  /* phi: the headline measure is the lede measure divided by 1.618 */
+  max-width: 21ch;
+  margin: 0 auto var(--ok-s-5);
+  text-wrap: balance;
+}
+.ok-hero__lede {
+  font-size: var(--ok-t-body-lg);
+  line-height: 1.6;
+  color: var(--ok-ink-2);
+  max-width: 64ch;
+  margin: 0 auto var(--ok-s-6);
+  text-wrap: pretty;
+}
+.ok-hero__cta {
+  display: flex;
+  gap: var(--ok-s-5);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Identity card ---------- */
+.ok-idcard {
+  display: grid;
+  /* The third column is sized to its content so the email address always
+     sits on one line; the middle column absorbs what is left. */
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--ok-s-6);
+  max-width: 1020px;
+  margin: var(--ok-s-8) auto 0;
+  padding: var(--ok-s-6);
+  background: var(--ok-surface);
+  border: 1px solid var(--ok-hairline);
+  border-radius: var(--ok-r-xl);
+  box-shadow: var(--ok-shadow-3);
+  text-align: left;
+}
+.ok-idcard__portrait {
+  width: 144px;
+  height: 144px;
+  border-radius: var(--ok-r-pill);
+  object-fit: cover;
+  object-position: center 26%;
+  border: 3px solid var(--ok-canvas);
+  box-shadow: var(--ok-shadow-2);
+}
+.ok-idcard__name {
+  font-family: var(--ok-font-display);
+  font-weight: 300;
+  font-size: var(--ok-t-display-md);
+  letter-spacing: var(--ok-track-md);
+  color: var(--ok-ink);
+  margin: 0;
+}
+.ok-idcard__role { font-size: var(--ok-t-body-sm); color: var(--ok-ink-2); margin: 2px 0 var(--ok-s-3); }
+.ok-idcard__affil { font-size: var(--ok-t-caption); line-height: 1.5; color: var(--ok-ink-3); margin: 0; }
+.ok-idcard__contact {
+  padding-left: var(--ok-s-6);
+  border-left: 1px solid var(--ok-hairline);
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.ok-idcard__email {
+  font-size: var(--ok-t-caption);
+  font-weight: 500;
+  color: var(--ok-primary-ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+/* Below this the card is a single column narrower than the address itself,
+   so let it wrap rather than overflow. */
+@media (max-width: 480px) {
+  .ok-idcard__email { white-space: normal; word-break: break-word; }
+}
+.ok-idcard__email:hover { text-decoration: underline; text-underline-offset: 3px; }
+.ok-idcard__addr { font-size: var(--ok-t-caption); line-height: 1.5; color: var(--ok-ink-3); margin: var(--ok-s-2) 0 var(--ok-s-4); }
+.ok-idcard__socials { display: flex; flex-wrap: wrap; gap: var(--ok-s-2); }
+
+
+/* Social buttons are neutral chrome; they tint to the platform colour
+   only on hover, so five saturated dots never compete with the CTA. */
+.ok-soc {
+  width: 34px; height: 34px;
+  border-radius: var(--ok-r-pill);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--ok-canvas-sunk);
+  color: var(--ok-ink-2);
+  text-decoration: none !important;
+  transition: background var(--ok-dur-fast) ease, color var(--ok-dur-fast) ease, transform var(--ok-dur-fast) ease;
+}
+.dark .ok-soc { background: rgba(255, 255, 255, .07); }
+.ok-soc:hover { background: var(--c, var(--ok-primary)); color: #fff; transform: translateY(-1px); }
+.ok-soc__txt { font-size: 11px; font-weight: 600; letter-spacing: -0.02em; }
+
+@media (max-width: 860px) {
+  .ok-idcard {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    text-align: center;
+    gap: var(--ok-s-5);
+    max-width: 440px;
+  }
+  .ok-idcard__contact { padding-left: 0; border-left: none; padding-top: var(--ok-s-5); border-top: 1px solid var(--ok-hairline); width: 100%; align-items: center; }
+  .ok-idcard__portrait { width: 120px; height: 120px; }
+}
+
+/* ============================================================
+   Page hero (About / Publications / Research)
+   ============================================================ */
+.ok-phero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--ok-canvas);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  /* VitePress's own top padding on .VPDoc is zeroed below, so the hero only
+     has to reclaim the nav height. Subtracting a hard-coded doc padding here
+     instead left a stripe of canvas above the mesh at some breakpoints, since
+     that padding is itself responsive. */
+  margin-top: calc(-1 * var(--vp-nav-height));
+  padding: calc(var(--vp-nav-height) + clamp(40px, 5vw, 72px)) 0 clamp(36px, 4vw, 56px);
+  text-align: center;
+}
+/* A page that leads with a hero hands its top spacing to that hero. */
+.VPDoc:has(.ok-phero) { padding-top: 0 !important; }
+.ok-phero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin-inline: auto;
+  padding-inline: var(--ok-gutter);
+}
+/* The page heroes are rendered inside `.vp-doc` on About and Publications,
+   where `.vp-doc p` sets `text-align: left`. Re-assert centring here rather
+   than weakening the prose rule, which every article depends on. */
+.ok-phero :is(p, h1) { text-align: center; }
+.ok-phero__eyebrow { font-size: var(--ok-t-body-sm); font-weight: 500; color: var(--ok-ink-3); margin: 0 0 var(--ok-s-4); }
+.ok-phero__title {
+  font-family: var(--ok-font-display);
+  font-weight: 300;
+  font-size: var(--ok-t-display-xxl);
+  line-height: 1.04;
+  letter-spacing: var(--ok-track-xxl);
+  color: var(--ok-ink);
+  margin: 0;
+  border: none;
+  padding: 0;
+  text-wrap: balance;
+}
+.ok-phero__lede {
+  font-size: var(--ok-t-body-lg);
+  line-height: 1.6;
+  color: var(--ok-ink-2);
+  max-width: 58ch;
+  margin: var(--ok-s-5) auto 0;
+  text-wrap: pretty;
+}
+.ok-phero__note { font-size: var(--ok-t-body-sm); line-height: 1.6; color: var(--ok-ink-3); margin: var(--ok-s-4) auto 0; }
+.ok-phero__note a { color: var(--ok-primary-ink); text-decoration: underline; text-underline-offset: 3px; }
+.ok-phero--compact { padding-block: clamp(36px, 4vw, 56px) clamp(28px, 3vw, 40px); }
+
+/* ============================================================
+   Content card
+   ------------------------------------------------------------
+   A tile rather than a bordered box: the card sits on a lightly
+   tinted surface with the image flush to its top edge, and earns
+   its separation from the canvas by tone instead of a hairline.
+   No resting shadow; the lift is the hover feedback.
+   ============================================================ */
+.ok-card {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  align-self: stretch;
+  background: var(--ok-canvas-soft);
+  border: 1px solid transparent;
+  border-radius: var(--ok-r-2xl);
+  overflow: hidden;
+  text-decoration: none !important;
+  transition: box-shadow var(--ok-dur) ease, transform var(--ok-dur) var(--ok-ease),
+              background var(--ok-dur) ease;
+}
+.ok-card:hover {
+  background: var(--ok-surface);
+  box-shadow: var(--ok-shadow-2);
+  transform: translateY(-3px);
+}
+.dark .ok-card:hover { background: var(--ok-surface-hover); }
+
+.ok-card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--ok-canvas-sunk);
+  flex: none;
+}
+.ok-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 600ms var(--ok-ease); }
+.ok-card:hover .ok-card__media img { transform: scale(1.04); }
+.ok-card__ph {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: var(--ok-ink-3);
+  background: radial-gradient(circle at 35% 30%, var(--ok-primary-wash), transparent 62%), var(--ok-canvas-sunk);
+}
+.ok-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: var(--ok-s-3);
+  padding: var(--ok-s-5);
+}
+.ok-card__meta { display: flex; align-items: center; gap: var(--ok-s-3); flex-wrap: wrap; }
+.ok-card__date { font-size: var(--ok-t-caption); color: var(--ok-ink-3); }
+.ok-card__title {
+  font-family: var(--ok-font-ui);
+  font-weight: 600;
+  font-size: var(--ok-t-heading-sm);
+  line-height: 1.32;
+  letter-spacing: var(--ok-track-sm);
+  color: var(--ok-ink);
+  margin: 0;
+  /* Cap at three lines so every card in a row keeps its baseline grid. */
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.ok-card:hover .ok-card__title { color: var(--ok-primary-ink); }
+.ok-card__read {
+  margin-top: auto;
+  padding-top: var(--ok-s-2);
+  font-size: var(--ok-t-caption);
+  color: var(--ok-ink-3);
+}
+
+/* ============================================================
+   Blog / article list row
+   ============================================================ */
+.ok-list { display: flex; flex-direction: column; gap: var(--ok-s-4); }
+.ok-post {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  align-items: stretch;
+  text-decoration: none !important;
+  background: var(--ok-surface);
+  border: 1px solid var(--ok-hairline);
+  border-radius: var(--ok-r-2xl);
+  overflow: hidden;
+  min-height: 210px;
+  transition: border-color var(--ok-dur) ease, box-shadow var(--ok-dur) ease;
+}
+.ok-post:hover { border-color: var(--ok-hairline-strong); box-shadow: var(--ok-shadow-2); }
+.ok-post__media {
+  /* Fills its whole side of the card: no inset, no rounding of its own,
+     clipped by the card's own radius. The image is taken out of flow so it
+     cannot drive the card's height; the text column decides that, and the
+     image simply covers whatever space results. */
+  position: relative;
+  overflow: hidden;
+  background: var(--ok-canvas-sunk);
+}
+.ok-post__media img,
+.ok-post__ph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--ok-dur-slow) var(--ok-ease);
+}
+.ok-post:hover .ok-post__media img { transform: scale(1.03); }
+.ok-post__ph {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; color: var(--ok-ink-3);
+  background: radial-gradient(circle at 35% 30%, var(--ok-primary-wash), transparent 62%), var(--ok-canvas-sunk);
+}
+.ok-post__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ok-s-3);
+  padding: var(--ok-s-5) var(--ok-s-6);
+}
+.ok-post__meta { display: flex; align-items: center; gap: var(--ok-s-3); }
+.ok-post__date { font-size: var(--ok-t-caption); color: var(--ok-ink-3); }
+.ok-post__title {
+  font-family: var(--ok-font-ui);
+  font-weight: 600;
+  font-size: var(--ok-t-display-md);
+  line-height: 1.24;
+  letter-spacing: var(--ok-track-md);
+  color: var(--ok-ink);
+  margin: 0 0 var(--ok-s-3);
+  text-wrap: balance;
+}
+.ok-post:hover .ok-post__title { color: var(--ok-primary-ink); }
+.ok-post__excerpt {
+  font-size: var(--ok-t-body-sm);
+  line-height: 1.6;
+  color: var(--ok-ink-3);
+  margin: 0;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.ok-post__foot {
+  display: flex;
+  align-items: center;
+  gap: var(--ok-s-4);
+  margin-top: auto;
+  padding-top: var(--ok-s-4);
+  border-top: 1px solid var(--ok-hairline);
+}
+.ok-post__by { display: flex; align-items: center; gap: var(--ok-s-3); margin-right: auto; }
+.ok-post__avatar { width: 32px; height: 32px; border-radius: var(--ok-r-pill); object-fit: cover; object-position: center 22%; }
+.ok-post__author { display: flex; flex-direction: column; line-height: 1.3; }
+.ok-post__authorname { font-size: var(--ok-t-body-sm); font-weight: 500; color: var(--ok-ink); }
+.ok-post__authorrole { font-size: var(--ok-t-caption); color: var(--ok-ink-3); }
+.ok-post__statval { font-size: var(--ok-t-caption); color: var(--ok-ink-3); display: inline-flex; align-items: center; gap: var(--ok-s-1); white-space: nowrap; }
+.ok-post__listen {
+  background: none; border: none; cursor: pointer; font-family: inherit; padding: 0;
+  color: var(--ok-primary-ink);
+  transition: color var(--ok-dur-fast) ease;
+}
+.ok-post__listen .ok-post__statval { color: inherit; }
+.ok-post__listen:hover { color: var(--ok-primary); }
+
+@media (max-width: 720px) {
+  .ok-post { grid-template-columns: minmax(0, 1fr); }
+  .ok-post { min-height: 0; }
+  .ok-post__media { aspect-ratio: 16 / 9; }
+  .ok-post__body { padding: var(--ok-s-5); }
+  /* The byline and the two stats no longer fit on one line; give the
+     byline its own row so the author name stops wrapping mid-word. */
+  .ok-post__foot { flex-wrap: wrap; gap: var(--ok-s-3) var(--ok-s-5); }
+  .ok-post__by { flex: 1 1 100%; margin-right: 0; }
+}
+
+/* ============================================================
+   Post header
+   ============================================================ */
+.ok-posthead { margin-bottom: var(--ok-s-7); }
+.ok-posthead__meta { display: flex; gap: var(--ok-s-3); align-items: center; margin-bottom: var(--ok-s-4); }
+.ok-posthead__date { font-size: var(--ok-t-caption); color: var(--ok-ink-3); }
+.ok-posthead__title {
+  font-family: var(--ok-font-display);
+  font-weight: 300;
+  font-size: var(--ok-t-display-xl);
+  line-height: 1.06;
+  letter-spacing: var(--ok-track-xl);
+  color: var(--ok-ink);
+  margin: 0 0 var(--ok-s-6);
+  text-wrap: balance;
+}
+.ok-posthead__img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--ok-r-lg);
+  box-shadow: var(--ok-shadow-1);
+  margin: 0;
+}
+/* The header renders the title, so hide the markdown H1 underneath. */
+.content-container:has(.ok-posthead) .vp-doc h1 { display: none; }
+
+/* ============================================================
+   Publications
+   ============================================================ */
+.ok-pubs { max-width: var(--ok-w-page); margin-inline: auto; }
+
+/* Segmented control — both options look like options. */
+.ok-pubs__tabs {
+  display: inline-flex;
+  gap: var(--ok-s-1);
+  padding: var(--ok-s-1);
+  background: var(--ok-canvas-sunk);
+  border-radius: var(--ok-r-pill);
+  margin-bottom: var(--ok-s-5);
+}
+.dark .ok-pubs__tabs { background: rgba(255, 255, 255, .06); }
+.ok-pubs__tab {
+  border: none; cursor: pointer;
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-body-sm);
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: var(--ok-r-pill);
+  background: transparent;
+  color: var(--ok-ink-3);
+  transition: background var(--ok-dur-fast) ease, color var(--ok-dur-fast) ease, box-shadow var(--ok-dur-fast) ease;
+}
+.ok-pubs__tab:hover { color: var(--ok-ink); }
+.ok-pubs__tab.is-active { background: var(--ok-surface); color: var(--ok-ink); box-shadow: var(--ok-shadow-1); }
+
+.ok-pubs__controls { display: flex; flex-wrap: wrap; gap: var(--ok-s-3); margin-bottom: var(--ok-s-5); }
+.ok-pubs__search { flex: 2 1 280px; }
+.ok-pubs__filter { flex: 1 1 180px; max-width: 220px; cursor: pointer; }
+.ok-pubs__search, .ok-pubs__filter {
+  padding: 10px 14px;
+  font-size: var(--ok-t-body-sm);
+  font-family: inherit;
+  color: var(--ok-ink);
+  background: var(--ok-surface);
+  border: 1px solid var(--ok-hairline-strong);
+  border-radius: var(--ok-r-sm);
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color var(--ok-dur-fast) ease, box-shadow var(--ok-dur-fast) ease;
+}
+.ok-pubs__search:focus, .ok-pubs__filter:focus {
+  border-color: var(--ok-primary);
+  box-shadow: 0 0 0 3px var(--ok-primary-ring);
+}
+.ok-pubs__search::placeholder { color: var(--ok-ink-3); }
+
+.ok-pubs__count { font-size: var(--ok-t-caption); color: var(--ok-ink-3); margin: 0 0 var(--ok-s-3); }
+
+.ok-pubs__table { width: 100%; border-collapse: collapse; }
+.ok-pubs__table thead th {
+  text-align: left;
+  padding: 0 var(--ok-s-4) var(--ok-s-3);
+  font-size: var(--ok-t-caption);
+  font-weight: 600;
+  color: var(--ok-ink-2);
+  border-bottom: 1px solid var(--ok-hairline-strong);
+}
+.ok-pubs__table th:nth-child(1), .ok-pubs__table td:nth-child(1) { width: 58%; }
+.ok-pubs__table th:nth-child(2), .ok-pubs__table td:nth-child(2) { width: 10%; }
+.ok-pubs__table th:nth-child(3), .ok-pubs__table td:nth-child(3) { width: 32%; }
+.ok-pubs__table td {
+  padding: var(--ok-s-4);
+  vertical-align: baseline;
+  border-bottom: 1px solid var(--ok-hairline);
+  color: var(--ok-ink-2);
+  font-size: var(--ok-t-body-sm);
+}
+.ok-pubs__table tbody tr { transition: background var(--ok-dur-fast) ease; }
+.ok-pubs__table tbody tr:hover { background: var(--ok-canvas-soft); }
+.ok-pubs__year { color: var(--ok-ink-3); white-space: nowrap; }
+.ok-pubs__venue { color: var(--ok-ink-3); }
+.ok-pubs__title a {
+  color: var(--ok-ink);
+  text-decoration: none;
+  font-size: var(--ok-t-body-sm);
+  font-weight: 500;
+  line-height: 1.45;
+}
+.ok-pubs__title a:hover { color: var(--ok-primary-ink); text-decoration: underline; text-underline-offset: 3px; }
+.ok-pubs__empty { text-align: center; color: var(--ok-ink-3); padding: var(--ok-s-7); }
+
+@media (max-width: 640px) {
+  .ok-pubs__table thead { display: none; }
+  .ok-pubs__table, .ok-pubs__table tbody { display: block; width: 100%; }
+  .ok-pubs__table tr { display: block; padding: var(--ok-s-4) 0; border-bottom: 1px solid var(--ok-hairline); }
+  .ok-pubs__table tbody tr:hover { background: transparent; }
+  .ok-pubs__table td { display: inline; border: none; padding: 0; font-size: var(--ok-t-caption); }
+  .ok-pubs__title { display: block !important; margin-bottom: var(--ok-s-2); width: auto; }
+  .ok-pubs__title a { font-size: var(--ok-t-body-sm); }
+  .ok-pubs__year::after { content: ' · '; color: var(--ok-ink-3); }
+}
+
+/* ============================================================
+   Pagination
+   ============================================================ */
+.ok-pager { display: flex; align-items: center; justify-content: center; gap: var(--ok-s-2); margin-top: var(--ok-s-7); flex-wrap: wrap; }
+.ok-pager__btn {
+  min-width: 38px; height: 38px; padding: 0 var(--ok-s-3);
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--ok-hairline-strong);
+  border-radius: var(--ok-r-md);
+  background: var(--ok-surface);
+  color: var(--ok-ink);
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-body-sm);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background var(--ok-dur-fast) ease, border-color var(--ok-dur-fast) ease, color var(--ok-dur-fast) ease;
+}
+.ok-pager__btn:hover:not(:disabled) { border-color: var(--ok-ink-3); }
+.ok-pager__num.is-active { background: var(--ok-primary); color: var(--ok-on-primary); border-color: var(--ok-primary); }
+.ok-pager__arrow:disabled { opacity: .4; cursor: default; }
+.ok-pager__gap { padding: 0 var(--ok-s-1); color: var(--ok-ink-3); }
+
+/* ============================================================
+   About
+   ============================================================ */
+.ok-about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: clamp(32px, 4vw, 56px);
+  align-items: start;
+  margin: var(--ok-s-6) 0 var(--ok-s-7);
+}
+.ok-about__text > p:first-child { margin-top: 0; }
+.vp-doc .ok-about__text p {
+  font-size: var(--ok-t-body);
+  line-height: 1.72;
+  max-width: 62ch;
+}
+.ok-about__side { display: flex; flex-direction: column; gap: var(--ok-s-5); }
+.vp-doc .ok-about__img {
+  width: 100%;
+  border-radius: var(--ok-r-lg);
+  object-fit: cover;
+  margin: 0;
+  box-shadow: var(--ok-shadow-2);
+}
+@media (max-width: 860px) {
+  .ok-about { grid-template-columns: minmax(0, 1fr); }
+  .ok-about__img { max-width: 360px; }
+}
+
+/* Contact block */
+.ok-ct { display: flex; flex-direction: column; gap: var(--ok-s-4); padding-top: var(--ok-s-5); border-top: 1px solid var(--ok-hairline); }
+.ok-ct__email { font-size: var(--ok-t-body-sm); font-weight: 500; color: var(--ok-primary-ink); text-decoration: none; word-break: break-word; }
+.ok-ct__email:hover { text-decoration: underline; text-underline-offset: 3px; }
+.ok-ct__addr { font-size: var(--ok-t-caption); line-height: 1.55; color: var(--ok-ink-3); margin: var(--ok-s-2) 0 0; }
+.ok-ct__socials { display: flex; flex-wrap: wrap; gap: var(--ok-s-2); }
+
+/* CV timeline */
+.ok-cv { display: flex; flex-direction: column; margin-top: var(--ok-s-6); }
+.ok-cv__item {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: var(--ok-s-5);
+  padding: var(--ok-s-5) 0;
+  border-top: 1px solid var(--ok-hairline);
+  align-items: baseline;
+}
+.ok-cv__item:last-child { border-bottom: 1px solid var(--ok-hairline); }
+.ok-cv__years { font-size: var(--ok-t-body-sm); color: var(--ok-ink-3); white-space: nowrap; }
+.ok-cv__role { font-size: var(--ok-t-heading-sm); font-weight: 600; letter-spacing: var(--ok-track-sm); color: var(--ok-ink); }
+.ok-cv__place { color: var(--ok-ink-3); font-size: var(--ok-t-body-sm); margin-top: var(--ok-s-1); }
+@media (max-width: 640px) { .ok-cv__item { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-1); } }
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.ok-faq { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(34px, 4vw, 55px); align-items: start; margin: var(--ok-s-8) 0 var(--ok-s-6); }
+@media (max-width: 860px) { .ok-faq { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-6); } }
+.ok-faq__intro { position: sticky; top: calc(var(--vp-nav-height) + var(--ok-s-5)); }
+@media (max-width: 860px) { .ok-faq__intro { position: static; } }
+.ok-faq__title {
+  font-family: var(--ok-font-display);
+  font-weight: 300;
+  font-size: var(--ok-t-display-lg);
+  line-height: 1.12;
+  letter-spacing: var(--ok-track-lg);
+  color: var(--ok-ink);
+  margin: 0 0 var(--ok-s-5);
+  border: none; padding: 0;
+  text-wrap: balance;
+}
+.ok-faq__list { display: flex; flex-direction: column; }
+.ok-faq__item { border-bottom: 1px solid var(--ok-hairline); }
+.ok-faq__item:first-child { border-top: 1px solid var(--ok-hairline); }
+.ok-faq__q {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--ok-s-4);
+  background: none; border: none; cursor: pointer; text-align: left;
+  font-family: var(--ok-font-ui);
+  font-weight: 500;
+  font-size: var(--ok-t-body);
+  color: var(--ok-ink);
+  padding: var(--ok-s-5) 0;
+  line-height: 1.4;
+}
+.ok-faq__q:hover { color: var(--ok-primary-ink); }
+.ok-faq__icon { flex: none; color: var(--ok-ink-3); transition: transform var(--ok-dur) var(--ok-ease), color var(--ok-dur-fast) ease; }
+.ok-faq__item.is-open .ok-faq__icon { transform: rotate(45deg); color: var(--ok-primary); }
+.ok-faq__a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--ok-dur) var(--ok-ease); }
+.ok-faq__item.is-open .ok-faq__a { grid-template-rows: 1fr; }
+.ok-faq__a-inner { overflow: hidden; }
+.ok-faq__a p { margin: 0; padding: 0 var(--ok-s-7) var(--ok-s-5) 0; font-size: var(--ok-t-body-sm); line-height: 1.65; color: var(--ok-ink-3); max-width: 60ch; }
+
+/* ============================================================
+   News banner
+   ============================================================ */
+.ok-news {
+  position: relative;
+  display: flex; align-items: center; gap: var(--ok-s-4);
+  padding: var(--ok-s-3) var(--ok-gutter);
+  background: var(--ok-canvas-soft);
+  border-block: 1px solid var(--ok-hairline);
+}
+.ok-news__body { flex: 1 1 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--ok-s-2) var(--ok-s-4); }
+.ok-news__text { margin: 0; font-size: var(--ok-t-body-sm); color: var(--ok-ink-2); text-align: center; }
+.ok-news__sep { display: inline-block; margin: 0 var(--ok-s-3); color: var(--ok-ink-3); }
+.ok-news__text strong { font-weight: 600; color: var(--ok-ink); }
+.ok-news__cta {
+  flex: none; display: inline-flex; align-items: center; gap: var(--ok-s-1);
+  font-size: var(--ok-t-body-sm); font-weight: 500;
+  color: var(--ok-primary-ink); text-decoration: none !important;
+}
+.ok-news__cta:hover { text-decoration: underline !important; text-underline-offset: 3px; }
+.ok-news__close {
+  flex: none; background: none; border: none; cursor: pointer;
+  color: var(--ok-ink-3); padding: var(--ok-s-1); display: inline-flex; border-radius: var(--ok-r-sm);
+}
+.ok-news__close:hover { color: var(--ok-ink); background: var(--ok-canvas-sunk); }
+
+/* ============================================================
+   Footer
+   ------------------------------------------------------------
+   Closes the page with a faint echo of the hero mesh, so the site
+   opens and ends on the same material. Proportions follow the
+   golden ratio: the brand column is 1 to the link grid's 1.618.
+   ============================================================ */
+.ok-footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--ok-canvas-soft);
+  border-top: 1px solid var(--ok-hairline);
+  color: var(--ok-ink-3);
+  margin-top: 0;
+}
+/* Mesh echo, flipped so the colour sits along the bottom edge. */
+.ok-footer__wash {
+  position: absolute;
+  /* Flush to the bottom edge: the mask makes this opaque at the bottom, so
+     hanging it below the footer left only the transparent end visible. */
+  inset: auto 0 0 0;
+  height: 260px;
+  /* Sits above the footer's own background but below its content. A
+     negative z-index would paint it behind that background and vanish. */
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(48% 70% at 12% 100%, var(--ok-mesh-cream) 0%, transparent 66%),
+    radial-gradient(42% 62% at 38% 100%, var(--ok-mesh-lavender) 0%, transparent 64%),
+    radial-gradient(46% 66% at 68% 100%, var(--ok-mesh-indigo) 0%, transparent 62%),
+    radial-gradient(44% 64% at 94% 100%, var(--ok-mesh-ice) 0%, transparent 64%);
+  opacity: .62;
+  -webkit-mask-image: linear-gradient(0deg, #000 0%, transparent 92%);
+  mask-image: linear-gradient(0deg, #000 0%, transparent 92%);
+}
+.dark .ok-footer__wash { opacity: .85; }
+
+.ok-footer__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--ok-w-wide);
+  margin-inline: auto;
+  padding: var(--ok-s-8) var(--ok-gutter) var(--ok-s-7);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.618fr);
+  gap: clamp(34px, 5vw, 89px);
+}
+.ok-footer__wordmark {
+  font-family: var(--ok-font-display);
+  font-weight: 300;
+  font-size: var(--ok-t-display-md);
+  letter-spacing: var(--ok-track-md);
+  color: var(--ok-ink);
+  margin-bottom: var(--ok-s-4);
+}
+.ok-footer__tagline {
+  font-size: var(--ok-t-body-sm);
+  line-height: 1.6;
+  color: var(--ok-ink-2);
+  max-width: 36ch;
+  margin: 0 0 var(--ok-s-4);
+}
+.ok-footer__affil {
+  font-size: var(--ok-t-caption);
+  line-height: 1.55;
+  color: var(--ok-ink-3);
+  white-space: pre-line;
+  margin: 0 0 var(--ok-s-5);
+}
+.ok-footer__social { display: flex; flex-wrap: wrap; gap: var(--ok-s-2); }
+
+.ok-footer__cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ok-s-5);
+}
+.ok-footer__coltitle {
+  font-size: var(--ok-t-caption);
+  font-weight: 600;
+  color: var(--ok-ink);
+  margin-bottom: var(--ok-s-4);
+}
+.ok-footer__link {
+  display: block;
+  width: fit-content;
+  font-size: var(--ok-t-body-sm);
+  color: var(--ok-ink-3);
+  text-decoration: none;
+  padding: var(--ok-s-2) 0;
+  transition: color var(--ok-dur-fast) ease, transform var(--ok-dur-fast) ease;
+}
+.ok-footer__link:hover { color: var(--ok-primary-ink); transform: translateX(2px); }
+
+.ok-footer__bottom {
+  position: relative;
+  z-index: 1;
+  max-width: var(--ok-w-wide);
+  margin-inline: auto;
+  padding: var(--ok-s-5) var(--ok-gutter) var(--ok-s-7);
+  border-top: 1px solid var(--ok-hairline);
+  font-size: var(--ok-t-caption);
+  color: var(--ok-ink-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ok-s-4);
+  flex-wrap: wrap;
+}
+.ok-footer__top {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-s-2);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-caption);
+  font-weight: 500;
+  color: var(--ok-ink-2);
+  transition: color var(--ok-dur-fast) ease;
+}
+.ok-footer__top svg { transition: transform var(--ok-dur) var(--ok-ease); }
+.ok-footer__top:hover { color: var(--ok-primary-ink); }
+.ok-footer__top:hover svg { transform: translateY(-2px); }
+
+@media (max-width: 860px) {
+  .ok-footer__inner { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-6); }
+  .ok-footer__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ============================================================
+   404
+   ============================================================ */
+.ok-404 { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: var(--ok-s-8) var(--ok-gutter); }
+.ok-404__inner { max-width: 520px; }
+.ok-404__code {
+  font-family: var(--ok-font-display);
+  font-size: clamp(4rem, 14vw, 7rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--ok-primary);
+}
+.ok-404__title { font-size: var(--ok-t-display-lg); font-family: var(--ok-font-display); font-weight: 300; letter-spacing: var(--ok-track-lg); margin: var(--ok-s-4) 0 var(--ok-s-3); }
+.ok-404__text { color: var(--ok-ink-3); font-size: var(--ok-t-body); line-height: 1.6; margin-bottom: var(--ok-s-6); }
+.ok-404__cta { display: flex; gap: var(--ok-s-3); justify-content: center; flex-wrap: wrap; }
+
+/* ============================================================
+   Image zoom overlay
+   ============================================================ */
+.ok-zoom-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 4vh 4vw;
+  background: rgba(7, 10, 18, .88);
+  backdrop-filter: blur(4px);
+  cursor: zoom-out;
+  opacity: 0;
+  transition: opacity var(--ok-dur) ease;
+}
+.ok-zoom-overlay.is-open { opacity: 1; }
+.ok-zoom-overlay img {
+  max-width: 94vw; max-height: 90vh;
+  border-radius: var(--ok-r-md);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .55);
+  transform: scale(.98);
+  transition: transform var(--ok-dur) var(--ok-ease);
+}
+.ok-zoom-overlay.is-open img { transform: scale(1); }

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import researchData from '../data/research.json'
 import PageHero from './PageHero.vue'
 
@@ -13,8 +13,21 @@ const REDUCE = typeof window !== 'undefined' && window.matchMedia
 /* ── Research content (edited via CMS / docs/.vitepress/data/research.json) ── */
 const hero = researchData.hero
 const planets = researchData.planets
-const studies = researchData.studies
 const missions = researchData.missions
+const disciplines = researchData.disciplines
+const steps = researchData.steps
+
+/* The disciplines grid can be filtered by world. `null` shows everything;
+   picking a world dims the fields that are not applied to it rather than
+   removing them, so the size of the whole toolkit stays visible. */
+const worldFilter = ref(null)
+const worlds = computed(() => {
+  const seen = []
+  for (const d of disciplines.items) for (const w of d.worlds) if (!seen.includes(w)) seen.push(w)
+  return seen
+})
+function appliesTo(d) { return !worldFilter.value || d.worlds.includes(worldFilter.value) }
+function pickWorld(w) { worldFilter.value = worldFilter.value === w ? null : w }
 
 /* ── helper: load an image ── */
 function loadImg(src) { const i = new Image(); i.src = src; return i }
@@ -322,16 +335,62 @@ onBeforeUnmount(() => {
 <PageHero :eyebrow="hero.eyebrow" :title="hero.title" :lede="hero.lede" :bg="hero.bg" />
 <section class="ok-research" ref="root">
 
-  <div class="ok-reveal">
-    <div class="ok-topics ok-topics--top">
-      <a v-for="p in planets" :key="p.name" :href="'#ok-' + p.name.toLowerCase()"
-         class="ok-topic-pill ok-topic-pill--nav" @click.prevent="scrollToPlanet(p.name)">
-        <span class="ok-topic-pill__sym" :style="{ color: p.accent }">{{ p.symbol }}</span> {{ p.name }}
-      </a>
-    </div>
-  </div>
+  <!-- The method, as three ordered stages. Genuinely a sequence, which is
+       why it is numbered. -->
+  <section class="ok-steps ok-reveal" id="ok-workflow">
+    <h2 class="ok-steps__title">{{ steps.title }}</h2>
+    <ol class="ok-steps__list">
+      <li v-for="(st, i) in steps.items" :key="st.n" class="ok-step">
+        <span class="ok-step__n">{{ st.n }}</span>
+        <h3 class="ok-step__name">{{ st.name }}</h3>
+        <p v-if="st.method" class="ok-step__method">{{ st.method }}</p>
+        <p class="ok-step__body">{{ st.body }}</p>
+      </li>
+    </ol>
+  </section>
 
-  <!-- PLANETS (Venus / Mars / Ganymede) — content from data/research.json -->
+  <!-- Worlds covered, as navigation into the sections below. -->
+  <nav class="ok-worlds ok-reveal" aria-label="Jump to a world">
+    <a v-for="p in planets" :key="p.name" :href="'#ok-' + p.name.toLowerCase()"
+       class="ok-world" @click.prevent="scrollToPlanet(p.name)">
+      <span class="ok-world__sym" :style="{ color: p.accent }">{{ p.symbol }}</span>
+      <span class="ok-world__name">{{ p.name }}</span>
+    </a>
+  </nav>
+
+  <!-- DISCIPLINES: the multidisciplinary frame the rest of the page sits inside -->
+  <section class="ok-disc ok-reveal" id="ok-disciplines">
+    <p v-if="disciplines.eyebrow" class="ok-disc__eyebrow">{{ disciplines.eyebrow }}</p>
+    <h2 class="ok-disc__title">{{ disciplines.title }}</h2>
+    <p class="ok-disc__lede">{{ disciplines.lede }}</p>
+
+    <div class="ok-disc__filter" role="group" aria-label="Filter disciplines by world">
+      <button class="ok-disc__chip" :class="{ 'is-on': worldFilter === null }"
+              type="button" :aria-pressed="worldFilter === null" @click="worldFilter = null">
+        All fields
+      </button>
+      <button v-for="w in worlds" :key="w" class="ok-disc__chip"
+              :class="{ 'is-on': worldFilter === w }"
+              type="button" :aria-pressed="worldFilter === w" @click="pickWorld(w)">
+        {{ w }}
+      </button>
+    </div>
+
+    <ul class="ok-disc__grid">
+      <li v-for="d in disciplines.items" :key="d.name"
+          class="ok-disc__card" :class="{ 'is-dim': !appliesTo(d) }">
+        <p class="ok-disc__role">{{ d.role }}</p>
+        <h3 class="ok-disc__name">{{ d.name }}</h3>
+        <p class="ok-disc__body">{{ d.body }}</p>
+        <p class="ok-disc__worlds">
+          <span v-for="w in d.worlds" :key="w" class="ok-disc__world"
+                :class="{ 'is-match': worldFilter === w }">{{ w }}</span>
+        </p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- PLANETS (Venus / Mars / Ganymede), content from data/research.json -->
   <div v-for="p in planets" :key="p.name" class="ok-planet" :id="'ok-' + p.name.toLowerCase()">
     <div class="ok-planet__accent" :style="{ background: p.accent }"></div>
     <div class="ok-planet__top">
@@ -351,39 +410,16 @@ onBeforeUnmount(() => {
     </div>
   </div>
 
-  <!-- RESEARCH IN DEPTH -->
-  <div class="ok-indepth">
-    <div class="ok-eyebrow">Research in depth</div>
-    <h2 class="ok-h2"><b>Selected studies</b></h2>
-    <div v-for="group in studies" :key="group.planet" class="ok-indepth__group ok-reveal" data-ok-delay="0">
-      <div class="ok-indepth__head">
-        <span class="ok-indepth__bar" :style="{ background: group.accent }"></span>
-        <h3 class="ok-indepth__planet" :style="{ color: group.accent }">{{ group.planet }}</h3>
-      </div>
-      <p class="ok-indepth__intro">{{ group.intro }}</p>
-      <div class="ok-studies">
-        <article v-for="(s, i) in group.items" :key="s.title"
-          class="ok-study" :class="{ 'ok-study--rev': i % 2 === 1 }">
-          <div class="ok-study__media">
-            <img v-if="s.image" :src="s.image" :alt="s.title" loading="lazy" />
-            <div v-else class="ok-study__ph" :style="{ color: group.accent }">◐</div>
-          </div>
-          <div class="ok-study__text">
-            <h4 class="ok-study__title">{{ s.title }}</h4>
-            <p class="ok-study__body">{{ s.body }}</p>
-            <div class="ok-study__papers">
-              <span class="ok-study__pub">Published in</span>
-              <a v-for="p in s.papers" :key="p.href" :href="p.href" target="_blank" rel="noopener"
-                 class="ok-study__paper" :style="{ '--c': group.accent }">{{ p.label }}</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
+  <!-- Long-form write-ups live on their own page rather than being
+       duplicated here. -->
+  <div class="ok-more ok-reveal">
+    <h2 class="ok-h2">Read the work in depth</h2>
+    <p class="ok-lead">Long-form explainers on the studies behind each of these threads, written for a wider audience.</p>
+    <a class="ok-btn ok-btn--primary ok-btn--lg" href="/research/articles">Browse research articles</a>
   </div>
 
   <!-- METHODS -->
-  <div class="ok-methods-section">
+  <div class="ok-methods-section" id="ok-methods">
     <div class="ok-eyebrow">Research Methods</div>
     <h2 class="ok-h2"><b>Approaches &amp; Tools</b></h2>
     <div class="ok-methods-grid">
@@ -395,17 +431,17 @@ onBeforeUnmount(() => {
       <div class="ok-method-card" data-ok-delay="100">
         <div class="ok-method-card__label">Numerical · Mantle Convection</div>
         <div class="ok-method-card__name">ASPECT</div>
-        <p class="ok-method-card__desc">Advanced Solver for Problems in Earth's ConvecTion — finite-element mantle convection code. Used for planetary interior simulations: thermochemical evolution, plume dynamics, and lithospheric thickening under single-lid regimes on Venus, Mars, and icy moons.</p>
+        <p class="ok-method-card__desc">Advanced Solver for Problems in Earth's ConvecTion, a finite-element mantle convection code. Used for planetary interior simulations: thermochemical evolution, plume dynamics, and lithospheric thickening under single-lid regimes on Venus, Mars, and icy moons.</p>
       </div>
       <div class="ok-method-card" data-ok-delay="200">
         <div class="ok-method-card__label">Numerical · Geomechanics</div>
         <div class="ok-method-card__name">LaMEM</div>
-        <p class="ok-method-card__desc">Lithosphere and Mantle Evolution Model — massively parallel staggered-grid finite-difference code for coupled geodynamic and geomechanical problems. Applied to lithospheric deformation, viscoelastoplastic fault systems, rifting, and compressional tectonic regimes.</p>
+        <p class="ok-method-card__desc">Lithosphere and Mantle Evolution Model, a massively parallel staggered-grid finite-difference code for coupled geodynamic and geomechanical problems. Applied to lithospheric deformation, viscoelastoplastic fault systems, rifting, and compressional tectonic regimes.</p>
       </div>
       <div class="ok-method-card" data-ok-delay="300">
         <div class="ok-method-card__label">Numerical · Impact</div>
         <div class="ok-method-card__name">iSALE</div>
-        <p class="ok-method-card__desc">Impact Simplified Arbitrary Lagrangian–Eulerian hydrocode — simulates hypervelocity impact cratering, shock-wave propagation, melt generation, and crater scaling in planetary materials. Applied to multi-ring basin formation and impact-driven tectonic responses in icy and rocky targets.</p>
+        <p class="ok-method-card__desc">Impact Simplified Arbitrary Lagrangian-Eulerian hydrocode. Simulates hypervelocity impact cratering, shock-wave propagation, melt generation, and crater scaling in planetary materials. Applied to multi-ring basin formation and impact-driven tectonic responses in icy and rocky targets.</p>
       </div>
     </div>
   </div>
@@ -414,7 +450,7 @@ onBeforeUnmount(() => {
   <div class="ok-code-section">
     <div class="ok-eyebrow">Development</div>
     <h2 class="ok-h2"><b>Numerical Geodynamics</b><br>Code Development</h2>
-    <p class="ok-lead">Beyond running simulations, I contribute to the development, benchmarking, and extension of open-source geodynamics codes — implementing planetary rheology modules, new material models, and post-processing pipelines.<span class="ok-cursor"></span></p>
+    <p class="ok-lead">Beyond running simulations, I contribute to the development, benchmarking, and extension of open-source geodynamics codes, implementing planetary rheology modules, new material models, and post-processing pipelines.</p>
     <div class="ok-code-grid">
       <div class="ok-code-card" data-ok-delay="0">
         <div class="ok-code-card__name">ASPECT</div>
@@ -450,7 +486,7 @@ onBeforeUnmount(() => {
   </div>
 
   <!-- MISSIONS -->
-  <div class="ok-missions-section ok-reveal">
+  <div class="ok-missions-section ok-reveal" id="ok-missions">
     <div class="ok-eyebrow">Missions &amp; Instruments</div>
     <h2 class="ok-h2"><b>Planetary Missions</b></h2>
     <div class="ok-missions">
@@ -470,60 +506,240 @@ onBeforeUnmount(() => {
   max-width: 1400px;
   margin: 0 auto;
   padding: 6px 0 12px;
-  font-size: 20px;
+  font-size: var(--ok-t-body);
   line-height: 1.6;
 }
 
 .ok-eyebrow {
-  font-size: 14px; font-weight: 500; letter-spacing: .01em;
-  color: var(--vp-c-text-3); margin-bottom: 14px;
+  font-size: var(--ok-t-caption); font-weight: 500; letter-spacing: .01em;
+  color: var(--ok-ink-3); margin-bottom: 14px;
 }
 
 .ok-h1 {
   font-family: var(--ok-font-display);
   font-size: clamp(34px, 3.8vw, 56px);
-  font-weight: 600; letter-spacing: -.03em; line-height: 1.08;
-  color: var(--vp-c-text-1); margin: 0 0 20px; border: none; padding: 0;
+  font-weight: 300; letter-spacing: var(--ok-track-xl); line-height: 1.08;
+  color: var(--ok-ink); margin: 0 0 20px; border: none; padding: 0;
 }
-.ok-h1 b { font-weight: 700; }
+.ok-h1 b { font-weight: inherit; }
 
 .ok-h2 {
-  font-family: var(--ok-font-bold);
-  font-size: clamp(24px, 2.8vw, 40px);
-  font-weight: 600; letter-spacing: -.025em; line-height: 1.12;
-  color: var(--vp-c-text-1); margin: 0 0 16px; border: none; padding: 0;
+  font-family: var(--ok-font-display);
+  font-size: var(--ok-t-display-lg);
+  font-weight: 300; letter-spacing: var(--ok-track-lg); line-height: 1.12;
+  color: var(--ok-ink); margin: 0 0 16px; border: none; padding: 0;
 }
-.ok-h2 b { font-weight: 700; color: #C87030; }
+.ok-h2 b { font-weight: inherit; color: inherit; }
 
 .ok-lead {
-  font-size: 21px; color: var(--vp-c-text-2);
-  max-width: 100%; line-height: 1.8; margin-bottom: 80px; font-weight: 300;
+  font-size: var(--ok-t-body-lg); color: var(--ok-ink-2);
+  max-width: 66ch; line-height: 1.7; margin-bottom: var(--ok-band); font-weight: 400;
 }
 
-.ok-topics { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 80px; }
+.ok-topics { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--ok-band); }
 /* Match the Publications page ID buttons */
 .ok-topic-pill {
   display: inline-flex; align-items: center;
   font-size: 0.95rem; font-weight: 500; letter-spacing: .01em;
-  color: var(--vp-c-text-1); border: 1px solid var(--vp-c-border);
-  padding: 0.55rem 1.15rem; border-radius: 999px; background: var(--vp-c-bg-alt);
+  color: var(--ok-ink); border: 1px solid var(--ok-hairline-strong);
+  padding: 0.55rem 1.15rem; border-radius: 999px; background: var(--ok-surface);
   transition: border-color .2s, color .2s, background .2s, transform .2s;
 }
 .ok-topic-pill:hover {
-  border-color: var(--ok-accent); color: var(--ok-accent-deep);
-  background: var(--vp-c-bg-soft); transform: translateY(-1px);
+  border-color: var(--ok-primary); color: var(--ok-primary-ink);
+  background: var(--ok-canvas-soft); transform: translateY(-1px);
 }
-:global(.dark) .ok-topic-pill:hover { color: var(--ok-accent-a); }
+:global(.dark) .ok-topic-pill:hover { color: var(--ok-primary-ink); }
 .ok-topic-pill--nav { text-decoration: none !important; cursor: pointer; }
 .ok-topic-pill__sym { font-size: 1.05em; line-height: 1; margin-right: 1px; }
 
+/* ── Method steps ──
+   Numbered because this really is a sequence: each stage consumes what the
+   one before it produced. */
+.ok-steps {
+  padding-bottom: var(--ok-band);
+  margin-bottom: var(--ok-band);
+}
+.ok-steps__title {
+  font-family: var(--ok-font-display);
+  font-weight: 300;
+  font-size: var(--ok-t-display-lg);
+  letter-spacing: var(--ok-track-lg);
+  line-height: 1.12;
+  color: var(--ok-ink);
+  margin: 0 0 var(--ok-s-6);
+  text-align: center;
+}
+.ok-steps__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ok-s-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: none;
+}
+@media (max-width: 820px) { .ok-steps__list { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-5); } }
+.ok-step { position: relative; padding-top: var(--ok-s-5); border-top: 2px solid var(--ok-primary); }
+.ok-step__n {
+  display: block;
+  font-size: var(--ok-t-caption);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ok-primary-ink);
+  margin-bottom: var(--ok-s-2);
+}
+.ok-step__name {
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-heading);
+  font-weight: 600;
+  letter-spacing: var(--ok-track-sm);
+  color: var(--ok-ink);
+  margin: 0 0 var(--ok-s-2);
+}
+/* What the stage actually consists of, under the stage's name. */
+.ok-step__method {
+  font-size: var(--ok-t-body-sm);
+  font-weight: 500;
+  color: var(--ok-ink-2);
+  margin: 0 0 var(--ok-s-3);
+}
+.ok-step__body { font-size: var(--ok-t-body-sm); line-height: 1.65; color: var(--ok-ink-3); margin: 0; }
+
+/* ── Worlds nav ── */
+.ok-worlds {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--ok-s-3);
+  margin-bottom: var(--ok-band);
+}
+.ok-world {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ok-s-2);
+  padding: var(--ok-s-3) var(--ok-s-5);
+  border: 1px solid var(--ok-hairline-strong);
+  border-radius: var(--ok-r-pill);
+  background: var(--ok-surface);
+  color: var(--ok-ink) !important;
+  font-size: var(--ok-t-body-sm);
+  font-weight: 500;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: border-color var(--ok-dur-fast) ease, background var(--ok-dur-fast) ease;
+}
+.ok-world:hover { border-color: var(--ok-primary); background: var(--ok-primary-wash); }
+.ok-world__sym { font-size: 1.05em; line-height: 1; }
+
+/* ── Disciplines ──
+   The umbrella section. Cards dim rather than disappear when a world is
+   selected, so the breadth of the toolkit stays legible while the filter
+   answers "which of these apply here". */
+.ok-disc {
+  padding-top: var(--ok-band);
+  margin-bottom: var(--ok-band);
+  border-top: 1px solid var(--ok-hairline);
+  text-align: center;
+}
+.ok-disc__eyebrow { font-size: var(--ok-t-body-sm); font-weight: 500; color: var(--ok-ink-3); margin: 0 0 var(--ok-s-4); }
+.ok-disc__title {
+  font-family: var(--ok-font-display);
+  font-weight: 300;
+  font-size: var(--ok-t-display-lg);
+  line-height: 1.12;
+  letter-spacing: var(--ok-track-lg);
+  color: var(--ok-ink);
+  margin: 0 auto var(--ok-s-4);
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.ok-disc__lede {
+  font-size: var(--ok-t-body);
+  line-height: 1.65;
+  color: var(--ok-ink-3);
+  max-width: 62ch;
+  margin: 0 auto var(--ok-s-6);
+  text-wrap: pretty;
+}
+
+.ok-disc__filter { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--ok-s-2); margin-bottom: var(--ok-s-6); }
+.ok-disc__chip {
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-body-sm);
+  font-weight: 500;
+  padding: var(--ok-s-3) var(--ok-s-5);
+  border-radius: var(--ok-r-pill);
+  border: 1px solid var(--ok-hairline-strong);
+  background: var(--ok-surface);
+  color: var(--ok-ink-2);
+  cursor: pointer;
+  transition: border-color var(--ok-dur-fast) ease, background var(--ok-dur-fast) ease, color var(--ok-dur-fast) ease;
+}
+.ok-disc__chip:hover { border-color: var(--ok-ink-3); color: var(--ok-ink); }
+.ok-disc__chip.is-on {
+  background: var(--ok-primary);
+  border-color: var(--ok-primary);
+  color: var(--ok-on-primary);
+}
+
+.ok-disc__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--ok-s-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+@media (max-width: 1100px) { .ok-disc__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 820px)  { .ok-disc__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px)  { .ok-disc__grid { grid-template-columns: minmax(0, 1fr); } }
+
+.ok-disc__card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--ok-s-5);
+  background: var(--ok-surface);
+  border: 1px solid var(--ok-hairline);
+  border-radius: var(--ok-r-lg);
+  transition: opacity var(--ok-dur) ease, border-color var(--ok-dur) ease,
+              box-shadow var(--ok-dur) ease, transform var(--ok-dur) var(--ok-ease);
+}
+.ok-disc__card:hover { border-color: var(--ok-hairline-strong); box-shadow: var(--ok-shadow-2); transform: translateY(-2px); }
+.ok-disc__card.is-dim { opacity: .38; }
+.ok-disc__card.is-dim:hover { opacity: .68; box-shadow: none; transform: none; }
+
+.ok-disc__role { font-size: var(--ok-t-micro); font-weight: 500; color: var(--ok-primary-ink); margin: 0 0 var(--ok-s-2); }
+.ok-disc__name {
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-heading-sm);
+  font-weight: 600;
+  letter-spacing: var(--ok-track-sm);
+  color: var(--ok-ink);
+  margin: 0 0 var(--ok-s-3);
+  line-height: 1.3;
+}
+.ok-disc__body { font-size: var(--ok-t-caption); line-height: 1.6; color: var(--ok-ink-3); margin: 0 0 var(--ok-s-4); }
+.ok-disc__worlds { display: flex; flex-wrap: wrap; gap: var(--ok-s-2); margin: auto 0 0; }
+.ok-disc__world {
+  font-size: var(--ok-t-micro);
+  font-weight: 500;
+  padding: 3px var(--ok-s-3);
+  border-radius: var(--ok-r-pill);
+  background: var(--ok-canvas-sunk);
+  color: var(--ok-ink-2);
+  transition: background var(--ok-dur-fast) ease, color var(--ok-dur-fast) ease;
+}
+:global(.dark) .ok-disc__world { background: rgba(255, 255, 255, .07); }
+.ok-disc__world.is-match { background: var(--ok-primary-wash); color: var(--ok-primary-ink); }
+
 .ok-planet {
-  padding-bottom: 80px; margin-bottom: 80px;
-  border-bottom: 1px solid var(--vp-c-divider);
+  padding-top: var(--ok-band); margin-bottom: var(--ok-band);
+  border-top: 1px solid var(--ok-hairline);
   opacity: 0; transform: translateY(20px);
 }
 .ok-planet.ok-in { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s ease; }
-.ok-planet:last-of-type { border-bottom: none; }
 
 .ok-planet__accent { width: 32px; height: 3px; margin-bottom: 28px; }
 
@@ -534,7 +750,7 @@ onBeforeUnmount(() => {
 @media (max-width: 900px) { .ok-planet__top { grid-template-columns: 1fr; gap: 32px; } }
 
 canvas.ok-canvas {
-  width: 100%; display: block; border-radius: 12px;
+  width: 100%; display: block; border-radius: var(--ok-r-lg);
   /* match the bitmap aspect (1040×620) so the planet never squishes,
      even before the resize handler runs (this was blank on mobile) */
   aspect-ratio: 1040 / 620; height: auto;
@@ -542,76 +758,80 @@ canvas.ok-canvas {
 }
 
 .ok-planet-tag {
-  font-size: 16px; font-weight: 500; letter-spacing: .01em;
+  font-size: var(--ok-t-body-sm); font-weight: 500; letter-spacing: .01em;
   margin-bottom: 10px; display: block;
 }
 .ok-planet__title {
-  font-family: var(--ok-font-bold);
+  font-family: var(--ok-font-ui);
   font-size: clamp(20px, 2.2vw, 28px);
   font-weight: 600; letter-spacing: -.022em; line-height: 1.18;
-  color: var(--vp-c-text-1); margin: 0 0 16px;
+  color: var(--ok-ink); margin: 0 0 16px;
 }
 .ok-planet__desc {
-  font-size: 20px; color: var(--vp-c-text-2);
+  font-size: var(--ok-t-body); color: var(--ok-ink-2);
   line-height: 1.78; margin-bottom: 32px; font-weight: 400;
-  text-align: justify; text-justify: inter-word;
+  /* Ragged right: justified text at this measure opened rivers between words. */
+  text-align: left;
 }
 
-.ok-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--vp-c-divider); margin-bottom: 28px; }
+.ok-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--ok-hairline); margin-bottom: 28px; }
 .ok-tab {
-  font-size: 16px; font-weight: 500; letter-spacing: .01em;
-  color: var(--vp-c-text-3); padding: 8px 20px 8px 0; cursor: pointer;
+  font-size: var(--ok-t-body-sm); font-weight: 500; letter-spacing: .01em;
+  color: var(--ok-ink-3); padding: 8px 20px 8px 0; cursor: pointer;
   border: none; border-bottom: 2px solid transparent; margin-bottom: -1px;
   transition: color .2s, border-color .2s; background: none; font-family: inherit;
 }
-.ok-tab:hover { color: var(--vp-c-text-2); }
-.ok-tab.ok-active { color: var(--vp-c-text-1); border-bottom-color: currentColor; }
+.ok-tab:hover { color: var(--ok-ink-2); }
+.ok-tab.ok-active { color: var(--ok-ink); border-bottom-color: currentColor; }
 
 .ok-subtopics {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-  background: var(--vp-c-divider); margin-top: 40px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--ok-s-4);
+  margin-top: var(--ok-s-6);
 }
 @media (max-width: 700px) { .ok-subtopics { grid-template-columns: 1fr; } }
 .ok-subtopic {
-  background: var(--vp-c-bg); padding: 28px 28px 36px;
+  background: var(--ok-canvas-soft); border: 1px solid var(--ok-hairline);
+  border-radius: var(--ok-r-2xl); padding: var(--ok-s-5);
   opacity: 0; transform: translateY(10px);
 }
 .ok-subtopic.ok-in { opacity: 1; transform: none; transition: opacity .55s ease, transform .55s ease; }
-.ok-subtopic__num { font-size: 14px; font-weight: 500; color: var(--vp-c-text-3); margin-bottom: 12px; }
+.ok-subtopic__num { font-size: var(--ok-t-caption); font-weight: 500; color: var(--ok-ink-3); margin-bottom: 12px; }
 .ok-subtopic__title {
-  font-family: var(--ok-font-bold);
-  font-size: 16px; font-weight: 600; letter-spacing: -.012em;
-  color: var(--vp-c-text-1); margin-bottom: 10px; line-height: 1.3;
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-body-sm); font-weight: 600; letter-spacing: -.012em;
+  color: var(--ok-ink); margin-bottom: 10px; line-height: 1.3;
 }
-.ok-subtopic__body { font-size: 19px; color: var(--vp-c-text-2); line-height: 1.72; }
+.ok-subtopic__body { font-size: var(--ok-t-body); color: var(--ok-ink-2); line-height: 1.72; }
 
 .ok-methods-section {
-  margin-top: 80px; padding-top: 64px; border-top: 1px solid var(--vp-c-divider);
+  margin-top: var(--ok-band); padding-top: var(--ok-band); border-top: 1px solid var(--ok-hairline);
   opacity: 0; transform: translateY(16px);
 }
 .ok-methods-section.ok-in { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s ease; }
 .ok-methods-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-  background: var(--vp-c-divider); margin-top: 40px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ok-s-4);
+  margin-top: var(--ok-s-6);
 }
-@media (max-width: 800px) { .ok-methods-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 900px) { .ok-methods-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 620px) { .ok-methods-grid { grid-template-columns: 1fr; } }
 .ok-method-card {
-  background: var(--vp-c-bg); padding: 32px 28px 36px;
+  background: var(--ok-canvas-soft); border: 1px solid var(--ok-hairline);
+  border-radius: var(--ok-r-2xl); padding: var(--ok-s-5);
   opacity: 0; transform: translateY(10px);
 }
 .ok-method-card.ok-in { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
-.ok-method-card__label { font-size: 14px; font-weight: 400; color: var(--vp-c-text-3); margin-bottom: 10px; }
+.ok-method-card__label { font-size: var(--ok-t-caption); font-weight: 400; color: var(--ok-ink-3); margin-bottom: 10px; }
 .ok-method-card__name {
-  font-family: var(--ok-font-bold);
+  font-family: var(--ok-font-ui);
   font-size: 18px; font-weight: 600; letter-spacing: -.015em;
-  color: var(--vp-c-text-1); margin-bottom: 12px;
+  color: var(--ok-ink); margin-bottom: 12px;
 }
-.ok-method-card__desc { font-size: 17px; color: var(--vp-c-text-2); line-height: 1.7; font-weight: 300; }
+.ok-method-card__desc { font-size: var(--ok-t-body-sm); color: var(--ok-ink-2); line-height: 1.7; font-weight: 300; }
 
 /* Code section stays intentionally dark in both themes */
 .ok-code-section {
-  margin-top: 80px; background: #0c0c0c; padding: 72px 60px 80px;
-  position: relative; overflow: hidden; border-radius: 16px;
+  margin-top: 80px; background: #0a0e17; padding: 72px 60px 80px;
+  position: relative; overflow: hidden; border-radius: var(--ok-r-xl);
   opacity: 0; transform: translateY(16px);
 }
 .ok-code-section.ok-in { opacity: 1; transform: none; transition: opacity .65s ease, transform .65s ease; }
@@ -623,22 +843,22 @@ canvas.ok-canvas {
 .ok-code-section .ok-eyebrow { color: #6e6e73; }
 .ok-code-section .ok-h2 { color: #f0f0f0; margin-bottom: 16px; }
 .ok-code-section .ok-h2 b { color: #f0f0f0; }
-.ok-code-section .ok-lead { color: #86868b; margin-bottom: 48px; max-width: 100%; }
+.ok-code-section .ok-lead { color: #9aa3b2; margin-bottom: var(--ok-s-7); max-width: 66ch; margin-inline: auto; }
 @media (max-width: 700px) { .ok-code-section { padding: 56px 28px 64px; } }
 
-.ok-code-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: #1e1e1e; }
+.ok-code-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--ok-s-4); }
 @media (max-width: 700px) { .ok-code-grid { grid-template-columns: 1fr; } }
-.ok-code-card { background: #0c0c0c; padding: 32px 28px 36px; opacity: 0; transform: translateY(12px); }
+.ok-code-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: var(--ok-r-2xl); padding: var(--ok-s-5); opacity: 0; transform: translateY(12px); }
 .ok-code-card.ok-in { opacity: 1; transform: none; transition: opacity .55s ease, transform .55s ease; }
-.ok-code-card:hover { background: #111; }
+.ok-code-card:hover { background: rgba(255,255,255,.07); }
 .ok-code-card__name {
-  font-family: var(--ok-font-bold);
-  font-size: 20px; font-weight: 600; letter-spacing: -.015em; color: #f5f5f7; margin-bottom: 5px;
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-body); font-weight: 600; letter-spacing: -.015em; color: #f5f5f7; margin-bottom: 5px;
 }
-.ok-code-card__lang { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 16px; display: block; }
-.ok-code-card__desc { font-size: 15.5px; color: #9a9a9a; line-height: 1.72; font-weight: 300; margin-bottom: 20px; }
+.ok-code-card__lang { font-size: var(--ok-t-micro); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 16px; display: block; }
+.ok-code-card__desc { font-size: var(--ok-t-body-sm); color: #9a9a9a; line-height: 1.72; font-weight: 300; margin-bottom: 20px; }
 .ok-code-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.ok-code-tag { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border: 1px solid #2a2a2a; color: #7a7a7a; }
+.ok-code-tag { font-size: var(--ok-t-micro); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border: 1px solid #2a2a2a; color: #7a7a7a; }
 .ok-cursor { display: inline-block; width: 8px; height: 14px; background: #3a3a3a; vertical-align: middle; margin-left: 4px; animation: okBlink .9s step-end infinite; }
 @keyframes okBlink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 
@@ -649,65 +869,20 @@ canvas.ok-canvas {
 .ok-h1, .ok-h2, .ok-eyebrow { text-align: center; }
 .ok-h1 + .ok-lead, .ok-h2 + .ok-lead { text-align: center; margin-left: auto; margin-right: auto; }
 .ok-topics { justify-content: center; }
-.ok-indepth__head { justify-content: center; }
-.ok-indepth__intro { text-align: center; margin-left: auto; margin-right: auto; }
 
-/* ── Research in depth ── */
-.ok-indepth { margin-top: 80px; padding-top: 64px; border-top: 1px solid var(--vp-c-divider); }
-.ok-indepth__group { margin-top: 56px; }
-.ok-indepth__head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
-.ok-indepth__bar { width: 32px; height: 3px; display: inline-block; flex: none; }
-.ok-indepth__planet {
-  font-family: var(--ok-font-bold); font-weight: 700;
-  font-size: 26px; letter-spacing: -.02em; margin: 0;
+/* ── Through to the long-form articles ── */
+.ok-more {
+  margin-top: var(--ok-band); padding-top: var(--ok-band);
+  border-top: 1px solid var(--ok-hairline); text-align: center;
 }
-.ok-indepth__intro {
-  font-size: 20px; line-height: 1.8; color: var(--vp-c-text-2);
-  max-width: 74ch; margin: 0 0 36px; font-weight: 300;
-}
-.ok-studies { display: flex; flex-direction: column; }
-.ok-study {
-  display: grid; grid-template-columns: 440px 1fr; gap: 44px; align-items: center;
-  padding: 36px 0; border-top: 1px solid var(--vp-c-divider);
-}
-.ok-study--rev { grid-template-columns: 1fr 440px; }
-.ok-study--rev .ok-study__media { order: 2; }
-.ok-study__media {
-  aspect-ratio: 16/11; border-radius: 12px; overflow: hidden;
-  background: #14161c; position: relative; box-shadow: var(--ok-shadow);
-}
-.ok-study__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
-.ok-study:hover .ok-study__media img { transform: scale(1.03); }
-.ok-study__ph {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  font-size: 2.6rem; opacity: .55;
-  background: radial-gradient(circle at 35% 30%, rgba(105,145,199,.14), transparent 60%), #14161c;
-}
-.ok-study__title {
-  font-family: var(--ok-font-bold); font-size: 22px; font-weight: 600;
-  letter-spacing: -.02em; color: var(--vp-c-text-1); margin: 0 0 12px;
-}
-.ok-study__body { font-size: 20px; line-height: 1.7; color: var(--vp-c-text-2); margin: 0 0 18px; text-align: justify; text-justify: inter-word; }
-.ok-study__papers { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
-.ok-study__pub {
-  font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--vp-c-text-3);
-}
-.ok-study__paper {
-  font-size: 14.5px; font-weight: 500; color: var(--c, var(--ok-accent-deep));
-  text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 1px;
-}
-.ok-study__paper:hover { border-bottom-color: currentColor; }
-@media (max-width: 820px) {
-  .ok-study, .ok-study--rev { grid-template-columns: 1fr; gap: 18px; }
-  .ok-study--rev .ok-study__media { order: 0; }
-}
+.ok-more .ok-lead { margin-bottom: var(--ok-s-5); }
 
 /* ── Missions ── */
-.ok-missions-section { margin-top: 80px; padding-top: 64px; border-top: 1px solid var(--vp-c-divider); }
-.ok-missions { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--vp-c-divider); margin-top: 40px; }
+.ok-missions-section { margin-top: var(--ok-band); padding-top: var(--ok-band); border-top: 1px solid var(--ok-hairline); }
+.ok-missions { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--ok-s-4); margin-top: var(--ok-s-6); }
 @media (max-width: 800px) { .ok-missions { grid-template-columns: 1fr; } }
-.ok-mission { background: var(--vp-c-bg); padding: 32px 28px 36px; }
-.ok-mission__name { font-family: var(--ok-font-bold); font-size: 20px; font-weight: 600; color: var(--vp-c-text-1); margin-bottom: 4px; }
-.ok-mission__org { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--vp-c-text-3); margin-bottom: 14px; }
-.ok-mission__desc { font-size: 16px; line-height: 1.7; color: var(--vp-c-text-2); font-weight: 300; }
+.ok-mission { background: var(--ok-canvas-soft); border: 1px solid var(--ok-hairline); border-radius: var(--ok-r-2xl); padding: var(--ok-s-5); }
+.ok-mission__name { font-family: var(--ok-font-ui); font-size: var(--ok-t-body); font-weight: 600; color: var(--ok-ink); margin-bottom: 4px; }
+.ok-mission__org { font-size: var(--ok-t-caption); text-transform: uppercase; letter-spacing: .08em; color: var(--ok-ink-3); margin-bottom: 14px; }
+.ok-mission__desc { font-size: var(--ok-t-body-sm); line-height: 1.7; color: var(--ok-ink-2); font-weight: 300; }
 </style>

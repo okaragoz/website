@@ -1,8 +1,8 @@
 {
   "hero": {
-    "eyebrow": "Planetary Science · Tectonics · Geodynamics",
-    "title": "Research",
-    "lede": "I investigate tectonic and geodynamic processes on Venus, Mars, and Ganymede through satellite-based geological mapping, analogue experiments, and numerical modelling.",
+    "eyebrow": "",
+    "title": "Planetary Research",
+    "lede": "How the surfaces of Venus, Mars and Ganymede came to look the way they do, and what their deformation says about the interiors that drove it.",
     "bg": "/images/hero/research-bg.jpg"
   },
   "topics": [
@@ -20,7 +20,7 @@
       "name": "Venus",
       "accent": "#C87030",
       "title": "Volcanic Resurfacing & Single-Lid Tectonics",
-      "desc": "Venus lacks plate tectonics yet displays a geologically young, heavily resurfaced terrain. I investigate how mantle plumes, coronae, tessera plateaus, and compressional fold belts record the planet's long-term geodynamic evolution — and what Venus reveals about the limits of Earth-like planetary behaviour.",
+      "desc": "Venus lacks plate tectonics yet displays a geologically young, heavily resurfaced terrain. I investigate how mantle plumes, coronae, tessera plateaus, and compressional fold belts record the planet's long-term geodynamic evolution, and what Venus reveals about the limits of Earth-like planetary behaviour.",
       "tabs": [
         "Structural",
         "Tectonics",
@@ -28,19 +28,19 @@
       ],
       "subtopics": [
         {
-          "num": "01 — Structural",
+          "num": "01 · Structural",
           "title": "Coronae, Tessera & Fracture Mapping",
-          "body": "Systematic mapping of coronae morphology, radial and concentric fracture networks, and tessera terrain using Magellan SAR and altimetry — linking surface structural patterns to subsurface plume geometry and heat flux."
+          "body": "Systematic mapping of coronae morphology, radial and concentric fracture networks, and tessera terrain using Magellan SAR and altimetry, linking surface structural patterns to subsurface plume geometry and heat flux."
         },
         {
-          "num": "02 — Tectonics",
+          "num": "02 · Tectonics",
           "title": "Rifting, Fold Belts & Tectonic Regimes",
-          "body": "Characterising extensional rift zones, compressional fold-and-thrust belts (chasmata, ridge belts), and the interplay of horizontal stress fields — evaluating whether transient or episodic plate-tectonic episodes are recorded in the structural fabric."
+          "body": "Characterising extensional rift zones, compressional fold-and-thrust belts (chasmata, ridge belts), and the interplay of horizontal stress fields, evaluating whether transient or episodic plate-tectonic episodes are recorded in the structural fabric."
         },
         {
-          "num": "03 — Geodynamics",
+          "num": "03 · Geodynamics",
           "title": "Mantle Plumes & Lid Regime Evolution",
-          "body": "Numerical and analogue models of plume–lithosphere interaction, heat-pipe and stagnant-lid regimes, and resurfacing mechanisms — constraining Venus's thermal history and the conditions under which a planet transitions between tectonic modes."
+          "body": "Numerical and analogue models of plume–lithosphere interaction, heat-pipe and stagnant-lid regimes, and resurfacing mechanisms, constraining Venus's thermal history and the conditions under which a planet transitions between tectonic modes."
         }
       ]
     },
@@ -49,7 +49,7 @@
       "name": "Mars",
       "accent": "#C44C30",
       "title": "Compressional Tectonics & Thick Lithosphere",
-      "desc": "Mars preserves a four-billion-year tectonic record dominated by its anomalously thick, cold lithosphere. Wrinkle ridges, lobate scarps, and compressional fold systems are the dominant structural expressions — recording global contraction, flexural loading, and the temporal evolution of Martian crustal stress.",
+      "desc": "Mars preserves a four-billion-year tectonic record dominated by its anomalously thick, cold lithosphere. Wrinkle ridges, lobate scarps, and compressional fold systems are the dominant structural expressions, recording global contraction, flexural loading, and the temporal evolution of Martian crustal stress.",
       "tabs": [
         "Structural",
         "Tectonics",
@@ -57,19 +57,19 @@
       ],
       "subtopics": [
         {
-          "num": "01 — Structural",
+          "num": "01 · Structural",
           "title": "Wrinkle Ridges, Lobate Scarps & Thrust Faults",
-          "body": "Mapping wrinkle ridge systems, lobate scarp geometries, and compressional fold-thrust belts using CTX, THEMIS, and HiRISE — measuring shortening magnitudes, fault dips, and cumulative strain to reconstruct the compressional stress history of Martian plains and highlands."
+          "body": "Mapping wrinkle ridge systems, lobate scarp geometries, and compressional fold-thrust belts using CTX, THEMIS, and HiRISE, measuring shortening magnitudes, fault dips, and cumulative strain to reconstruct the compressional stress history of Martian plains and highlands."
         },
         {
-          "num": "02 — Tectonics",
+          "num": "02 · Tectonics",
           "title": "Lithospheric Flexure & Global Contraction",
-          "body": "Modelling flexural loading from Tharsis and the resulting compressional stress field, together with global contraction from secular cooling — constraining elastic thickness, strain budgets, and the temporal sequence of compressional tectonics across Mars's geological history."
+          "body": "Modelling flexural loading from Tharsis and the resulting compressional stress field, together with global contraction from secular cooling, constraining elastic thickness, strain budgets, and the temporal sequence of compressional tectonics across Mars's geological history."
         },
         {
-          "num": "03 — Geodynamics",
+          "num": "03 · Geodynamics",
           "title": "Thermal Evolution & Interior Dynamics",
-          "body": "Numerical simulations of Martian mantle convection, lithospheric thickening, and thermal contraction — exploring why Mars evolved as a one-plate stagnant-lid planet and how interior cooling drove the compressional tectonic regime observed at the surface."
+          "body": "Numerical simulations of Martian mantle convection, lithospheric thickening, and thermal contraction, exploring why Mars evolved as a one-plate stagnant-lid planet and how interior cooling drove the compressional tectonic regime observed at the surface."
         }
       ]
     },
@@ -78,7 +78,7 @@
       "name": "Ganymede",
       "accent": "#4A6FA5",
       "title": "Ice Shell Tectonics, Impact Cratering & Interior Structure",
-      "desc": "Ganymede records a unique episode of extensional ice-shell tectonics, punctuated by some of the solar system's largest impact basins. I study grooved terrain deformation, impact crater morphology via iSALE hydrocode simulations, and the coupling between the subsurface ocean and icy crust — directly relevant to JUICE mission science.",
+      "desc": "Ganymede records a unique episode of extensional ice-shell tectonics, punctuated by some of the solar system's largest impact basins. I study grooved terrain deformation, impact crater morphology via iSALE hydrocode simulations, and the coupling between the subsurface ocean and icy crust: directly relevant to JUICE mission science.",
       "tabs": [
         "Structural",
         "Tectonics",
@@ -86,19 +86,19 @@
       ],
       "subtopics": [
         {
-          "num": "01 — Structural",
+          "num": "01 · Structural",
           "title": "Grooved Terrain, Palimpsests & Impact Basins",
-          "body": "Mapping groove sets, cross-cutting relationships, and multi-ring impact basin structures using Galileo SSI and Voyager imagery — establishing structural chronology, basin rim geometry, and the influence of large impacts on the tectonic fabric of Ganymede's icy lithosphere."
+          "body": "Mapping groove sets, cross-cutting relationships, and multi-ring impact basin structures using Galileo SSI and Voyager imagery, establishing structural chronology, basin rim geometry, and the influence of large impacts on the tectonic fabric of Ganymede's icy lithosphere."
         },
         {
-          "num": "02 — Tectonics",
+          "num": "02 · Tectonics",
           "title": "Extensional Faulting & Crater Morphology",
-          "body": "Analysing normal fault kinematics in grooved terrain and the anomalous morphology of large craters in ice — central pits, domes, and multi-ring basins whose relaxed forms encode ice rheology and shell thickness at the time of impact."
+          "body": "Analysing normal fault kinematics in grooved terrain and the anomalous morphology of large craters in ice: central pits, domes, and multi-ring basins whose relaxed forms encode ice rheology and shell thickness at the time of impact."
         },
         {
-          "num": "03 — Geodynamics",
+          "num": "03 · Geodynamics",
           "title": "iSALE Impact Simulations & Ocean–Ice Coupling",
-          "body": "Hypervelocity impact cratering simulations in icy targets using iSALE — modelling shock pressure, melt generation, and crater scaling in layered ice-over-ocean systems. Combined with ocean–ice geodynamic models to interpret the tectonic response to large basin-forming events on icy ocean worlds."
+          "body": "Hypervelocity impact cratering simulations in icy targets using iSALE, modelling shock pressure, melt generation, and crater scaling in layered ice-over-ocean systems. Combined with ocean–ice geodynamic models to interpret the tectonic response to large basin-forming events on icy ocean worlds."
         }
       ]
     }
@@ -111,7 +111,7 @@
       "items": [
         {
           "title": "Coronae structure and low-angle faults",
-          "body": "Large coronae are ringed by concentric fractures whose kinematics have long been debated. Mapping Magellan SAR and altimetry across coronae such as Atahensik, I show that low-angle faults at the rim accommodate gravitational spreading of the topographic rise — linking surface structure to subsurface plume geometry and the planet's single-lid heat loss.",
+          "body": "Large coronae are ringed by concentric fractures whose kinematics have long been debated. Mapping Magellan SAR and altimetry across coronae such as Atahensik, I show that low-angle faults at the rim accommodate gravitational spreading of the topographic rise, linking surface structure to subsurface plume geometry and the planet's single-lid heat loss.",
           "image": "/images/2025/12/Screenshot-2025-12-28-at-14.52.05.png",
           "papers": [
             {
@@ -130,11 +130,11 @@
           "image": "/images/2026/03/element-437857-make-it-perspective-and-colors.png",
           "papers": [
             {
-              "label": "EGU — Fault–melt interaction (2025)",
+              "label": "EGU: Fault–melt interaction (2025)",
               "href": "https://doi.org/10.5194/egusphere-egu25-235"
             },
             {
-              "label": "EGU — Synconvergent extension (2025)",
+              "label": "EGU: Synconvergent extension (2025)",
               "href": "https://doi.org/10.5194/egusphere-egu25-9519"
             }
           ]
@@ -156,7 +156,7 @@
               "href": "https://doi.org/10.1016/j.icarus.2024.116330"
             },
             {
-              "label": "EPSC — Trishear (2024)",
+              "label": "EPSC: Trishear (2024)",
               "href": "https://doi.org/10.5194/epsc2024-888"
             }
           ]
@@ -186,7 +186,7 @@
               "href": "https://doi.org/10.1029/2023JE007965"
             },
             {
-              "label": "EGU — Recent activity (2025)",
+              "label": "EGU: Recent activity (2025)",
               "href": "https://doi.org/10.5194/egusphere-egu25-518"
             }
           ]
@@ -200,11 +200,11 @@
       "items": [
         {
           "title": "Ray and halo craters: stratigraphy and composition",
-          "body": "Young impact craters excavate and redistribute Ganymede's near-surface materials. Using Galileo imagery and JUICE-relevant datasets, I read ray- and halo-crater morphology for clues to ice-shell stratigraphy and composition — directly feeding mission science.",
+          "body": "Young impact craters excavate and redistribute Ganymede's near-surface materials. Using Galileo imagery and JUICE-relevant datasets, I read ray- and halo-crater morphology for clues to ice-shell stratigraphy and composition: directly feeding mission science.",
           "image": "",
           "papers": [
             {
-              "label": "EGU — Ray & halo craters (2025)",
+              "label": "EGU: Ray & halo craters (2025)",
               "href": "https://doi.org/10.5194/egusphere-egu25-21586"
             }
           ]
@@ -221,12 +221,120 @@
     {
       "name": "VERITAS",
       "org": "NASA · Venus orbiter",
-      "desc": "Global topography, SAR imaging and emissivity — a new generation of data for mapping Venusian tectonics at unprecedented resolution."
+      "desc": "Global topography, SAR imaging and emissivity: a new generation of data for mapping Venusian tectonics at unprecedented resolution."
     },
     {
       "name": "JUICE",
       "org": "ESA · Jupiter icy moons",
-      "desc": "Ganymede-focused exploration of icy-shell tectonics and impact cratering — the context for my crater-morphology and ice-rheology studies."
+      "desc": "Ganymede-focused exploration of icy-shell tectonics and impact cratering: the context for my crater-morphology and ice-rheology studies."
     }
-  ]
+  ],
+  "disciplines": {
+    "eyebrow": "",
+    "title": "The fields this draws on",
+    "lede": "Each answers a different part of the same question, and an answer only holds when they agree.",
+    "items": [
+      {
+        "name": "Structural Geology",
+        "role": "Reads the record",
+        "body": "Mapping faults, folds, ridges and fracture networks from orbital imagery, then measuring their geometry and offsets to recover the strain a surface has accumulated.",
+        "worlds": [
+          "Venus",
+          "Mars",
+          "Ganymede"
+        ]
+      },
+      {
+        "name": "Geodynamics",
+        "role": "Supplies the driver",
+        "body": "Modelling convection, plume ascent and lithospheric response to work out which interior processes could have produced the structures seen at the surface.",
+        "worlds": [
+          "Venus",
+          "Mars"
+        ]
+      },
+      {
+        "name": "Remote Sensing",
+        "role": "Provides the ground truth",
+        "body": "Magellan SAR, CTX, HiRISE, THEMIS and Galileo SSI imagery, plus altimetry and gravity, are the only direct observations available for most of these surfaces.",
+        "worlds": [
+          "Venus",
+          "Mars",
+          "Ganymede"
+        ]
+      },
+      {
+        "name": "Rock Mechanics",
+        "role": "Sets the rules",
+        "body": "Friction, yield strength and the rheology of silicates and ice determine how a lithosphere can break, and therefore which structural interpretations are physically allowed.",
+        "worlds": [
+          "Venus",
+          "Mars",
+          "Ganymede"
+        ]
+      },
+      {
+        "name": "Analogue Modelling",
+        "role": "Tests the idea",
+        "body": "Scaled sand and silicone experiments reproduce fault systems under controlled boundary conditions, showing which kinematic histories can actually produce the observed geometry.",
+        "worlds": [
+          "Venus",
+          "Mars"
+        ]
+      },
+      {
+        "name": "Numerical Modelling",
+        "role": "Extends the reach",
+        "body": "Finite-element and finite-difference codes carry the problem into regimes no experiment can reach: billion-year timescales, whole-mantle domains, hypervelocity impacts.",
+        "worlds": [
+          "Venus",
+          "Mars",
+          "Ganymede"
+        ]
+      },
+      {
+        "name": "Comparative Planetology",
+        "role": "Frames the answer",
+        "body": "Setting Venus, Mars and the icy moons against Earth is what turns a local observation into a statement about how terrestrial planets evolve in general.",
+        "worlds": [
+          "Venus",
+          "Mars",
+          "Ganymede",
+          "Earth"
+        ]
+      },
+      {
+        "name": "Impact Cratering",
+        "role": "Dates and disturbs",
+        "body": "Crater populations give relative ages for every surface here, and large impacts are themselves a tectonic driver, especially in ice.",
+        "worlds": [
+          "Mars",
+          "Ganymede"
+        ]
+      }
+    ]
+  },
+  "steps": {
+    "title": "How the work proceeds",
+    "items": [
+      {
+        "n": "01",
+        "name": "Observation",
+        "method": "Remote sensing and data acquisition",
+        "body": "Acquiring and co-registering orbital imagery, altimetry and gravity data from Magellan SAR, CTX, HiRISE, THEMIS and Galileo SSI, then mapping faults, ridges and fracture networks directly from it."
+      },
+      {
+        "n": "02",
+        "name": "Analysis",
+        "method": "Quantification",
+        "body": "Measuring fault geometry, offsets, shortening and cumulative strain from the mapped structures, so the deformation is expressed as numbers rather than description."
+      },
+      {
+        "n": "03",
+        "name": "Validation",
+        "method": "Numerical and analogue models",
+        "body": "Reproducing the measured geometry in scaled laboratory experiments and finite-element simulations, to test which mechanisms and histories could physically have produced it."
+      }
+    ]
+  }
 }

@@ -7,6 +7,6 @@ pageClass: ok-wide
 
 # Research Articles
 
-Long-form explainers and write-ups from my research on Venus, Mars, and icy worlds.
+<p class="ok-page-intro">Long-form explainers and write-ups from my research on Venus, Mars, and the icy worlds of the outer solar system.</p>
 
 <BlogList category="research" :per-page="4" />

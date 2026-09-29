@@ -6,10 +6,10 @@
 
 backend:
   name: github
-  repo: okaragoz/web
+  repo: okaragoz/website
   branch: main
   # Sveltia CMS lets you sign in with a GitHub Personal Access Token
-  # (Settings > Developer settings > Fine-grained tokens, repo: okaragoz/web,
+  # (Settings > Developer settings > Fine-grained tokens, repo: okaragoz/website,
   # Contents: Read and write) — no OAuth server needed for PAT login.
 
 # Where uploaded images go (served from /images/...)
@@ -131,7 +131,7 @@ collections:
       - name: research_content
         label: "Research Page Content"
         file: "docs/.vitepress/data/research.json"
-        description: "Topic pills, the three planet panels, in-depth studies, and missions."
+        description: "Hero, workflow steps, disciplines, the three planet panels, and missions."
         fields:
           - name: hero
             label: "Hero (top banner)"
@@ -141,6 +141,36 @@ collections:
               - { name: title, label: Title, widget: string }
               - { name: lede, label: Lede, widget: text }
               - { name: bg, label: "Background image", widget: image, required: false }
+          - name: steps
+            label: "Workflow steps"
+            widget: object
+            fields:
+              - { name: title, label: "Section title", widget: string }
+              - name: items
+                label: Steps
+                label_singular: Step
+                widget: list
+                fields:
+                  - { name: n, label: "Number (01, 02, 03)", widget: string }
+                  - { name: name, label: "Stage name", widget: string }
+                  - { name: method, label: "What it consists of", widget: string }
+                  - { name: body, label: Body, widget: text }
+          - name: disciplines
+            label: "Disciplines grid"
+            widget: object
+            fields:
+              - { name: eyebrow, label: Eyebrow, widget: string, required: false }
+              - { name: title, label: Title, widget: string }
+              - { name: lede, label: Lede, widget: text }
+              - name: items
+                label: Disciplines
+                label_singular: Discipline
+                widget: list
+                fields:
+                  - { name: name, label: Name, widget: string }
+                  - { name: role, label: "Role it plays", widget: string }
+                  - { name: body, label: Body, widget: text }
+                  - { name: worlds, label: "Worlds it applies to", widget: list }
           - name: planets
             label: "Planet panels"
             label_singular: "Planet"
@@ -198,8 +228,29 @@ collections:
         description: "Top navigation links. Order = display order."
         fields:
           - name: nav
-            label: Menu Items
+            label: "Menu Items (mobile + fallback)"
             widget: list
             fields:
               - { name: text, label: Label, widget: string }
               - { name: link, label: Link, widget: string }
+          - name: mega
+            label: "Desktop menu (with flyout panels)"
+            label_singular: "Menu item"
+            widget: list
+            fields:
+              - { name: text, label: Label, widget: string }
+              - { name: link, label: Link, widget: string, required: false }
+              - name: columns
+                label: "Flyout columns (leave empty for a plain link)"
+                label_singular: Column
+                widget: list
+                required: false
+                fields:
+                  - { name: title, label: "Column heading", widget: string }
+                  - name: links
+                    label: Links
+                    widget: list
+                    fields:
+                      - { name: text, label: Label, widget: string }
+                      - { name: link, label: Link, widget: string }
+                      - { name: desc, label: Description, widget: string, required: false }

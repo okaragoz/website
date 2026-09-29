@@ -1,0 +1,244 @@
+/* ============================================================
+   Design tokens
+   ------------------------------------------------------------
+   One source of truth for colour, type, space, radius and depth.
+   Every rule elsewhere in the theme reads from here — if a value
+   is hard-coded in a component, it is a bug.
+
+   Colour model follows the Stripe system the site is modelled on:
+   a near-white canvas, deep-navy ink (never pure black), and ONE
+   saturated CTA voltage used sparingly. The planetary hues
+   (sherbet, rust, ice) live only inside the gradient mesh and the
+   research diagrams — never as button fills.
+   ============================================================ */
+
+@font-face {
+  font-family: 'TWK Lausanne';
+  src: url('/fonts/TWKLausanne-300.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---------- Type families ----------
+     Two families, clearly distinct roles:
+     · Lausanne 300 — display only. A Sohne-class grotesk; its single
+       thin weight is exactly the editorial register the display tier wants.
+     · Inter — everything else. Carries every weight Lausanne lacks. */
+  --ok-font-display: 'TWK Lausanne', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --ok-font-ui: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --ok-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ---------- Type scale ----------
+     A golden-ratio modular scale. The step between adjacent sizes is
+     sqrt(phi) = 1.272, so every *second* step is a true golden-ratio
+     multiple: 17 -> 27.5 -> 44.5 -> 72. That gives fine enough control
+     for UI text while keeping the display tier in exact phi relation to
+     the body size it sits above.
+
+       10.5  13.4  [17]  21.6  27.5  35  44.5  56.6
+                    ^body      ^phi        ^phi^2
+     Display sizes are tracked negative; the larger the size, the more
+     negative, so optical weight stays even across the tier. */
+  --ok-t-display-xxl: clamp(2.188rem, 1.45rem + 2.4vw, 3.538rem);  /* ->56.6px */
+  --ok-t-display-xl:  clamp(1.719rem, 1.28rem + 1.5vw, 2.781rem);  /* ->44.5px */
+  --ok-t-display-lg:  clamp(1.35rem, 1.13rem + 0.85vw, 2.188rem);  /* ->35px   */
+  --ok-t-display-md:  clamp(1.25rem, 1.12rem + 0.42vw, 1.719rem);  /* ->27.5px */
+  --ok-t-heading:     1.35rem;    /* 21.6px */
+  --ok-t-heading-sm:  1.188rem;   /* 19px, between the 17 and 21.6 steps */
+  --ok-t-body-lg:     1.188rem;   /* 19px  */
+  --ok-t-body:        1.0625rem;  /* 17px, the base of the scale */
+  --ok-t-body-sm:     1rem;       /* 16px  */
+  --ok-t-caption:     0.838rem;   /* 13.4px */
+  --ok-t-micro:       0.75rem;    /* 12px  */
+
+  --ok-track-xxl: -0.032em;
+  --ok-track-xl:  -0.028em;
+  --ok-track-lg:  -0.023em;
+  --ok-track-md:  -0.018em;
+  --ok-track-sm:  -0.011em;
+
+  /* ---------- Space ----------
+     Fibonacci, which converges on the golden ratio: each step is the sum
+     of the two before it, so nested spacing always sits in phi relation
+     to its parent. Deliberately tighter at the top end than the previous
+     8px-multiple scale, which left too much air between page bands. */
+  --ok-s-1: 3px;
+  --ok-s-2: 5px;
+  --ok-s-3: 8px;
+  --ok-s-4: 13px;
+  --ok-s-5: 21px;
+  --ok-s-6: 34px;
+  --ok-s-7: 55px;
+  --ok-s-8: 89px;
+  --ok-s-9: 144px;
+
+  /* Vertical rhythm between major page bands. */
+  --ok-band: clamp(34px, 2.6vw + 16px, 55px);
+
+  /* ---------- Containers ----------
+     Three widths, each with a job. Prose never uses --ok-w-wide:
+     that is what made the old article pages 150 characters wide. */
+  --ok-w-wide: 1200px;   /* marketing bands, card grids, nav */
+  --ok-w-page: 1060px;   /* listing + table pages */
+  --ok-w-text: 62ch;     /* article reading measure, ~75 characters */
+  --ok-w-figure: 860px;  /* every figure, table and code block in an article */
+  --ok-gutter: clamp(20px, 4vw, 32px);
+
+  /* ---------- Radius ---------- */
+  --ok-r-xs: 4px;
+  --ok-r-sm: 6px;
+  --ok-r-md: 8px;
+  --ok-r-lg: 12px;
+  --ok-r-xl: 16px;
+  --ok-r-2xl: 21px;   /* card tiles */
+  --ok-r-pill: 9999px;
+
+  /* ---------- Motion ---------- */
+  --ok-ease: cubic-bezier(.22, 1, .36, 1);
+  --ok-ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ok-dur-fast: 140ms;
+  --ok-dur: 220ms;
+  --ok-dur-slow: 420ms;
+}
+
+/* ============================================================
+   Light — the default canvas
+   ============================================================ */
+:root,
+:root:not(.dark) {
+  --ok-canvas: #ffffff;
+  --ok-canvas-soft: #f6f8fc;   /* cool off-white feature band */
+  --ok-canvas-sunk: #eef2f8;
+  --ok-surface: #ffffff;        /* cards sit here */
+  --ok-surface-hover: #fbfcfe;
+
+  --ok-ink: #0b1a2e;            /* body text — deep navy, never black */
+  --ok-ink-2: #37475d;
+  --ok-ink-3: #5c6b81;          /* muted; 4.9:1 on white */
+  --ok-ink-inverse: #ffffff;
+
+  --ok-hairline: #e3e9f2;
+  --ok-hairline-strong: #ccd7e6;
+
+  --ok-primary: #4436e8;        /* the single CTA voltage */
+  --ok-primary-hover: #3a2dd0;
+  --ok-primary-press: #2c2299;
+  --ok-primary-ink: #3a2dd0;    /* primary as a text colour on white */
+  --ok-primary-wash: #eceafd;
+  --ok-primary-ring: rgba(68, 54, 232, 0.22);
+  --ok-on-primary: #ffffff;
+
+  /* Gradient-mesh stops. Alpha is baked in: the mesh is a wash, not a fill. */
+  --ok-mesh-cream: rgba(247, 231, 208, 0.92);
+  --ok-mesh-sherbet: rgba(240, 180, 120, 0.72);
+  --ok-mesh-rust: rgba(224, 118, 90, 0.42);
+  --ok-mesh-lavender: rgba(185, 180, 247, 0.78);
+  --ok-mesh-indigo: rgba(68, 54, 232, 0.34);
+  --ok-mesh-ice: rgba(134, 207, 227, 0.55);
+  --ok-mesh-opacity: 1;
+
+  /* Accretion-disk particle colours, as raw triplets so both CSS and the
+     canvas can read them. Warm on the outside, indigo toward the centre. */
+  --ok-orbit-a: 224, 146, 82;
+  --ok-orbit-b: 206, 116, 92;
+  --ok-orbit-c: 146, 138, 238;
+  --ok-orbit-d: 68, 54, 232;
+  --ok-orbit-e: 104, 178, 200;
+  --ok-orbit-alpha: 0.7;
+  --ok-orbit-trail: 0.22;
+
+  /* Depth — blue-tinted, two working levels plus a float. */
+  --ok-shadow-1: 0 1px 2px rgba(11, 26, 46, .06), 0 1px 3px rgba(11, 26, 46, .04);
+  --ok-shadow-2: 0 2px 6px rgba(11, 26, 46, .06), 0 12px 28px -12px rgba(11, 26, 46, .18);
+  --ok-shadow-3: 0 4px 10px rgba(11, 26, 46, .07), 0 24px 48px -20px rgba(11, 26, 46, .26);
+
+  color-scheme: light;
+}
+
+/* ============================================================
+   Dark — same system, inverted polarity
+   ============================================================ */
+.dark {
+  --ok-canvas: #0a0e17;
+  --ok-canvas-soft: #111724;
+  --ok-canvas-sunk: #070a12;
+  --ok-surface: #141b2a;
+  --ok-surface-hover: #1a2233;
+
+  --ok-ink: #eef2f8;
+  --ok-ink-2: #b6c2d4;
+  --ok-ink-3: #8090a6;
+  --ok-ink-inverse: #0b1a2e;
+
+  --ok-hairline: rgba(255, 255, 255, .10);
+  --ok-hairline-strong: rgba(255, 255, 255, .18);
+
+  /* Voltage lifts on dark so it keeps its contrast against the canvas. */
+  --ok-primary: #7b6fff;
+  --ok-primary-hover: #8f85ff;
+  --ok-primary-press: #6357e0;
+  --ok-primary-ink: #a79dff;
+  --ok-primary-wash: rgba(123, 111, 255, .14);
+  --ok-primary-ring: rgba(123, 111, 255, .30);
+  --ok-on-primary: #0a0e17;
+
+  /* The mesh reads as a nebula on dark: same hues, much lower alpha. */
+  --ok-mesh-cream: rgba(247, 231, 208, 0.16);
+  --ok-mesh-sherbet: rgba(240, 180, 120, 0.18);
+  --ok-mesh-rust: rgba(224, 118, 90, 0.16);
+  --ok-mesh-lavender: rgba(185, 180, 247, 0.20);
+  --ok-mesh-indigo: rgba(98, 84, 255, 0.34);
+  --ok-mesh-ice: rgba(134, 207, 227, 0.16);
+  --ok-mesh-opacity: 1;
+
+  /* Lifted and more luminous, so the disk reads as a nebula on the dark canvas. */
+  --ok-orbit-a: 245, 186, 128;
+  --ok-orbit-b: 236, 150, 124;
+  --ok-orbit-c: 178, 170, 255;
+  --ok-orbit-d: 138, 126, 255;
+  --ok-orbit-e: 150, 214, 234;
+  --ok-orbit-alpha: 0.82;
+  --ok-orbit-trail: 0.26;
+
+  --ok-shadow-1: 0 1px 2px rgba(0, 0, 0, .40);
+  --ok-shadow-2: 0 2px 6px rgba(0, 0, 0, .40), 0 12px 28px -12px rgba(0, 0, 0, .66);
+  --ok-shadow-3: 0 4px 10px rgba(0, 0, 0, .44), 0 24px 48px -20px rgba(0, 0, 0, .74);
+
+  color-scheme: dark;
+}
+
+/* ============================================================
+   Bridge — map VitePress's own variables onto the tokens so the
+   default theme chrome (nav, search, outline, mobile menu)
+   inherits the system instead of fighting it.
+   ============================================================ */
+:root {
+  --vp-font-family-base: var(--ok-font-ui);
+  --vp-font-family-mono: var(--ok-font-mono);
+
+  --vp-c-bg: var(--ok-canvas);
+  --vp-c-bg-alt: var(--ok-surface);
+  --vp-c-bg-soft: var(--ok-canvas-soft);
+  --vp-c-bg-elv: var(--ok-surface);
+
+  --vp-c-text-1: var(--ok-ink);
+  --vp-c-text-2: var(--ok-ink-2);
+  --vp-c-text-3: var(--ok-ink-3);
+
+  --vp-c-divider: var(--ok-hairline);
+  --vp-c-border: var(--ok-hairline);
+  --vp-c-gutter: var(--ok-hairline);
+
+  --vp-c-brand-1: var(--ok-primary-ink);
+  --vp-c-brand-2: var(--ok-primary);
+  --vp-c-brand-3: var(--ok-primary-press);
+  --vp-c-brand-soft: var(--ok-primary-wash);
+
+  --vp-nav-height: 84px;
+  --vp-layout-max-width: 100%;
+
+  --vp-nav-bg-color: color-mix(in srgb, var(--ok-canvas) 82%, transparent);
+  --vp-nav-screen-bg-color: var(--ok-canvas);
+}

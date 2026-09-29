@@ -1,0 +1,339 @@
+/* ============================================================
+   Base — document, typography scale, prose, page layout widths
+   ============================================================ */
+
+/* Full-bleed bands use 100vw, which can exceed the content box by the
+   scrollbar width. Clip (not hidden) so sticky/fixed still work. */
+html { overflow-x: clip; }
+
+body {
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-body);
+  color: var(--ok-ink);
+  background: var(--ok-canvas);
+  /* ss01 is the Inter stylistic set that matches the display face's
+     single-storey character shapes; cv05 aligns the l/I ambiguity. */
+  font-feature-settings: 'ss01' 1, 'cv05' 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Numbers that sit in columns or next to each other — years, counts,
+   reading times, dates — get tabular figures so they line up. */
+.ok-tnum,
+.ok-cv__years,
+.ok-pubs__year,
+.ok-card__read,
+.ok-post__statval,
+.ok-post__date,
+.ok-posthead__date { font-variant-numeric: tabular-nums; }
+
+::selection { background: var(--ok-primary-wash); color: var(--ok-primary-press); }
+.dark ::selection { background: var(--ok-primary-wash); color: var(--ok-ink); }
+
+/* Visible keyboard focus everywhere, on one ring token. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--ok-primary);
+  outline-offset: 2px;
+  border-radius: var(--ok-r-xs);
+}
+
+/* ============================================================
+   Display + heading tiers
+   ============================================================ */
+.ok-display-xxl,
+.ok-display-xl,
+.ok-display-lg,
+.ok-display-md {
+  font-family: var(--ok-font-display);
+  font-weight: 300;
+  color: var(--ok-ink);
+  margin: 0;
+  text-wrap: balance;
+}
+.ok-display-xxl { font-size: var(--ok-t-display-xxl); line-height: 1.03; letter-spacing: var(--ok-track-xxl); }
+.ok-display-xl  { font-size: var(--ok-t-display-xl);  line-height: 1.08; letter-spacing: var(--ok-track-xl); }
+.ok-display-lg  { font-size: var(--ok-t-display-lg);  line-height: 1.12; letter-spacing: var(--ok-track-lg); }
+.ok-display-md  { font-size: var(--ok-t-display-md);  line-height: 1.18; letter-spacing: var(--ok-track-md); }
+
+/* Section titles across the site share one class so the rhythm is
+   identical on home, research, blog and about. */
+.ok-section__title {
+  font-family: var(--ok-font-display);
+  font-weight: 300;
+  font-size: var(--ok-t-display-lg);
+  line-height: 1.12;
+  letter-spacing: var(--ok-track-lg);
+  color: var(--ok-ink);
+  margin: 0;
+  text-wrap: balance;
+}
+.ok-section__lede {
+  font-size: var(--ok-t-body);
+  line-height: 1.6;
+  color: var(--ok-ink-3);
+  margin: var(--ok-s-3) 0 0;
+  max-width: 56ch;
+}
+
+/* ============================================================
+   Layout primitives
+   ============================================================ */
+.ok-container { max-width: var(--ok-w-wide); margin-inline: auto; padding-inline: var(--ok-gutter); }
+.ok-container--page { max-width: var(--ok-w-page); }
+
+.ok-section { max-width: var(--ok-w-wide); margin-inline: auto; padding: var(--ok-band) var(--ok-gutter); }
+.ok-section--tight { padding-top: 0; }
+.ok-section--flush { padding-bottom: 0; }
+
+.ok-section__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--ok-s-5);
+  margin-bottom: var(--ok-s-5);
+  flex-wrap: wrap;
+}
+
+/* Card grids: 3-up → 2-up → 1-up, one rule, used everywhere. */
+.ok-grid { display: grid; gap: var(--ok-s-5); }
+.ok-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ok-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 1024px) { .ok-grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px)  { .ok-grid--3, .ok-grid--2 { grid-template-columns: minmax(0, 1fr); } }
+
+/* Full-bleed helper — no translateX, so it adds no horizontal overflow. */
+.ok-bleed { width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+
+/* ============================================================
+   Page content widths
+   ------------------------------------------------------------
+   VitePress caps .content at 784px and .content-container at 688px
+   inside media queries, so overriding needs !important at equal
+   specificity. Three cases:
+     · articles (have .ok-posthead) → reading measure
+     · listing/table pages          → --ok-w-page
+     · component pages (research)   → --ok-w-wide
+   ============================================================ */
+.VPDoc:not(.has-sidebar) .container { max-width: var(--ok-w-wide) !important; }
+.VPDoc:not(.has-sidebar) .content { max-width: 100% !important; min-width: 0; }
+.VPDoc:not(.has-sidebar) .content-container { max-width: 100% !important; }
+.VPDoc .container { padding-inline: var(--ok-gutter); }
+/* The 128px sits on .content, not on .VPDoc, and the footer's band was
+   stacked on top of it: 183px of empty canvas below every page. The footer's
+   own border and padding are separation enough. */
+.VPDoc .content { padding-bottom: 0 !important; }
+.VPDoc { padding-bottom: var(--ok-s-7) !important; }
+.VPDocFooter { margin-top: var(--ok-s-6); }
+
+/* Articles: the column is the FIGURE width, and the running text is narrowed
+   inside it. Doing it this way round is what makes figure sizing consistent.
+
+   The previous approach kept the column at the text measure and pushed
+   figures outward with a negative margin, which only fired for images that
+   happened to be alone in their paragraph. The result was two different
+   figure widths, at two different left offsets, inside the same article, and
+   it broke entirely inside a <details>. Nothing bleeds now: images, tables
+   and code blocks simply fill the column they are already in, at any nesting
+   depth. */
+.content-container:has(.ok-posthead) .vp-doc,
+.content-container:has(.ok-posthead) > .ok-posthead {
+  max-width: var(--ok-w-figure);
+  margin-inline: auto;
+}
+.content-container:has(.ok-posthead) .vp-doc
+  :is(p, ul, ol, dl, blockquote, h1, h2, h3, h4, h5, h6, hr) {
+  max-width: var(--ok-w-text);
+  margin-inline: auto;
+}
+/* Any paragraph carrying an image is a figure, not a line of text: it keeps
+   the full column and any text in it reads as the caption. Matching on
+   `> img` rather than `> img:only-child` is deliberate; the narrower
+   selector missed figure pairs that share a paragraph with their caption,
+   which is how the same article ended up with two figure widths. */
+.content-container:has(.ok-posthead) .vp-doc p:has(> img) {
+  max-width: none;
+  text-align: center;
+  font-size: var(--ok-t-caption);
+  line-height: 1.55;
+  color: var(--ok-ink-3);
+}
+.content-container:has(.ok-posthead) .vp-doc p:has(> img) > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto var(--ok-s-3);
+}
+/* Every figure stacks at the same width, including several in one paragraph.
+   An earlier version put multiple images side by side at 50%, which assumed
+   clean image pairs; the articles actually interleave images with their
+   captions in a single paragraph, so the text wrapped around half-width
+   figures and the whole section fell apart. One column, one width. */
+.content-container:has(.ok-posthead) .vp-doc p:has(> img) > img + img {
+  margin-top: var(--ok-s-5);
+}
+
+/* Listing + table pages sit at the page width, not the wide width. */
+.ok-wide .VPDoc .container { max-width: var(--ok-w-page) !important; }
+/* …except the research page, whose component owns a wide internal layout. */
+.ok-research-page .VPDoc .container { max-width: var(--ok-w-wide) !important; }
+
+/* VitePress adds top padding for the doc layout; our page heroes supply
+   their own, so collapse it where a hero is the first thing on the page. */
+.VPDoc.has-aside .content-container { max-width: 100% !important; }
+
+/* ============================================================
+   Prose (.vp-doc) — article body
+   ============================================================ */
+.vp-doc {
+  font-size: var(--ok-t-body);
+  line-height: 1.72;
+  color: var(--ok-ink);
+}
+.vp-doc p,
+.vp-doc li {
+  color: var(--ok-ink);
+  /* Ragged right. Justified text at this measure produced rivers and
+     bad hyphen breaks across every article on the old theme. */
+  text-align: left;
+  hyphens: none;
+}
+.vp-doc p { margin: 1.25em 0; }
+
+.vp-doc h1 {
+  font-family: var(--ok-font-display);
+  font-weight: 300;
+  font-size: var(--ok-t-display-xl);
+  line-height: 1.08;
+  letter-spacing: var(--ok-track-xl);
+  margin: 0 0 var(--ok-s-6);
+  border: none;
+  padding: 0;
+  text-wrap: balance;
+}
+.vp-doc h2 {
+  font-family: var(--ok-font-ui);
+  font-weight: 600;
+  font-size: var(--ok-t-display-md);
+  line-height: 1.25;
+  letter-spacing: var(--ok-track-md);
+  margin-top: var(--ok-s-7);
+  padding-top: var(--ok-s-5);
+  border-top: 1px solid var(--ok-hairline);
+  text-wrap: balance;
+}
+.vp-doc h3 {
+  font-family: var(--ok-font-ui);
+  font-weight: 600;
+  font-size: var(--ok-t-heading);
+  line-height: 1.32;
+  letter-spacing: var(--ok-track-sm);
+  margin-top: var(--ok-s-7);
+}
+.vp-doc h4 {
+  font-family: var(--ok-font-ui);
+  font-weight: 600;
+  font-size: var(--ok-t-heading-sm);
+  letter-spacing: var(--ok-track-sm);
+}
+
+.vp-doc a {
+  color: var(--ok-primary-ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--ok-primary) 38%, transparent);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--ok-dur-fast) ease, color var(--ok-dur-fast) ease;
+}
+.vp-doc a:hover { text-decoration-color: var(--ok-primary); }
+
+.vp-doc blockquote {
+  border-left: 2px solid var(--ok-primary);
+  padding-left: var(--ok-s-5);
+  margin: var(--ok-s-6) 0;
+  color: var(--ok-ink-2);
+  font-style: normal;
+  font-size: var(--ok-t-body);
+}
+.vp-doc blockquote p { margin: 0.5em 0; }
+
+.vp-doc :not(pre) > code {
+  font-family: var(--ok-font-mono);
+  font-size: 0.86em;
+  color: var(--ok-primary-ink);
+  background: var(--ok-primary-wash);
+  border-radius: var(--ok-r-xs);
+  padding: 0.16em 0.42em;
+}
+
+.vp-doc hr { border: none; border-top: 1px solid var(--ok-hairline); margin: var(--ok-s-7) 0; }
+
+.vp-doc table {
+  display: table;
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ok-t-body-sm);
+}
+.vp-doc th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--ok-ink);
+  border-bottom: 1px solid var(--ok-hairline-strong);
+  padding: var(--ok-s-3) var(--ok-s-4);
+}
+.vp-doc td {
+  border-bottom: 1px solid var(--ok-hairline);
+  padding: var(--ok-s-3) var(--ok-s-4);
+  color: var(--ok-ink-2);
+}
+.vp-doc tr { background: transparent; }
+
+/* Article body images: centred, capped, click to enlarge. */
+.vp-doc img { border-radius: var(--ok-r-lg); margin: var(--ok-s-6) 0; max-width: 100%; height: auto; }
+.content-container:has(.ok-posthead) .vp-doc img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+  cursor: zoom-in;
+  box-shadow: var(--ok-shadow-1);
+}
+
+/* Listing pages (Blog, Research Articles) lead with a centred title and
+   intro, matching the centred page heroes elsewhere. */
+.ok-wide .vp-doc > div > h1:first-child { text-align: center; }
+.vp-doc .ok-page-intro {
+  color: var(--ok-ink-3);
+  max-width: 56ch;
+  font-size: var(--ok-t-body-lg);
+  line-height: 1.6;
+  margin: calc(-1 * var(--ok-s-4)) auto var(--ok-s-7);
+  text-align: center;
+  text-wrap: pretty;
+}
+
+/* ============================================================
+   Code blocks — Dracula is a dark theme by design, so it keeps a
+   dark block in both appearances rather than washing out on light.
+   ============================================================ */
+:root, .dark { --vp-code-block-bg: #1e2030; }
+.vp-doc div[class*='language-'] {
+  background-color: #1e2030;
+  border-radius: var(--ok-r-lg);
+  border: 1px solid transparent;
+  max-width: 100%;
+  overflow: hidden;           /* keeps the radius while the inner <pre> scrolls */
+}
+.vp-doc div[class*='language-'] pre { overflow-x: auto; }
+/* A <details> wrapper is a figure too, so its contents match everything else. */
+.vp-doc details { max-width: 100%; }
+.vp-doc details > summary { cursor: pointer; }
+.vp-doc div[class*='language-'] code { color: #f8f8f2; font-size: 0.86em; }
+.vp-doc div[class*='language-'] .lang,
+.vp-doc div[class*='language-'] .line-numbers-wrapper { color: #6272a4; }
+.vp-doc div[class*='language-'] > button.copy {
+  background-color: rgba(255, 255, 255, .06);
+  border-color: rgba(255, 255, 255, .12);
+}

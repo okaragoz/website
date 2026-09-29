@@ -1,0 +1,98 @@
+/* ============================================================
+   Motion
+   ------------------------------------------------------------
+   The motion budget is spent in two places and nowhere else:
+
+     1. One page-load sequence in the hero.
+     2. A cross-fade when the route changes.
+
+   Everything else is feedback for something the reader did —
+   hover, open, expand. There is deliberately no fade-up-on-scroll
+   on individual cards: staggered card reveals on every section are
+   the commonest tell of a templated page, and they delay content.
+
+   Every hidden-until-revealed state is gated behind `.ok-js`, which
+   the theme only adds once JavaScript is running. If the script
+   fails, the observer never fires, or the page is being printed,
+   the content is simply visible.
+   ============================================================ */
+
+/* ============================================================
+   Hero entrance — one orchestrated sequence, once, on load
+   ============================================================ */
+.ok-js .ok-enter > * {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: ok-enter var(--ok-dur-slow) var(--ok-ease-out) forwards;
+}
+.ok-js .ok-enter > *:nth-child(1) { animation-delay: 60ms; }
+.ok-js .ok-enter > *:nth-child(2) { animation-delay: 130ms; }
+.ok-js .ok-enter > *:nth-child(3) { animation-delay: 200ms; }
+.ok-js .ok-enter > *:nth-child(4) { animation-delay: 270ms; }
+.ok-js .ok-enter > *:nth-child(5) { animation-delay: 340ms; }
+
+/* The identity card arrives a beat after the headline it supports. */
+.ok-js .ok-enter-card {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: ok-enter 520ms var(--ok-ease-out) 220ms forwards;
+}
+
+@keyframes ok-enter {
+  to { opacity: 1; transform: none; }
+}
+
+/* ============================================================
+   Section reveal — one per band, not one per card
+   ============================================================ */
+.ok-js .ok-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 520ms var(--ok-ease-out), transform 520ms var(--ok-ease-out);
+}
+.ok-js .ok-reveal.is-in { opacity: 1; transform: none; }
+
+/* ============================================================
+   Route transition
+   ------------------------------------------------------------
+   VitePress swaps page content synchronously, so the leaving state
+   is short and the entering state carries the perceived motion.
+   ============================================================ */
+.ok-js .VPContent { animation: ok-route-in 320ms var(--ok-ease-out); }
+@keyframes ok-route-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+/* Suppress the route animation on the very first paint — the hero
+   sequence already owns that moment and the two would collide. */
+.ok-js.ok-first-paint .VPContent { animation: none; }
+
+/* ============================================================
+   Reduced motion — everything above becomes a no-op
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .ok-js .ok-enter > *,
+  .ok-js .ok-enter-card,
+  .ok-js .ok-reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+  .ok-js .VPContent { animation: none; }
+  .ok-mesh--drift .ok-mesh__layer { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Printing gets the content, never the choreography. */
+@media print {
+  .ok-js .ok-enter > *,
+  .ok-js .ok-enter-card,
+  .ok-js .ok-reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .ok-mesh, .ok-news, .VPNav, .ok-footer { display: none !important; }
+}

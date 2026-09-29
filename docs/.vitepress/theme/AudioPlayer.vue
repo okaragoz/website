@@ -68,14 +68,14 @@ onMounted(() => {
 <style scoped>
 .ok-audio {
   display: flex; align-items: center; gap: 1rem;
-  background: var(--vp-c-bg-alt); border: 1px solid var(--vp-c-border);
+  background: var(--ok-surface); border: 1px solid var(--ok-hairline-strong);
   border-radius: 14px; padding: 1rem 1.2rem; margin: 1.5rem 0 2rem;
-  box-shadow: var(--ok-shadow);
+  box-shadow: var(--ok-shadow-1);
 }
 .ok-audio__play {
   flex: none; width: 48px; height: 48px; border-radius: 999px; border: none; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center;
-  background: var(--ok-accent-grad); color: #11233f;
+  background: var(--ok-primary); color: var(--ok-on-primary);
   box-shadow: 0 6px 18px -8px rgba(105,145,199,0.6);
   transition: transform .18s;
 }
@@ -84,20 +84,20 @@ onMounted(() => {
 .ok-audio__body { flex: 1; min-width: 0; }
 .ok-audio__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.5rem; }
 .ok-audio__title {
-  font-family: var(--ok-font-bold); font-weight: 600; font-size: 0.98rem;
-  color: var(--vp-c-text-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: var(--ok-font-ui); font-weight: 600; font-size: 0.98rem;
+  color: var(--ok-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .ok-audio__rate {
-  flex: none; background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-border);
-  color: var(--vp-c-text-2); font-size: 0.8rem; font-weight: 600;
+  flex: none; background: var(--vp-c-bg-soft); border: 1px solid var(--ok-hairline-strong);
+  color: var(--ok-ink-2); font-size: 0.8rem; font-weight: 600;
   padding: 2px 9px; border-radius: 999px; cursor: pointer; font-family: inherit;
 }
-.ok-audio__rate:hover { color: var(--vp-c-text-1); border-color: var(--vp-c-text-3); }
+.ok-audio__rate:hover { color: var(--ok-ink); border-color: var(--ok-ink-3); }
 .ok-audio__bar {
   height: 6px; border-radius: 999px; background: var(--vp-c-bg-soft);
   cursor: pointer; overflow: hidden;
 }
-.ok-audio__fill { height: 100%; border-radius: 999px; background: var(--ok-accent-grad); transition: width .1s linear; }
-.ok-audio__time { margin-top: 0.45rem; font-size: 0.82rem; color: var(--vp-c-text-3); font-variant-numeric: tabular-nums; }
+.ok-audio__fill { height: 100%; border-radius: 999px; background: var(--ok-primary); transition: width .1s linear; }
+.ok-audio__time { margin-top: 0.45rem; font-size: 0.82rem; color: var(--ok-ink-3); font-variant-numeric: tabular-nums; }
 .ok-audio__time span { opacity: 0.8; }
 </style>

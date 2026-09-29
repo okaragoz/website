@@ -1,6 +1,6 @@
 ---
 title: "Publications"
-description: "Peer-reviewed articles and conference abstracts by Oguzcan Karagoz on planetary tectonics and geodynamics — Mars, Venus and icy moons."
+description: "Peer-reviewed articles and conference abstracts by Oguzcan Karagoz on planetary tectonics and geodynamics across Mars, Venus and the icy moons."
 aside: false
 pageClass: ok-wide
 ---
