@@ -48,6 +48,15 @@ const fixCaps = (title) => {
 const norm = (s) => decodeEntities(s).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
 // short key catches near-duplicates across sources (corrigenda, year drift, casing)
 const keyOf = (s) => norm(s).slice(0, 48)
+// ORCID files every Copernicus deposit under type `preprint`, but nearly all
+// of them are conference abstracts that merely share the 10.5194 prefix:
+// egusphere-eguNN-… (EGU General Assembly), epscYYYY-… and epsc-dpsYYYY-…
+// (EPSC / EPSC-DPS). A deposit without a meeting stamp — egusphere-YYYY-N, or
+// anything on arXiv/ESSOAr — is a genuine preprint of an article, and belongs
+// with the articles rather than in the abstracts tab.
+const MEETING_DOI = /egusphere-egu\d|epsc(-dps)?\d{4}-|\/egu\d|lpsc|agu-?fall/i
+const isArticlePreprint = (p) =>
+  p.type === 'preprint' && !MEETING_DOI.test(`${p.doi} ${p.url}`)
 const isConference = (venue, url) =>
   /egu|epsc|envision|copernicus|workshop|abstract|conference|assembly|lpsc|agu fall/i.test(`${venue} ${url}`)
 const isThesisOrCorr = (p) =>
@@ -82,6 +91,7 @@ async function fromOrcid() {
     let v = venue
     if (!v) {
       if (/egusphere-egu|\/egu\d/i.test(url)) v = 'EGU General Assembly'
+      else if (/egusphere-\d{4}-/i.test(url)) v = 'EGUsphere'
       else if (/epsc/i.test(url)) v = 'EPSC'
       else if (/envision/i.test(url)) v = 'EnVision Workshop'
     }
@@ -124,11 +134,12 @@ async function fromScholar() {
 }
 
 function classify(p) {
-  // Peer-reviewed = published journal articles / chapters; everything else
-  // (conference abstracts, preprints, EGU/EPSC) goes to the Abstracts tab.
+  // Articles = published journal articles / chapters, plus preprints of
+  // articles (flagged separately); conference abstracts go to the other tab.
   if (p.type === 'journal-article' || p.type === 'book-chapter' || p.type === 'book') {
     return 'peer'
   }
+  if (isArticlePreprint(p)) return 'peer'
   if (p.type === 'scholar' && !isConference(p.venue, p.url)) return 'peer'
   return 'abstracts'
 }
@@ -157,6 +168,7 @@ async function main() {
     seenKey.add(k)
     if (p.doi) seenDoi.add(p.doi)
     const entry = { title: fixCaps(p.title), year: p.year, venue: decodeEntities(p.venue), url: p.url }
+    if (isArticlePreprint(p)) entry.preprint = true
     ;(classify(p) === 'peer' ? peer : abstracts).push(entry)
   }
 

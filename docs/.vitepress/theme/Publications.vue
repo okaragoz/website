@@ -35,7 +35,7 @@ function setTab(t) {
 <section class="ok-pubs">
   <div class="ok-pubs__tabs">
     <button class="ok-pubs__tab" :class="{ 'is-active': tab === 'peer' }" @click="setTab('peer')">
-      Peer-reviewed Articles
+      Articles &amp; Preprints
     </button>
     <button class="ok-pubs__tab" :class="{ 'is-active': tab === 'abstracts' }" @click="setTab('abstracts')">
       Abstracts
@@ -62,7 +62,12 @@ function setTab(t) {
     </thead>
     <tbody>
       <tr v-for="(p, i) in filtered" :key="p.url + i">
-        <td class="ok-pubs__title"><a :href="p.url" target="_blank" rel="noopener">{{ p.title }}</a></td>
+        <td class="ok-pubs__title">
+          <a :href="p.url" target="_blank" rel="noopener">{{ p.title }}</a>
+          <!-- Deposited but not yet through review: say so rather than let it
+               sit unmarked among the published articles. -->
+          <span v-if="p.preprint" class="ok-pubs__flag">Preprint</span>
+        </td>
         <td class="ok-pubs__year">{{ p.year }}</td>
         <td class="ok-pubs__venue">{{ p.venue }}</td>
       </tr>

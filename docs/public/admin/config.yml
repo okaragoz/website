@@ -120,7 +120,7 @@ collections:
         description: "The searchable publications table (peer-reviewed + abstracts)."
         fields:
           - name: peerReviewed
-            label: "Peer-reviewed Articles"
+            label: "Articles & Preprints"
             label_singular: "Article"
             widget: list
             fields:
@@ -128,6 +128,8 @@ collections:
               - { name: year, label: Year, widget: string }
               - { name: venue, label: Journal, widget: string }
               - { name: url, label: DOI / URL, widget: string }
+              # Declared so a CMS save keeps the flag the generator sets.
+              - { name: preprint, label: "Not yet peer-reviewed (preprint)", widget: boolean, required: false, default: false }
           - name: abstracts
             label: "Conference Abstracts"
             label_singular: "Abstract"

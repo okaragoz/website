@@ -914,6 +914,21 @@
   line-height: 1.45;
 }
 .ok-pubs__title a:hover { color: var(--ok-primary-ink); text-decoration: underline; text-underline-offset: 3px; }
+/* Status marker, not a highlight — it should read as a quiet qualifier on the
+   title it follows, so it borrows the caption size and the muted ink. */
+.ok-pubs__flag {
+  display: inline-block;
+  margin-left: var(--ok-s-2);
+  padding: 1px 8px;
+  border: 1px solid var(--ok-hairline-strong);
+  border-radius: var(--ok-r-pill);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: var(--ok-ink-3);
+  vertical-align: 2px;
+  white-space: nowrap;
+}
 .ok-pubs__empty { text-align: center; color: var(--ok-ink-3); padding: var(--ok-s-7); }
 
 @media (max-width: 640px) {
