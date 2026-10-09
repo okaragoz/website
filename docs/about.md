@@ -3,6 +3,8 @@ title: "About me"
 description: "Oguzcan Karagoz is a planetary scientist at the University of Freiburg studying the structural geology and tectonics of Mars, Venus and the icy moons."
 aside: false
 pageClass: ok-wide
+photo: /images/about/oguzcan-podium.jpg
+photoAlt: Oguzcan Karagoz presenting
 ---
 
 <PageHero
@@ -18,7 +20,7 @@ pageClass: ok-wide
     <p>In addition to my scientific pursuits, I am deeply passionate about project and team leadership, science communication, teaching, and advancing diversity within the scientific community. I am committed to cultivating an academic environment that values inclusivity, equity, and representation, striving to inspire and support the next generation of scientists while contributing to a more accessible and welcoming scientific community.</p>
   </div>
   <div class="ok-about__side">
-    <img class="ok-about__img" src="/images/about/oguzcan-podium.jpg" alt="Oguzcan Karagoz presenting" />
+    <img class="ok-about__img" :src="$frontmatter.photo" :alt="$frontmatter.photoAlt" />
     <Contact />
   </div>
 </div>

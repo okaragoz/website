@@ -72,7 +72,14 @@ collections:
         file: "docs/about.md"
         fields:
           - { name: title, label: Title, widget: string }
-          - { name: layout, label: Layout, widget: hidden, default: page }
+          - { name: description, label: "SEO description", widget: text }
+          - { name: photo, label: "Photo (beside the intro text)", widget: image }
+          - { name: photoAlt, label: "Photo — alt text", widget: string, required: false }
+          # Layout flags. Declared so a CMS save keeps them — Sveltia/Decap drops
+          # any frontmatter key the collection does not list. The page uses
+          # VitePress's default `doc` layout, so `layout` is deliberately absent.
+          - { name: aside, label: Aside, widget: hidden, default: false }
+          - { name: pageClass, label: "Page class", widget: hidden, default: ok-wide }
           - { name: body, label: Body, widget: markdown }
       # NB: research/index.md and publications.md just render Vue components; their
       # editable content is the JSON entries below (not markdown files). Listing one
@@ -86,6 +93,8 @@ collections:
           - { name: titlePrefix, label: "Headline — before accent", widget: string }
           - { name: titleAccent, label: "Headline — accent word(s)", widget: string }
           - { name: titleSuffix, label: "Headline — after accent", widget: string }
+          - { name: heroImage, label: "Hero photo", widget: image, hint: "The round portrait in the identity card. A square-ish crop works best." }
+          - { name: heroImageAlt, label: "Hero photo — alt text", widget: string, required: false }
           - { name: tagline, label: "Tagline (under photo)", widget: text }
           - { name: ledeIntro, label: "Lede — intro line", widget: text }
           - { name: ledeBody, label: "Lede — body (muted)", widget: text }

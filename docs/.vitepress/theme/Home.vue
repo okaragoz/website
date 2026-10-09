@@ -34,7 +34,7 @@ import home from '../data/home.json'
       </div>
 
       <aside class="ok-idcard ok-enter-card">
-        <img class="ok-idcard__portrait" src="/images/hero/oguzcan-hero.jpg" alt="" />
+        <img class="ok-idcard__portrait" :src="home.heroImage" :alt="home.heroImageAlt" />
         <div class="ok-idcard__body">
           <p class="ok-idcard__name">Oguzcan Karagoz</p>
           <p class="ok-idcard__role">Planetary Scientist</p>
