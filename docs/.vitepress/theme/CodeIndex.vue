@@ -217,7 +217,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', sync))
 .ok-contrib__desc { font-size: var(--ok-t-body-sm); line-height: 1.7; color: var(--ok-ink-2); margin: 0; }
 .ok-contrib__tags { display: flex; flex-wrap: wrap; gap: 6px; margin: var(--ok-s-4) 0 0; padding: 0; list-style: none; }
 .ok-contrib__tags li {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--ok-ink-3);
   border: 1px solid var(--ok-hairline-strong);
   border-radius: var(--ok-r-pill);

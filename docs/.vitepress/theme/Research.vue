@@ -541,7 +541,7 @@ function scrollToPlanet(name) {
    label; the community codes stay quiet. */
 .ok-method-card__badge {
   flex: none;
-  font-size: 0.7rem; font-weight: 500; letter-spacing: .02em;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: .02em;
   color: var(--ok-primary-ink);
   border: 1px solid currentColor; border-radius: var(--ok-r-pill);
   padding: 1px 8px;

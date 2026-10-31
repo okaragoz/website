@@ -160,6 +160,12 @@
 
 .ok-btn--lg { padding: 13px 24px; font-size: var(--ok-t-body); }
 
+/* A text button with a long label cannot hold one line on a narrow screen:
+   "Simulations and figure scripts (Zenodo)" is 318px on its own. */
+@media (max-width: 520px) {
+  .ok-btn--quiet { white-space: normal; text-align: left; }
+}
+
 /* Buttons rendered inside markdown sit under `.vp-doc a`, which is more
    specific than `.ok-btn--*` and was repainting their labels in the link
    colour. On the filled button that put indigo text on an indigo fill. */
@@ -272,6 +278,10 @@
   border-bottom: none !important;
 }
 @media (max-width: 480px) { .VPNavBarTitle .title { font-size: var(--ok-t-heading); } }
+/* At 320px the name is 196px wide, which with the search field and the
+   hamburger beside it does not fit the bar. One more step down the scale and
+   it does, without truncating a name. */
+@media (max-width: 400px) { .VPNavBarTitle .title { font-size: var(--ok-t-body); } }
 
 .VPNavBarMenuLink,
 .VPNavBarMenuGroup .text {
@@ -313,8 +323,20 @@
    screen is untouched.
    ============================================================ */
 /* Hide VitePress's menu wherever ours is showing. */
-@media (min-width: 768px) { .VPNavBar .VPNavBarMenu { display: none !important; } }
-@media (max-width: 767px) { .ok-mega { display: none; } }
+@media (min-width: 900px) { .VPNavBar .VPNavBarMenu { display: none !important; } }
+
+/* Our bar needs about 890px before it fits beside the title and the search
+   field, and it grew when Code and Lab joined it. VitePress hands over to its
+   own horizontal menu at 768, which left a band of tablet widths where our
+   bar was showing and overflowing the page. Below 900 the drawer takes the
+   navigation instead, so its hamburger and screen have to be kept alive past
+   the breakpoint where VitePress would otherwise retire them. */
+@media (max-width: 899px) {
+  .ok-mega { display: none; }
+  .VPNavBar .VPNavBarMenu { display: none !important; }
+  .VPNavBar .VPNavBarHamburger { display: flex !important; }
+  .VPNavScreen { display: block !important; }
+}
 
 .ok-mega { order: 1; margin-left: auto; }
 .ok-mega__bar { display: flex; align-items: center; gap: var(--ok-s-3); list-style: none; margin: 0; padding: 0; }
@@ -925,7 +947,7 @@
   padding: 1px 8px;
   border: 1px solid var(--ok-hairline-strong);
   border-radius: var(--ok-r-pill);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: .02em;
   color: var(--ok-ink-3);
