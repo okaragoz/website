@@ -75,7 +75,7 @@ function slug(t) {
   align-items: start;
   margin-top: var(--ok-s-7);
 }
-@media (max-width: 860px) { .ok-lab__lead { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-5); } }
+@media (max-width: 860px) { .ok-lab__lead { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-7); } }
 
 .ok-lab__intro { margin: 0; font-size: var(--ok-t-body); line-height: 1.78; color: var(--ok-ink-2); }
 

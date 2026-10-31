@@ -161,11 +161,11 @@ function scrollToPlanet(name) {
                  :data-ok-delay="i * 80">
         <div class="ok-method-card__top">
           <div class="ok-method-card__label">{{ m.label }}</div>
-          <span v-if="m.own" class="ok-method-card__badge">My code</span>
+          <span v-if="m.badge" class="ok-method-card__badge">{{ m.badge }}</span>
         </div>
         <div class="ok-method-card__name">{{ m.name }}</div>
         <p class="ok-method-card__desc">{{ m.desc }}</p>
-        <span v-if="m.href" class="ok-method-card__more">Read more <span aria-hidden="true">→</span></span>
+        <span v-if="m.href" class="ok-method-card__more">{{ m.linkLabel || 'Read more' }} <span aria-hidden="true">→</span></span>
       </component>
     </div>
   </div>
@@ -176,7 +176,12 @@ function scrollToPlanet(name) {
     <div class="ok-eyebrow">{{ codeBand.eyebrow }}</div>
     <h2 class="ok-h2"><b>{{ codeBand.title }}</b></h2>
     <p class="ok-lead">{{ codeBand.lede }}</p>
-    <a class="ok-btn ok-btn--primary ok-btn--lg" :href="codeBand.ctaHref">{{ codeBand.ctaLabel }}</a>
+    <div class="ok-code-section__cta">
+      <a v-for="c in codeBand.ctas" :key="c.href"
+         class="ok-btn ok-btn--lg"
+         :class="c.kind === 'primary' ? 'ok-btn--primary' : 'ok-btn--ondark'"
+         :href="c.href">{{ c.label }}</a>
+    </div>
   </div>
 
   <!-- MISSIONS -->
@@ -569,6 +574,15 @@ function scrollToPlanet(name) {
 .ok-code-section .ok-h2 b { color: #f0f0f0; }
 .ok-code-section .ok-lead { color: #9aa3b2; margin-bottom: var(--ok-s-7); max-width: 66ch; margin-inline: auto; }
 .ok-code-section { text-align: center; }
+.ok-code-section__cta { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--ok-s-4); }
+/* The band stays dark in both themes, so the secondary button cannot borrow
+   the page's link colour: on this background it would be unreadable. */
+.ok-btn--ondark {
+  background: none;
+  color: #e8ecf5;
+  border: 1px solid rgba(255, 255, 255, .28);
+}
+.ok-btn--ondark:hover { border-color: rgba(255, 255, 255, .55); background: rgba(255, 255, 255, .06); }
 @media (max-width: 700px) { .ok-code-section { padding: 56px 28px 64px; } }
 
 

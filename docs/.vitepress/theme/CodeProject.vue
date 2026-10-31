@@ -157,7 +157,7 @@ const hero = computed(() => p.value?.media?.[0] || {})
   color: var(--ok-ink-2);
 }
 
-.ok-facts { margin: 0; }
+.ok-facts { margin: var(--ok-s-7) 0 0; }
 .ok-facts__row {
   display: grid;
   grid-template-columns: 110px minmax(0, 1fr);

@@ -349,57 +349,79 @@
   "methods": {
     "eyebrow": "Research Methods",
     "title": "Approaches & Tools",
-    "lede": "Two codes I write myself, the community codes I run alongside them, and the laboratory work that keeps both honest.",
+    "lede": "Two codes I write myself, the laboratory where their physics is tested against a real material, and the community codes I run alongside both.",
     "items": [
       {
         "label": "Numerical · Mantle convection",
         "name": "MILEVA",
         "own": true,
+        "badge": "My code",
         "href": "/code/mileva",
+        "linkLabel": "Read the code page",
         "desc": "My finite-volume mantle-convection code in Julia, for the 2-D spherical annulus and the 3-D Yin-Yang shell. Thermochemical convection with composite rheology, melting and phase transitions. It is the tool behind the stagnant-lid and plume work on Venus and Mars."
       },
       {
         "label": "Numerical · Lithosphere dynamics",
         "name": "MILET",
         "own": true,
+        "badge": "My code",
         "href": "/code/milet",
+        "linkLabel": "Read the code page",
         "desc": "My thermomechanical finite-element framework in Julia, built on Gridap.jl. Visco-elasto-plastic lithosphere with metamorphic phase change and two-phase melt migration, used for foundering, delamination, drips and subduction."
       },
       {
         "label": "Physical",
         "name": "Analogue Modelling",
-        "own": false,
+        "own": true,
+        "badge": "My lab",
         "href": "/lab/",
+        "linkLabel": "Inside the lab",
         "desc": "Three-dimensional scaled laboratory experiments in polydimethylsiloxane and silicone oils, with the velocity field measured by particle image velocimetry. Viscosity contrasts and effective viscosities set the behaviour; thermally dependent, convection-driven runs drive the deformation from the interior."
       },
       {
         "label": "Numerical · Mantle convection",
         "name": "ASPECT",
         "own": false,
+        "badge": "",
         "href": "",
+        "linkLabel": "",
         "desc": "Finite-element mantle convection in C++. Planetary interior simulations: thermochemical evolution, plume dynamics and lithospheric thickening under single-lid regimes, with contributed viscosity laws and planetary boundary conditions."
       },
       {
         "label": "Numerical · Geomechanics",
         "name": "LaMEM",
         "own": false,
+        "badge": "",
         "href": "",
+        "linkLabel": "",
         "desc": "Massively parallel staggered-grid finite differences for coupled geodynamic and geomechanical problems. Applied to lithospheric deformation, viscoelastoplastic fault systems and compressional regimes, with contributed ice-shell rheology."
       },
       {
         "label": "Numerical · Impact",
         "name": "iSALE",
         "own": false,
+        "badge": "",
         "href": "",
+        "linkLabel": "",
         "desc": "Hypervelocity impact hydrocode: shock propagation, melt generation and crater scaling in planetary materials. Applied to multi-ring basins and impact-driven tectonics on icy and rocky targets."
       }
     ]
   },
   "codeBand": {
-    "eyebrow": "Development",
-    "title": "Numerical geodynamics",
-    "lede": "The modelling here runs on code I write and maintain. MILEVA and MILET are documented in full, benchmarked against published reference cases, and shown with their own simulation output.",
-    "ctaLabel": "Explore the code",
-    "ctaHref": "/code/"
+    "eyebrow": "Behind the results",
+    "title": "Code and laboratory",
+    "lede": "The modelling runs on code I write and maintain, and the laboratory is where its physics is put in the way of a real material. MILEVA and MILET are documented in full and benchmarked against published reference cases; the scaled experiments supply the measured velocity fields they are checked against.",
+    "ctas": [
+      {
+        "label": "Explore the code",
+        "href": "/code/",
+        "kind": "primary"
+      },
+      {
+        "label": "Inside the lab",
+        "href": "/lab/",
+        "kind": "outline"
+      }
+    ]
   }
 }

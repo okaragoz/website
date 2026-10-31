@@ -181,8 +181,10 @@ onBeforeUnmount(() => window.removeEventListener('resize', sync))
   color: var(--ok-ink-2);
 }
 
-/* Spec table — the facts a reader scans for before reading a word of prose. */
-.ok-facts { margin: var(--ok-s-6) 0 0; }
+/* Spec table — the facts a reader scans for before reading a word of prose.
+   It needs clear air above it, or its first rule reads as an underline on the
+   last line of the paragraph. */
+.ok-facts { margin: var(--ok-s-7) 0 0; }
 .ok-facts__row {
   display: grid;
   grid-template-columns: 110px minmax(0, 1fr);
