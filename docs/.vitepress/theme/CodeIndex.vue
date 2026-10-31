@@ -62,7 +62,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', sync))
       <div class="ok-proj__fig">
         <div class="ok-proj__figstack">
           <CodeMedia v-for="m in p.media" :key="m.src"
-                     :src="m.src" :type="m.type" :caption="m.caption" :w="m.w" :h="m.h"
+                     :src="m.src" :type="m.type" :caption="m.caption" :w="m.w" :h="m.h" :invert="!!m.invert" :cutout="!!m.cutout"
                      :fill="!narrow" />
         </div>
       </div>
@@ -127,6 +127,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', sync))
   position: absolute;
   inset: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: var(--ok-s-6);
 }

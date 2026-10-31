@@ -12,7 +12,7 @@
     },
     {
       "label": "Materials",
-      "value": "Polydimethylsiloxane and silicone oils"
+      "value": "Polydimethylsiloxane, polymer fluids and silicone oils"
     },
     {
       "label": "Measurement",
@@ -25,17 +25,28 @@
   ],
   "sections": [
     {
-      "title": "Three-dimensional scaled experiments",
-      "body": "The experiments are built in three dimensions, not as a cross-section. Lateral escape, along-strike variation and the way a structure terminates are all part of the result, and none of them survive a two-dimensional box. Each model is dynamically scaled so that the ratios governing the natural system are reproduced at laboratory size and laboratory duration: buoyancy against viscous resistance, and the timescale of deformation against the timescale of thermal diffusion.",
+      "title": "Scaling laws",
+      "body": "An experiment is only an analogue if the numbers carry. A tank of silicone is centimetres across and runs for an afternoon; the lithosphere it stands for is tens of kilometres thick and takes millions of years, and the two are the same problem only when the dimensionless groups that govern them match. Geometry, density and viscosity are therefore chosen together rather than separately, and the scaling is fixed before a run rather than fitted to it afterwards. What comes out of that is a conversion: a centimetre and an hour in the tank stand for a stated distance and a stated time in the planet, and every measurement quoted from a run is quoted through it.",
       "items": [
-        "Geometry, density and viscosity scaled together, so that a centimetre and an hour in the tank stand for a known distance and time in the planet.",
+        "Length, density and viscosity scales set first; the time and velocity scales follow from them rather than being chosen.",
+        "The dimensionless groups matched rather than the quantities themselves: the Rayleigh number for the vigour of convection, the viscosity contrast across the interface, and the ratio of buoyancy to viscous resistance.",
+        "Deformation timescale held against thermal diffusion timescale, so a run that is fast enough to watch is not also one that has had time to cool.",
+        "Effective viscosities measured for every batch and fed back into the scaling, because a blend that has drifted makes the conversion wrong rather than merely imprecise.",
+        "The same scaling carried into the numerical counterpart, which is what allows a laboratory run and a thermo-mechanical model to be compared at all."
+      ]
+    },
+    {
+      "title": "Three-dimensional scaled experiments",
+      "body": "The experiments are built in three dimensions, not as a cross-section. Lateral escape, along-strike variation and the way a structure terminates are all part of the result, and none of them survive a two-dimensional box. A section cut through a three-dimensional run will often look like a clean two-dimensional experiment, which is exactly the problem: the material that left through the plane of that section is no longer in it to be counted.",
+      "items": [
+        "Measured in volume rather than in profile, so material that moves out of the plane of a section is still accounted for.",
         "Boundary conditions imposed on a three-dimensional volume: basal drag, lateral confinement and a free upper surface.",
         "Repeat runs across the parameter range rather than a single illustrative experiment."
       ]
     },
     {
-      "title": "Materials: polydimethylsiloxane and silicone oils",
-      "body": "The working materials are polydimethylsiloxane and a set of silicone oils. Polydimethylsiloxane behaves as a very nearly Newtonian fluid at the strain rates these experiments run at, which makes it a dependable stand-in for ductile lithosphere and for the deeper, hotter layers beneath it. Blending it, and layering it against silicone oils of different density and viscosity, builds the stratification a planet actually has.",
+      "title": "Materials: polydimethylsiloxane, polymer fluids and silicone oils",
+      "body": "The working materials are polydimethylsiloxane, a set of polymer fluids and silicone oils. Polydimethylsiloxane behaves as a very nearly Newtonian fluid at the strain rates these experiments run at, which makes it a dependable stand-in for ductile lithosphere and for the deeper, hotter layers beneath it. Blending it, and layering it against silicone oils of different density and viscosity, builds the stratification a planet actually has.",
       "items": [
         "Viscosity contrast between layers is the control variable: it sets whether a dense layer drips, founders coherently, or simply spreads.",
         "Effective viscosities are measured for every batch rather than taken from a datasheet, because they shift with blend ratio, filler content and temperature.",
@@ -44,7 +55,7 @@
     },
     {
       "title": "Starting from a density anomaly",
-      "body": "Most of these experiments begin compositionally rather than thermally. A layer is mixed to be denser than the fluid below it, standing in for eclogite: the dense product of a basaltic crust taken through its phase change. Left alone it is unstable, and what follows is the question — whether it drips, founders as a coherent block, or spreads without ever detaching. That outcome is set by the viscosity contrast across the interface and by how fast the dense layer can deform relative to how fast it is loaded.",
+      "body": "Most of these experiments begin compositionally rather than thermally. A layer is mixed to be denser than the fluid below it, standing in for eclogite: the dense product of a basaltic crust taken through its phase change. Left alone it is unstable, and what follows is the question of whether it drips, founders as a coherent block, or spreads without ever detaching. That outcome is set by the viscosity contrast across the interface and by how fast the dense layer can deform relative to how fast it is loaded.",
       "items": [
         "The density contrast is tuned with inert fillers, so it can be varied without changing the viscosity alongside it.",
         "The same setup covers drip, delamination and foundering: they are the same instability at different viscosity contrasts, not different experiments.",
@@ -125,19 +136,21 @@
       "id": "drip",
       "tag": "Density-driven",
       "title": "Lithospheric drip",
-      "body": "Where the contrast is high the layer pinches into a narrow drip. The run is followed from the first perturbation through necking to detachment, which is the moment that decides whether the dense material is lost to the interior or stays hanging from the layer that made it.",
+      "body": "Where the contrast is high the layer pinches into a narrow drip. The run is followed from the first perturbation through necking to detachment, which is the moment that decides whether the dense material is lost to the interior or stays hanging from the layer that made it. A drip is the end member of the instability: nearly all of the dense material gathers into one narrow column, and the layer it came from is left thinned rather than stripped away. The neck is where the outcome is settled, because it is the narrowest part of the flow and therefore the part straining fastest, and it is also the part a two-dimensional section is least able to resolve. Tracer particles seeded through the model make the velocity field readable while all of this is happening, so the growth is measured as it occurs rather than reconstructed afterwards from the shape it leaves behind.",
       "items": [
         "Growth rate and final drip diameter measured against the viscosity contrast across the interface.",
         "Detachment either completes or stalls; both outcomes are recorded, since a stalled drip is its own result.",
-        "Surface topography tracked throughout, because uplift and subsidence above the drip is what a planet shows."
+        "Surface topography tracked throughout, because uplift and subsidence above the drip is what a planet shows.",
+        "Neck thinning followed frame by frame, since the rate there sets how long the drip has before it either parts or stalls.",
+        "Velocity and strain-rate fields recovered by particle image velocimetry during the run, so the growth is measured and not inferred."
       ],
       "figures": [
         {
           "src": "/images/lab/drip-still.jpg",
           "type": "image",
-          "w": 900,
-          "h": 675,
-          "caption": "A drip part-way down, photographed in another run."
+          "w": 1200,
+          "h": 1117,
+          "caption": "A drip descending on a long neck, its head already well clear of the layer that fed it."
         },
         {
           "src": "/images/lab/drip-timelapse.gif",
@@ -152,11 +165,13 @@
       "id": "foundering",
       "tag": "Density-driven",
       "title": "Foundering across a layer",
-      "body": "Lower the contrast, or let the whole layer go at once, and the behaviour changes: the dense material comes away as a coherent sheet, or as several instabilities competing for the material feeding them. In three dimensions that competition is visible; a cross-section would show one instability and miss it entirely.",
+      "body": "Lower the contrast, or let the whole layer go at once, and the behaviour changes: the dense material comes away as a coherent sheet, or as several instabilities competing for the material feeding them. In three dimensions that competition is visible; a cross-section would show one instability and miss it entirely. What separates the two outcomes is how readily the dense layer localises against how fast the fluid beneath it can get out of the way. At a low contrast the layer has no reason to pick a single path, so it descends broadly and keeps its coherence; at a high one the flow gathers into the narrowest route open to it. Between those ends the layer breaks into several drips drawing on a shared reservoir, and the ones that start first starve the ones beside them. The spacing the survivors settle into is the measurement that carries over to a planet, because it is the one a surface can still record long after the layer itself has gone.",
       "items": [
         "Spacing and number of drips measured across the full layer rather than along a single section.",
         "Drips that merge, and drips starved by a neighbour, are both ordinary outcomes here.",
-        "The same apparatus covers drip, delamination and coherent foundering: one instability at different viscosity contrasts."
+        "The same apparatus covers drip, delamination and coherent foundering: one instability at different viscosity contrasts.",
+        "Onset times recorded alongside spacing, because an instability that starts early takes material from the ones next to it.",
+        "Each viscosity contrast is tested repeatedly rather than once, and a result is validated by holding it against the earlier repeats; some drips still vary from run to run even when the experimental setup does not."
       ],
       "figures": [
         {
@@ -179,7 +194,7 @@
       "id": "shortening",
       "tag": "Shortening",
       "title": "Mountain building",
-      "body": "Not every run is density-driven. Layered material put under progressive shortening on the deformation apparatus builds a thrust wedge, and the question becomes how that shortening is distributed: which thrusts take it up, in what order they step forward, and what the surface does above them.",
+      "body": "Not every run is density-driven. Layered material put under progressive shortening on the thermo-mechanical deformation apparatus builds a thrust wedge, and the question becomes how that shortening is distributed: which thrusts take it up, in what order they step forward, and what the surface does above them.",
       "items": [
         "Passive markers through the section record the internal deformation, not only the surface expression.",
         "Thrust sequence and spacing read directly off the section as the wedge grows.",
@@ -191,13 +206,12 @@
           "type": "gif",
           "w": 640,
           "h": 287,
-          "caption": "Layered analogue material under progressive shortening, building a thrust wedge. The markers scattered through the section record how the deformation is taken up inside it.",
-          "wide": true
+          "caption": "Layered analogue material under progressive shortening, building a thrust wedge. The markers scattered through the section record how the deformation is taken up inside it."
         }
       ],
       "rig": {
         "id": "deformation-rig",
-        "name": "Deformation apparatus after Hofmann",
+        "name": "Thermo-mechanical deformation apparatus",
         "role": "Analogue tectonics · thermomechanical deformation",
         "body": "A driven box that shortens or extends the model at a controlled rate while holding a temperature gradient across it, so that deformation and the thermal state evolve together rather than one being imposed on a fixed version of the other.",
         "specs": [
@@ -220,7 +234,7 @@
           "type": "image",
           "w": 1400,
           "h": 933,
-          "caption": "The deformation apparatus after Hofmann."
+          "caption": "The thermo-mechanical deformation apparatus."
         }
       }
     }
@@ -231,24 +245,24 @@
   "crewLede": "The experiments are not a one-person job. The lab runs on:",
   "crew": [
     {
-      "name": "Mandira N. Nagarsenkar",
-      "role": "Robotics"
-    },
-    {
-      "name": "Noah Kittel",
-      "role": "MSc student"
+      "name": "Dagmar Flemming",
+      "role": "Lab technician"
     },
     {
       "name": "Gordon Mette",
       "role": "Lab technician"
     },
     {
-      "name": "Dagmar Flemming",
-      "role": "Lab technician"
-    },
-    {
       "name": "Nils Einfeld",
       "role": "Bachelor student"
+    },
+    {
+      "name": "Noah Kittel",
+      "role": "MSc student"
+    },
+    {
+      "name": "Mandira N. Nagarsenkar",
+      "role": "Robotics"
     }
   ],
   "crewGroupLabel": "Current",
@@ -257,6 +271,6 @@
     "type": "image",
     "w": 1300,
     "h": 1330,
-    "caption": "The tank under its lighting, with the cameras that supply the image pairs."
+    "caption": "The experimental setup: the tank under its lighting, with the particle image velocimetry cameras and the five-axis robotic surface scanner."
   }
 }

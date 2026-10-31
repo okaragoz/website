@@ -19,6 +19,19 @@
 .vp-doc .ok-post .ok-post__avatar,
 .ok-post__avatar { border-radius: var(--ok-r-pill); }
 
+/* A figure narrower than its column is centred in it, and a framed one keeps
+   its corners. Both are set in CodeMedia, and both were being flattened by
+   the reset above, which out-specifies a scoped rule: that is why a 400px
+   figure sat hard against the left edge of a 930px column. */
+.vp-doc :is(.ok-lab, .ok-codeproj, .ok-codepage) .ok-codefig__media {
+  margin-inline: auto;
+  border-radius: var(--ok-r-lg);
+}
+.vp-doc :is(.ok-lab, .ok-codeproj, .ok-codepage) .ok-codefig--cutout .ok-codefig__media,
+.vp-doc :is(.ok-lab, .ok-codeproj, .ok-codepage) .ok-codefig--fill .ok-codefig__media {
+  border-radius: 0;
+}
+
 /* The same leak reaches headings and paragraphs. `.vp-doc h3` carries a 55px
    top margin and `.vp-doc p` a 20px block margin, and both out-specify a
    component's own `margin: 0`, which is where the gaps inside the list cards
@@ -57,14 +70,31 @@
 
 /* Prose list styling leaks the same way. VitePress puts `margin-top: 8px`
    on `li + li`, which knocked every card after the first out of alignment
-   in the disciplines grid. Component lists carry their own spacing. */
-.vp-doc :is(.ok-disc__grid, .ok-steps__list, .ok-mega__bar, .ok-footer__cols) {
+   in the disciplines grid. Component lists carry their own spacing.
+
+   A chip row is where that 8px tells most: in a wrapping flex row it does not
+   open a gap between rows, it drops every chip after the first by 8px, so the
+   row walks downhill and the wrap lands at a third height. The row's own
+   `gap` is what should be spacing them. */
+.vp-doc :is(.ok-disc__grid, .ok-steps__list, .ok-mega__bar, .ok-footer__cols,
+            .ok-contrib__tags, .ok-codeproj__chips, .ok-codeproj__list,
+            .ok-lab__list, .ok-lab__crew) {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
-.vp-doc :is(.ok-disc__grid, .ok-steps__list, .ok-mega__bar) > li,
-.vp-doc :is(.ok-disc__grid, .ok-steps__list, .ok-mega__bar) > li + li { margin: 0; }
+.vp-doc :is(.ok-disc__grid, .ok-steps__list, .ok-mega__bar,
+            .ok-contrib__tags, .ok-codeproj__chips, .ok-codeproj__list,
+            .ok-lab__list, .ok-lab__crew) > li,
+.vp-doc :is(.ok-disc__grid, .ok-steps__list, .ok-mega__bar,
+            .ok-contrib__tags, .ok-codeproj__chips, .ok-codeproj__list,
+            .ok-lab__list, .ok-lab__crew) > li + li { margin: 0; }
+
+/* The component lists set their own rhythm again here, since the reset above
+   is deliberately blunt. */
+.vp-doc .ok-contrib .ok-contrib__tags { margin-top: var(--ok-s-4); }
+.vp-doc .ok-lab .ok-lab__list { margin-top: var(--ok-s-6); }
+.vp-doc .ok-lab .ok-lab__crew { margin-top: var(--ok-s-4); }
 
 /* ============================================================
    Gradient mesh

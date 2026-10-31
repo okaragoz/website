@@ -9,3 +9,6 @@ docs/.vitepress/cache/
 .assistant/
 AGENTS.md
 *.local.md
+
+# Playwright MCP scratch output (screenshots, traces)
+.playwright-mcp/

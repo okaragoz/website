@@ -3,9 +3,10 @@
   The laboratory: three-dimensional scaled analogue experiments.
 
   Built on the same template as the code pages: a lead row carrying the
-  summary and the specification beside one figure, then full-width prose with
-  its figures side by side beneath it. Figures in a row share a tile so they
-  line up, and none is ever drawn larger than the file actually is.
+  summary and the specification beside one figure, and then every entry on the
+  same two-column grid, prose on the left and its figures on the right. The
+  machine a run is made on spans the full width beneath both. No figure is
+  ever drawn larger than the file actually is.
 
   Content lives in data/lab.json (CMS: Pages → Lab Page).
 */
@@ -18,12 +19,15 @@ const { hero, intro, facts, sections, links } = labData
 const experiments = computed(() => labData.experiments || [])
 const crew = computed(() => labData.crew || [])
 
-/* Figures sit in a row under the prose. Up to three share a tile so their
-   edges line up; a figure marked wide takes the row to itself. */
-const sideFigs = (figs) => (figs || []).filter((f) => !f.wide)
-const wideFigs = (figs) => (figs || []).filter((f) => f.wide)
-const cols = (figs) => Math.min(sideFigs(figs).length, 3) || 1
-const tile = (figs) => (cols(figs) > 1 ? '4 / 3' : '')
+/* Every entry is one row: the prose in the left column, its figures stacked
+   in the right. The two columns are divided at φ, so the reading measure
+   leads and the figures answer it.
+
+   The stack is capped by how many figures are in it, because an uncapped
+   portrait figure is 1.3 times as tall as it is wide and two of them would
+   run a long way past the bottom of the prose beside them. */
+const figsOf = (figs) => figs || []
+const capFor = (figs) => [0, 520, 380, 280][Math.min(figsOf(figs).length, 3)] || 280
 
 function slug(t) {
   return t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
@@ -56,41 +60,36 @@ function slug(t) {
     <h2 class="ok-lab__parth">{{ labData.experimentsTitle }}</h2>
     <p class="ok-lab__partlede">{{ labData.experimentsLede }}</p>
 
-    <article v-for="e in experiments" :key="e.id" :id="e.id" class="ok-lab__entry">
+    <article v-for="e in experiments" :key="e.id" :id="e.id"
+             class="ok-lab__entry" :class="{ 'ok-lab__entry--split': figsOf(e.figures).length }">
       <div class="ok-lab__text">
-          <span class="ok-lab__tag">{{ e.tag }}</span>
+        <span class="ok-lab__tag">{{ e.tag }}</span>
         <h3 class="ok-lab__title">{{ e.title }}</h3>
         <p class="ok-lab__body">{{ e.body }}</p>
         <ul v-if="e.items && e.items.length" class="ok-lab__list">
           <li v-for="(it, i) in e.items" :key="i">{{ it }}</li>
         </ul>
-        <aside v-if="e.rig" class="ok-lab__rig">
-          <span class="ok-lab__rigeyebrow">Run on</span>
-          <h4 class="ok-lab__rigname">{{ e.rig.name }}</h4>
-          <div class="ok-lab__rigbody">
-            <dl class="ok-lab__facts">
-              <div v-for="r in e.rig.specs" :key="r.label" class="ok-lab__row">
-                <dt class="ok-lab__k">{{ r.label }}</dt>
-                <dd class="ok-lab__v">{{ r.value }}</dd>
-              </div>
-            </dl>
-            <CodeMedia v-if="e.rig.figure" :src="e.rig.figure.src"
-                       :type="e.rig.figure.type || 'image'" :caption="e.rig.figure.caption"
-                       :w="e.rig.figure.w" :h="e.rig.figure.h" />
-          </div>
-        </aside>
       </div>
-      <div v-if="sideFigs(e.figures).length" class="ok-lab__figs"
-           :style="{ '--ok-lab-cols': cols(e.figures) }">
-        <CodeMedia v-for="g in sideFigs(e.figures)" :key="g.src"
+      <div v-if="figsOf(e.figures).length" class="ok-lab__figs">
+        <CodeMedia v-for="g in figsOf(e.figures)" :key="g.src"
                    :src="g.src" :type="g.type || 'image'" :caption="g.caption"
-                   :w="g.w" :h="g.h" :plate="!!g.plate" :tile="tile(e.figures)" />
+                   :w="g.w" :h="g.h" :cap="capFor(e.figures)" />
       </div>
-      <div v-if="wideFigs(e.figures).length" class="ok-lab__wide">
-        <CodeMedia v-for="g in wideFigs(e.figures)" :key="g.src"
-                   :src="g.src" :type="g.type || 'image'" :caption="g.caption"
-                   :w="g.w" :h="g.h" />
-      </div>
+      <aside v-if="e.rig" class="ok-lab__rig">
+        <span class="ok-lab__rigeyebrow">Run on</span>
+        <h4 class="ok-lab__rigname">{{ e.rig.name }}</h4>
+        <div class="ok-lab__rigbody">
+          <dl class="ok-lab__facts">
+            <div v-for="r in e.rig.specs" :key="r.label" class="ok-lab__row">
+              <dt class="ok-lab__k">{{ r.label }}</dt>
+              <dd class="ok-lab__v">{{ r.value }}</dd>
+            </div>
+          </dl>
+          <CodeMedia v-if="e.rig.figure" :src="e.rig.figure.src"
+                     :type="e.rig.figure.type || 'image'" :caption="e.rig.figure.caption"
+                     :w="e.rig.figure.w" :h="e.rig.figure.h" />
+        </div>
+      </aside>
     </article>
   </section>
 
@@ -99,40 +98,35 @@ function slug(t) {
     <h2 class="ok-lab__parth">{{ labData.methodTitle }}</h2>
     <p class="ok-lab__partlede">{{ labData.methodLede }}</p>
 
-    <section v-for="s in sections" :key="s.title" :id="slug(s.title)" class="ok-lab__entry">
+    <section v-for="s in sections" :key="s.title" :id="slug(s.title)"
+             class="ok-lab__entry" :class="{ 'ok-lab__entry--split': figsOf(s.figures).length }">
       <div class="ok-lab__text">
-          <h3 class="ok-lab__title">{{ s.title }}</h3>
+        <h3 class="ok-lab__title">{{ s.title }}</h3>
         <p class="ok-lab__body">{{ s.body }}</p>
         <ul v-if="s.items && s.items.length" class="ok-lab__list">
           <li v-for="(it, i) in s.items" :key="i">{{ it }}</li>
         </ul>
-        <aside v-if="s.rig" class="ok-lab__rig">
-          <span class="ok-lab__rigeyebrow">Measured with</span>
-          <h4 class="ok-lab__rigname">{{ s.rig.name }}</h4>
-          <div class="ok-lab__rigbody">
-            <dl class="ok-lab__facts">
-              <div v-for="r in s.rig.specs" :key="r.label" class="ok-lab__row">
-                <dt class="ok-lab__k">{{ r.label }}</dt>
-                <dd class="ok-lab__v">{{ r.value }}</dd>
-              </div>
-            </dl>
-            <CodeMedia v-if="s.rig.figure" :src="s.rig.figure.src"
-                       :type="s.rig.figure.type || 'image'" :caption="s.rig.figure.caption"
-                       :w="s.rig.figure.w" :h="s.rig.figure.h" />
-          </div>
-        </aside>
       </div>
-      <div v-if="sideFigs(s.figures).length" class="ok-lab__figs"
-           :style="{ '--ok-lab-cols': cols(s.figures) }">
-        <CodeMedia v-for="g in sideFigs(s.figures)" :key="g.src"
+      <div v-if="figsOf(s.figures).length" class="ok-lab__figs">
+        <CodeMedia v-for="g in figsOf(s.figures)" :key="g.src"
                    :src="g.src" :type="g.type || 'image'" :caption="g.caption"
-                   :w="g.w" :h="g.h" :plate="!!g.plate" :tile="tile(s.figures)" />
+                   :w="g.w" :h="g.h" :cap="capFor(s.figures)" />
       </div>
-      <div v-if="wideFigs(s.figures).length" class="ok-lab__wide">
-        <CodeMedia v-for="g in wideFigs(s.figures)" :key="g.src"
-                   :src="g.src" :type="g.type || 'image'" :caption="g.caption"
-                   :w="g.w" :h="g.h" />
-      </div>
+      <aside v-if="s.rig" class="ok-lab__rig">
+        <span class="ok-lab__rigeyebrow">Measured with</span>
+        <h4 class="ok-lab__rigname">{{ s.rig.name }}</h4>
+        <div class="ok-lab__rigbody">
+          <dl class="ok-lab__facts">
+            <div v-for="r in s.rig.specs" :key="r.label" class="ok-lab__row">
+              <dt class="ok-lab__k">{{ r.label }}</dt>
+              <dd class="ok-lab__v">{{ r.value }}</dd>
+            </div>
+          </dl>
+          <CodeMedia v-if="s.rig.figure" :src="s.rig.figure.src"
+                     :type="s.rig.figure.type || 'image'" :caption="s.rig.figure.caption"
+                     :w="s.rig.figure.w" :h="s.rig.figure.h" />
+        </div>
+      </aside>
     </section>
   </section>
 
@@ -215,12 +209,29 @@ function slug(t) {
   color: var(--ok-ink-3);
 }
 
-/* ── One entry ── */
+/* ── One entry ──
+   Prose left, figures right, divided at φ so the reading measure leads and
+   the figures answer it. Both columns start at the top: an entry whose text
+   outruns its figures, or the other way round, simply ends ragged rather than
+   stretching anything to match. The rig spans the full width beneath. */
 .ok-lab__entry {
   margin-top: var(--ok-s-8, 89px);
   padding-top: var(--ok-s-7);
   border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   scroll-margin-top: 90px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--ok-s-7);
+  row-gap: var(--ok-s-7);
+  align-items: start;
+}
+/* An entry with no figures is all measure, so it keeps the whole width rather
+   than leaving a column of nothing beside it. */
+.ok-lab__entry--split { grid-template-columns: minmax(0, 1.618fr) minmax(0, 1fr); }
+.ok-lab__rig { grid-column: 1 / -1; }
+@media (max-width: 860px) {
+  .ok-lab__entry--split { grid-template-columns: minmax(0, 1fr); }
+  .ok-lab__entry { row-gap: var(--ok-s-6); }
 }
 /* The tag sits above the title, so the title starts at the gutter like every
    other block rather than being indented by the badge beside it. */
@@ -271,7 +282,6 @@ function slug(t) {
 
 /* ── The machine a run is made on, stated beside the run ── */
 .ok-lab__rig {
-  margin-top: var(--ok-s-6);
   padding: var(--ok-s-5);
   border: 1px solid var(--ok-hairline);
   border-radius: var(--ok-r-lg);
@@ -293,16 +303,13 @@ function slug(t) {
 }
 @media (max-width: 760px) { .ok-lab__rigbody { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-5); } }
 
-/* ── Figures: a row under the prose ── */
+/* ── Figures: the right-hand column ── */
 .ok-lab__figs {
-  margin-top: var(--ok-s-7);
   display: grid;
-  grid-template-columns: repeat(var(--ok-lab-cols, 1), minmax(0, 1fr));
-  gap: var(--ok-s-5) var(--ok-s-4);
+  gap: var(--ok-s-6);
   align-items: start;
+  min-width: 0;
 }
-@media (max-width: 760px) { .ok-lab__figs { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-6); } }
-.ok-lab__wide { margin-top: var(--ok-s-7); display: grid; gap: var(--ok-s-6); }
 
 /* ── Crew ── */
 .ok-lab__crewlabel {
