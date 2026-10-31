@@ -1,146 +1,84 @@
 ---
 title: "How Computer Models Helped Us Solve a 4-Billion-Year-Old Martian Mystery"
 date: 2025-12-28
-excerpt: "One of Mars's most striking features is also one of its biggest mysteries. If you look at a map of the Red Planet, you'll notice something odd: the northern half…"
-image: "https://images.unsplash.com/photo-1635349429385-201ee3a51b88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000"
+excerpt: "Extension along the Martian dichotomy and compression 800 kilometres out into the lowlands. Three numerical models, and only one of them produces the Mars we actually see."
+image: "/images/research/figures/mars-dichotomy-map.webp"
 category: research
 tags: ["research"]
 ---
 
 # How Computer Models Helped Us Solve a 4-Billion-Year-Old Martian Mystery
 
-Some of the most beautiful features on Mars are also the most stubborn puzzles. Pull up a map of the Red Planet and something jumps out almost immediately: the northern half sits about 3 kilometers lower than the southern half. We call this the Martian dichotomy, and it's had scientists scratching their heads for decades.
+Open a topographic map of Mars and the first thing you notice is that the northern half sits about three kilometres lower than the southern half. That is the Martian dichotomy, and how it got there has been argued over for decades.
 
-What pulled me in, though, was a detail in one particular spot called Nilosyrtis Mensae. Right along the boundary between the high ground and the low ground, there are extensional faults: cracks where the surface pulled apart. And roughly 800 kilometers out into the lowlands, there are compressional ridges, where the ground got squeezed together instead. The two sets of features run more or less parallel to each other.
+What drew me in was smaller than the dichotomy itself. At Nilosyrtis Mensae, along the boundary, there are extensional faults where the surface has pulled apart. About 800 kilometres out into the lowlands there are compressional ridges where it has been squeezed. The two sets run roughly parallel.
 
-That pattern looked oddly familiar to me and my colleagues. It's the kind of thing we see on Earth along passive continental margins, where gravity slowly drags the land downslope: you get extension up top and compression at the bottom. But could that really happen on Mars? And if it did, what would it be telling us about the planet's deep past?
+<CodeMedia src="/images/research/figures/mars-dichotomy-map.webp" type="image" :w="1600" :h="1007"
+           caption="Mars with the dichotomy boundary marked. The extensional structures sit along the boundary itself; the compressional ones lie several hundred kilometres out into the northern lowlands." />
 
-## Why We Turned to Numerical Models
+That pairing is familiar from Earth. It is what gravity-driven systems on passive continental margins look like: extension at the top of the slope, compression at the toe, with the whole thing sliding on something weak in between. The Gulf of Mexico and the Angolan margin both do it. The question was whether Mars could, and what would have to be buried underneath for it to work.
 
-Satellite images alone weren't going to settle this. We needed to find out whether gravity-driven deformation was even physically possible under Martian conditions, and if it was, what kind of buried structure you'd need to pull it off.
+## Why model it
 
-That's exactly where numerical modeling comes in. Picture building a virtual Mars inside a computer: a place where you set the laws of physics yourself, swap out rock types, and watch millions of years of deformation unfold in a matter of hours.
+Imagery alone cannot answer that. You can draw a cross-section that looks plausible and still be describing something that could not physically happen. A numerical model is a way of insisting on the physics: you set the rock properties and the gravity, and then you find out whether the structures form on their own.
 
-## Setting Up Our Virtual Mars
+The simulations used the Norma code on a slice 700 kilometres wide and 20 kilometres deep, resolved finely enough for faults to develop rather than be imposed, with about four million markers each carrying its own material properties through the deformation.
 
-We ran our simulations with a code called Norma. The job was to rebuild a 700-kilometer-wide slice of Mars reaching 20 kilometers down, with enough resolution to capture how faults actually form. Our model tracked about 4 million markers, each carrying its own rock properties as everything moved and deformed through time.
+The setup was a four-kilometre basaltic upper crust, a one-kilometre detachment layer, another four kilometres of lower crust, and a low-density layer on top to give a free surface. The parameters are Martian rather than terrestrial: gravity at 3.72 m/s², crustal density around 3,000 kg/m³, and viscosities and failure criteria to match.
 
-Getting the setup right took some care. We started with:
+## Three detachments, three outcomes
 
-  * A 4-kilometer-thick upper layer of basaltic rock (representing the Martian crust)
-  * A 1-kilometer-thick detachment layer (the weak zone that would allow sliding)
-  * Another 4-kilometer layer of lower crust
-  * A low-density "sticky air" layer on top to simulate a free surface
+**A frictional detachment everywhere.** Overpressured clay or shale throughout, with a high fluid pressure ratio. Deformation would not travel. It concentrated at the dichotomy boundary, produced extension along the scarp, and then locked up after about two million years. Even with the fluid pressure cranked up, this layer stays near 10<sup>21</sup> Pa s, which is too stiff to distribute strain across hundreds of kilometres.
 
-The fiddly part was the rock properties. Mars isn't Earth, so we had to dial in:
+**A weak viscous detachment everywhere.** The opposite extreme, at 10<sup>17</sup> to 10<sup>18</sup> Pa s, standing in for salt or ice mixed through fractured basalt. This one deforms the whole system. Extension begins almost immediately and spreads both back into the highlands and forward into the lowlands, and the compressional domain builds out-of-sequence, front thrusts first and new ones stepping backward. By five million years there are clear extensional, transitional and compressional domains. The problem is the topography: it builds two distinct steps in the highlands, which Mars does not have, and the extensional domain comes out too long.
 
-  * Martian gravity (3.72 m/s², about 38% of Earth's)
-  * Martian crustal densities (around 3000 kg/m³)
-  * The correct viscosity for different rock types
-  * How rocks fail under stress
+**Two detachments, linked.** A shallow frictional detachment under the highlands connected to a deeper viscous one under the lowlands, joined through a relay zone at the boundary. This is the one that works. Deformation runs in the highlands for the first 4.5 million years as normal faults develop, then shifts: extension dies back in the highlands and picks up in the adjacent lowlands. By 13.5 million years the highland detachment has essentially stopped moving, the compressional domain has reached its maximum width, and by 20 million years the system is stable. The final topography is a single lowered slope near the dichotomy, a wide low-relief bulge in the transition, and ridges at the far end.
 
-## Testing Three Different Scenarios
+## The numbers that separate them
 
-This is where the modeling really earned its keep. We didn't settle for a single simulation: we ran three fundamentally different scenarios and asked which one actually matched the Mars we see today.
+Measuring the three structural domains as fractions of the section length:
 
-**Model 1: A Frictional Detachment Throughout**
+| | extensional | transitional | compressional |
+|---|---|---|---|
+| frictional only | 100% | 0% | 0% |
+| viscous only | ~20% | ~30% | ~50% |
+| two detachments | 14% | 68% | 18% |
+| **Mars, measured** | **24%** | **46%** | **30%** |
 
-In the first model, we made the detachment layer out of overpressured clay or shale-like material running through the whole system. We gave it a fairly high fluid pressure ratio (λ = 0.9) so it would be weak enough to deform.
+The combined model is the closest, and the remaining gap runs the right way: erosion and burial have hidden some of the extensional structures, so the real extensional domain should measure smaller than it was.
 
-The result was a letdown, but a useful one. Deformation kept getting stuck near the dichotomy boundary. We'd get extension along the scarp, sure, but it just couldn't travel far into the highlands or the lowlands. After only 2 million years of simulation, the whole thing essentially seized up. We might see some faulting near the boundary, but nothing close to the 800-kilometer-wide system nature actually built.
+The viscosity contrast is the control. The frictional detachment will not go below about 10<sup>21</sup> Pa s however much fluid pressure you give it, while the viscous one sits at 10<sup>17</sup> to 10<sup>18</sup>. You need three to four orders of magnitude between the two to reproduce the pattern, which is a specific and testable claim about what is down there.
 
-Even with all that fluid pressure, the viscosity of this frictional layer hovered around 10²¹ Pa·s: still too stiff for the spread-out deformation we were after.
+## What that implies about early Mars
 
-**Model 2: A Weak Viscous Detachment Throughout**
+The model does not just say gravity-driven deformation was possible. It says what had to be buried for it to happen, and that turns into a sequence.
 
-For the second model, we swung to the opposite extreme: a very weak, viscous-like detachment with a viscosity of just 10¹⁷–10¹⁸ Pa·s running continuously beneath both the highlands and the lowlands. That could stand in for salt, ice, or some mixture of the two along with fractured basalt.
+Around 4.5 billion years ago the Borealis impact excavated the northern lowlands, removing much of the existing crust and leaving a large volume of impact melt. As that cooled and a shallow, short-lived ocean formed, evaporites precipitated. Later impacts, the Utopia event around 4.1 billion years ago in particular, mixed those salts through a thick layer of fractured basalt. The result is a mechanically weak layer at five to eleven kilometres depth: exactly what the lowland detachment needs to be.
 
-This one did a far better job of deforming the entire system. Extension kicked off almost right away (within 0.03 million years of simulation time) near the dichotomy, then spread both backward into the highlands and forward into the lowlands.
+In the highlands, flood basalts with thin sedimentary interbeds give pockets of overpressured fine-grained material, which is the frictional detachment.
 
-The compressional domain came together nicely too, with thrust faults forming in an "out-of-sequence" pattern: the front faults appeared first, then new ones popped up progressively backward toward the highlands. By 5 million years, we had clear extensional, transitional, and compressional domains.
+Something then had to start it, somewhere between 3.8 and 3.6 billion years ago. Tharsis loading, the Isidis impact and regional uplift are all candidates. After that gravity does the work, and the models suggest it is quick: the whole system runs its course in around 20 million years, possibly less.
 
-But it had a flaw. The model built two distinct topographic steps in the highlands, and that's just not what Mars shows us. The extensional domain came out too long compared to what we observe, as well.
+## What the models could do that mapping could not
 
-**Model 3: Two Different Detachments**
+The detachments are kilometres down and no orbital dataset will see them. What the models provide is the inverse: given the structures at the surface, what must exist below to produce them.
 
-The third model was the winner. We blended the two earlier ideas: a shallower frictional detachment in the highlands, linked to a deeper viscous detachment in the lowlands.
+They also constrain the timing. The sequence of early extension, a shift in where strain is accommodated, peak compression, then stabilisation is not recoverable from a static surface.
 
-Here's where the numerical modeling really flexed. The model showed how those two detachment layers could hook up through a "relay zone" right at the dichotomy boundary. The strain patterns told a genuinely compelling story:
+And they rule things out. Showing that the frictional-only and viscous-only cases fail is as much of the result as showing that the combined case succeeds.
 
-  * For the first 4.5 million years, most deformation occurred in the highlands as normal faults formed
-  * Then there was a shift: extension decreased in the highlands but picked up in the nearby lowlands
-  * By 13.5 million years, the frictional detachment in the highlands was essentially done moving
-  * The compressional domain, meanwhile, showed that characteristic out-of-sequence development, reaching its maximum width around 13.35 million years
-  * By 20 million years (our simulation end time), the system had stabilized
+One independent check is worth noting. InSight has detected seismic discontinuities in the lowland crust at 8 ± 2 kilometres, which is within the depth range the model requires for the lowland detachment. That is not confirmation, but it is the right number in the right place.
 
-And the final topography from Model 3 lined up with observations beautifully: a single lowered slope near the dichotomy, a wide low-relief bulge in the transitional zone, and a string of ridges in the compressional domain.
+## How it compares to Earth
 
-## What the Numbers Told Us
+The wedge angle for the Martian system comes out at about 0.4°, which is in the same range as terrestrial gravity-driven margins and close to the Angolan one in particular. The mechanics transfer.
 
-Once we put the three models side by side, the contrast was hard to miss. We measured the normalized lengths of the three structural domains:
+The materials do not. On Earth these systems develop in marine sediments as a margin subsides. On Mars this one is built from impact-generated material and the residue of a short-lived ocean, which is a setting Earth does not offer. It also means the model leans on the giant-impact origin for the northern lowlands: without that impact there is no weak layer, and without the weak layer the system does not behave this way.
 
-  * **Model 1** (frictional only): 100% extensional domain, 0% transitional, 0% compressional
-  * **Model 2** (viscous only): ~20% extensional, ~30% transitional, ~50% compressional
-  * **Model 3** (combined): 14% extensional, 68% transitional, 18% compressional
+---
 
-The real Mars sections we mapped averaged: 24% extensional, 46% transitional, 30% compressional.
+**The paper.** Karagoz, O., Kenkmann, T., and Hergarten, S. (2025). *Gravity-driven fold-thrust belt at the Martian dichotomy.* Earth and Planetary Science Letters. [doi.org/10.1016/j.epsl.2025.119645](https://doi.org/10.1016/j.epsl.2025.119645)
 
-Model 3 was clearly the closest fit, and that's even before you account for erosion and burial on Mars, which would have hidden some of the extensional features and made that domain look smaller than it really was.
+The follow-up, which takes the rheology of the detachment itself as the subject, is Karagoz, O., Kenkmann, T., and Hergarten, S. (2026). *Décollement Rheology Controls Crustal Deformation on Early Mars.* Journal of Geophysical Research: Planets. [doi.org/10.1029/2026JE010093](https://doi.org/10.1029/2026JE010093)
 
-The viscosity contrast between the two detachment types mattered just as much. The frictional detachment never dropped below about 10²¹ Pa·s even with high fluid pressure, while the viscous detachment sat at 10¹⁷–10¹⁸ Pa·s: roughly 1,000 to 10,000 times weaker. You need a gap of several orders of magnitude like that to reproduce the pattern we see.
-
-## What This Means for Mars's History
-
-The modeling didn't just prove gravity-driven deformation was possible. It told us what had to be hiding beneath the Martian surface to make it happen.
-
-And the fact that you need two different detachment types says something pretty deep about Mars's early days. Here's the story that comes together:
-
-About 4.5 billion years ago, a giant impact (the "Borealis impact") carved out the northern lowlands. It excavated much of the crust that was already there and left behind an enormous pool of impact melt. As that cooled and a shallow, short-lived ocean formed, evaporites, salt minerals, precipitated out. Later impacts, especially the Utopia impact around 4.1 billion years ago, churned up and spread that salt through a thick layer of fractured basalt (megaregolith).
-
-The upshot? A mechanically weak layer sitting 5-11 kilometers deep, just about perfect for acting as a detachment surface.
-
-Up in the highlands, meanwhile, volcanic activity laid down flood basalts with thin sedimentary layers wedged between them, creating pockets of overpressured fine-grained material that could serve as a frictional detachment.
-
-Then, somewhere around 3.8-3.6 billion years ago (Late Noachian to Early Hesperian), something set the whole thing in motion. Maybe it was the Tharsis volcanic region swelling and nudging Mars's entire crust, maybe the Isidis impact, maybe regional uplift. Whatever lit the fuse, gravity took it from there.
-
-Our models suggest this all happened fairly fast: the entire system played out in maybe 20 million years, possibly less. The dichotomy boundary failed, the highlands began sliding northward, and the system ran its course, sculpting the features we see today before erosion and volcanic resurfacing buried part of the evidence.
-
-## Why Numerical Modeling Was Essential
-
-Let me be honest about this: we never could have worked it out without numerical modeling. Here's why:
-
-**1\. Testing what we can't see:** The detachment layers are buried kilometers deep. No amount of satellite mapping could tell us whether they exist or what they're made of. But the models showed us what _must_ be there to produce the observed structures.
-
-**2\. Testing physical plausibility:** It's one thing to draw a cross-section that looks nice. It's another to prove that it can actually form under real physical conditions. The models incorporate actual rock mechanics, realistic viscosities, and proper gravitational forces. If something can't work in the model, it probably can't work in nature.
-
-**3\. Understanding timing:** The models revealed that this wasn't a slow, steady process but rather had distinct phases: early extension, a shift in strain patterns, peak compression, then stabilization. This temporal evolution would be impossible to reconstruct from surface observations alone.
-
-**4\. Quantifying requirements:** The models told us precisely how weak the detachment layers needed to be. A viscosity contrast of 1,000-10,000 times between the highland and lowland detachments wasn't just helpful: it was necessary. That's a concrete constraint for understanding Mars's subsurface composition.
-
-**5\. Ruling out alternatives:** Just as important as showing Model 3 worked was showing that Models 1 and 2 didn't. Science advances by elimination as much as confirmation.
-
-## The Bigger Picture
-
-What I love about this work is how it shows Mars and Earth sharing more geology than you'd expect. Gravity-driven fold-thrust belts are everywhere on Earth along passive continental margins: think of the Gulf of Mexico or the coast of Angola. The wedge angle we calculated for Mars (~0.4°) lines up nicely with those Earth examples, the Angola margin in particular.
-
-There's a meaningful difference, though. On Earth, these systems usually form in marine sediments as continental margins subside. On Mars, we're looking at one that grew out of impact-related materials and ancient ocean sediments, driven by the strange conditions of the planet's early history.
-
-The modeling threw in a bonus, too: it lent support to the giant impact origin for the northern lowlands. Without that impact to build the mechanically weak layer down there, the gravity-driven system simply couldn't have behaved the way our models did.
-
-## What's Next?
-
-This work cracks open a whole new set of questions. If salt-rich layers really do sit this deep in the Martian lowlands, what does that mean for:
-
-  * Other tectonic features on Mars?
-  * The history and composition of early Martian oceans?
-  * Potential resources for future Mars missions?
-
-Here's something that still gives me chills: NASA's InSight lander has already picked up seismic discontinuities in the lowland crust at depths of 8±2 kilometers: remarkably close to what our model predicted. Future seismic studies could help pin down whether these weak layers are really there and what they're made of.
-
-For me, this project is a perfect reminder of why numerical modeling is such a powerful tool in planetary science. Mars doesn't have plate tectonics the way Earth does, but its geological history has been anything but quiet. Computer models let us run experiments we could never set up in a lab or in the field, probing events that unfolded billions of years ago on a planet none of us has ever set foot on.
-
-Every time we launch a new simulation, we're really putting a question to Mars: "Could this have happened?" For gravity-driven deformation at Nilosyrtis Mensae, the answer seems to be yes, and honestly, the story it tells is hard to put down.
-
-* * *
-
-_This research was published in Earth and Planetary Science Letters. The numerical simulations were performed using the Norma code, a finite-difference mechanical modeling framework specifically designed for studying tectonic processes._
+The simulations ran in Norma, a finite-difference mechanical modelling framework for tectonic problems. The numerical codes I develop and work with are described on the [code pages](/code/), and the laboratory side of the same questions is on the [lab page](/lab/).

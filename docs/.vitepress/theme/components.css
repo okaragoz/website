@@ -16,21 +16,42 @@
 }
 /* …then re-assert the shapes that are part of the component, at a
    specificity that clears the reset above. */
+/* The avatar has to be told its box at a specificity the prose `img` rules
+   cannot reach. `height: auto` was winning, so the 32px square collapsed to
+   32x18 and the pill radius drew an ellipse rather than a circle. */
 .vp-doc .ok-post .ok-post__avatar,
-.ok-post__avatar { border-radius: var(--ok-r-pill); }
+.ok-post__avatar {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  object-fit: cover;
+  border-radius: var(--ok-r-pill);
+}
 
 /* A figure narrower than its column is centred in it, and a framed one keeps
    its corners. Both are set in CodeMedia, and both were being flattened by
    the reset above, which out-specifies a scoped rule: that is why a 400px
    figure sat hard against the left edge of a 930px column. */
-.vp-doc :is(.ok-lab, .ok-codeproj, .ok-codepage) .ok-codefig__media {
+.vp-doc .ok-codefig .ok-codefig__media {
   margin-inline: auto;
   border-radius: var(--ok-r-lg);
 }
-.vp-doc :is(.ok-lab, .ok-codeproj, .ok-codepage) .ok-codefig--cutout .ok-codefig__media,
-.vp-doc :is(.ok-lab, .ok-codeproj, .ok-codepage) .ok-codefig--fill .ok-codefig__media {
-  border-radius: 0;
+.vp-doc .ok-codefig--cutout .ok-codefig__media,
+.vp-doc .ok-codefig--fill .ok-codefig__media { border-radius: 0; }
+/* A table with more columns than a phone has room for should scroll inside
+   its own box rather than widening the page. `display: block` is what makes
+   a table scrollable at all. */
+.vp-doc .table-wrapper,
+.vp-doc table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
 }
+
+/* In prose the figure owns its vertical rhythm, not the prose image rule. */
+.vp-doc .ok-codefig { margin: var(--ok-s-7) 0; }
+.vp-doc .ok-codefig .ok-codefig__media { margin-block: 0; }
 
 /* The same leak reaches headings and paragraphs. `.vp-doc h3` carries a 55px
    top margin and `.vp-doc p` a 20px block margin, and both out-specify a

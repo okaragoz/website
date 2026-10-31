@@ -173,6 +173,9 @@ export default {
     app.component('SocialIcon', SocialIcon)
     app.component('CodeIndex', CodeIndex)
     app.component('CodeProject', CodeProject)
+    // Articles use it too, so a figure in a research write-up gets the same
+    // sizing, caption and transparent-ground handling as one on a code page.
+    app.component('CodeMedia', CodeMedia)
     app.component('CodeMedia', CodeMedia)
     app.component('Sci', Sci)
     app.component('Lab', Lab)

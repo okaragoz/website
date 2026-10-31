@@ -173,6 +173,15 @@ body {
   margin-top: var(--ok-s-5);
 }
 
+/* A figure placed with the figure component sits at the measure, not at the
+   wider figure column. A plot read alongside the prose that explains it wants
+   to be the same width as that prose; running wider makes it the subject of
+   the page rather than support for it. */
+.content-container:has(.ok-posthead) .vp-doc .ok-codefig {
+  max-width: var(--ok-w-text);
+  margin-inline: auto;
+}
+
 /* Listing + table pages sit at the page width, not the wide width. */
 .ok-wide .VPDoc .container { max-width: var(--ok-w-page) !important; }
 /* …except the research page, whose component owns a wide internal layout. */
