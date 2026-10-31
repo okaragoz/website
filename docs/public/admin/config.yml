@@ -40,7 +40,11 @@ collections:
       - { name: tags, label: Tags, widget: list, required: false }
       - { name: category, label: Category, widget: hidden, default: blog }
       - { name: layout, label: Layout, widget: hidden, default: post }
-      - { name: body, label: Body, widget: markdown }
+      # Raw mode: the article bodies carry figure components, and a
+      # rich-text editor rewrites the HTML it does not recognise. Raw
+      # keeps them intact, and the figure captions stay editable here
+      # as ordinary text inside the caption="..." attribute.
+      - { name: body, label: Body, widget: markdown, modes: ["raw"] }
 
   # ---------- Research writing ----------
   - name: research
@@ -61,7 +65,11 @@ collections:
       - { name: tags, label: Tags, widget: list, required: false, default: ["research"] }
       - { name: category, label: Category, widget: hidden, default: research }
       - { name: layout, label: Layout, widget: hidden, default: post }
-      - { name: body, label: Body, widget: markdown }
+      # Raw mode: the article bodies carry figure components, and a
+      # rich-text editor rewrites the HTML it does not recognise. Raw
+      # keeps them intact, and the figure captions stay editable here
+      # as ordinary text inside the caption="..." attribute.
+      - { name: body, label: Body, widget: markdown, modes: ["raw"] }
 
   # ---------- Pages (one place: page content + the About markdown) ----------
   - name: pages
@@ -80,7 +88,11 @@ collections:
           # VitePress's default `doc` layout, so `layout` is deliberately absent.
           - { name: aside, label: Aside, widget: hidden, default: false }
           - { name: pageClass, label: "Page class", widget: hidden, default: ok-wide }
-          - { name: body, label: Body, widget: markdown }
+          # Raw mode: the article bodies carry figure components, and a
+      # rich-text editor rewrites the HTML it does not recognise. Raw
+      # keeps them intact, and the figure captions stay editable here
+      # as ordinary text inside the caption="..." attribute.
+      - { name: body, label: Body, widget: markdown, modes: ["raw"] }
       # NB: research/index.md and publications.md just render Vue components; their
       # editable content is the JSON entries below (not markdown files). Listing one
       # file in two collections breaks Sveltia saves, so they are not file entries.
@@ -124,6 +136,7 @@ collections:
             fields:
               - { name: slug, label: "URL slug (/code/<slug>)", widget: string }
               - { name: name, label: Name, widget: string }
+              - { name: logo, label: "Logo mark", widget: image, required: false }
               - { name: expansion, label: "What the name stands for", widget: string }
               - { name: tagline, label: Tagline, widget: string }
               - { name: accent, label: "Accent colour (hex)", widget: string }
@@ -136,13 +149,25 @@ collections:
                 fields:
                   - { name: label, label: Label, widget: string }
                   - { name: value, label: Value, widget: string }
+              - { name: architecture, label: "How it is built", widget: text, required: false }
+              - { name: run, label: "How it is run (code block)", widget: text, required: false }
+              - { name: runNote, label: "Note under the code block", widget: text, required: false }
+              # A list, not a single figure: the first is the lead figure on the
+              # project page and both appear on the index card.
               - name: media
-                label: "Figure"
-                widget: object
+                label: "Lead figures"
+                label_singular: Figure
+                widget: list
                 fields:
-                  - { name: src, label: "File (video or GIF)", widget: file }
-                  - { name: type, label: Type, widget: select, options: ["video", "gif"] }
+                  - { name: src, label: "File", widget: file }
+                  - { name: type, label: Type, widget: select, options: ["image", "video", "gif"], default: image }
                   - { name: caption, label: Caption, widget: text }
+                  - { name: w, label: "Width in pixels", widget: number, value_type: int }
+                  - { name: h, label: "Height in pixels", widget: number, value_type: int }
+                  # Declared so a CMS save keeps them. The figure pipeline sets
+                  # these; dropping one puts a white box back on the dark theme.
+                  - { name: cutout, label: "Transparent background (no frame)", widget: boolean, required: false, default: false }
+                  - { name: invert, label: "Line art: flip the ink on dark", widget: boolean, required: false, default: false }
               - name: sections
                 label: "Detail sections"
                 label_singular: Section
@@ -150,6 +175,20 @@ collections:
                 fields:
                   - { name: title, label: "Section title", widget: string }
                   - { name: items, label: "Bullet points", widget: list }
+              - name: gallery
+                label: "Example gallery"
+                label_singular: Figure
+                widget: list
+                required: false
+                fields:
+                  - { name: src, label: "File", widget: file }
+                  - { name: type, label: Type, widget: select, options: ["image", "video", "gif"], default: image }
+                  - { name: caption, label: Caption, widget: text }
+                  - { name: w, label: "Width in pixels", widget: number, value_type: int }
+                  - { name: h, label: "Height in pixels", widget: number, value_type: int }
+                  - { name: cutout, label: "Transparent background (no frame)", widget: boolean, required: false, default: false }
+                  - { name: invert, label: "Line art: flip the ink on dark", widget: boolean, required: false, default: false }
+              - { name: galleryColumns, label: "Gallery columns (1 for wide strips, 3 for square clips)", widget: number, value_type: int, required: false, default: 1 }
               - { name: examples, label: "Worked examples", widget: list }
               - name: links
                 label: Links
@@ -159,8 +198,8 @@ collections:
                   - { name: href, label: URL, widget: string }
                   - { name: kind, label: Style, widget: select, options: ["primary", "ghost"] }
               - { name: citation, label: Citation, widget: text, required: false }
-          - { name: contributionsTitle, label: "Community codes — title", widget: string }
-          - { name: contributionsLede, label: "Community codes — lede", widget: text }
+          - { name: contributionsTitle, label: "Community codes, title", widget: string }
+          - { name: contributionsLede, label: "Community codes, lede", widget: text }
           - name: contributions
             label: "Community codes"
             label_singular: "Code"
@@ -174,7 +213,7 @@ collections:
       - name: lab_content
         label: "Lab Page"
         file: "docs/.vitepress/data/lab.json"
-        description: "The analogue-modelling laboratory page. Add experiment photographs and particle image velocimetry figures under Figures."
+        description: "The analogue-modelling laboratory page: the experiments, the method sections, the apparatus and the crew."
         fields:
           - name: hero
             label: "Hero (top banner)"
@@ -191,26 +230,126 @@ collections:
             fields:
               - { name: label, label: Label, widget: string }
               - { name: value, label: Value, widget: string }
-          - name: gallery
-            label: "Figures"
-            label_singular: Figure
-            widget: list
+          - name: leadFigure
+            label: "Lead figure (beside the spec table)"
+            widget: object
             required: false
             fields:
-              - { name: src, label: "Image or video", widget: file }
+              - { name: src, label: "File", widget: file }
               - { name: type, label: Type, widget: select, options: ["image", "video", "gif"], default: image }
               - { name: caption, label: Caption, widget: text }
               - { name: w, label: "Width in pixels", widget: number, value_type: int }
               - { name: h, label: "Height in pixels", widget: number, value_type: int }
-          - { name: galleryNote, label: "Note about the figures", widget: text, required: false }
+          - { name: experimentsTitle, label: "Experiments, section title", widget: string }
+          - { name: experimentsLede, label: "Experiments, section lede", widget: text }
+          - name: experiments
+            label: "Experiments"
+            label_singular: Experiment
+            widget: list
+            fields:
+              - { name: id, label: "Anchor id (used in the URL)", widget: string }
+              - { name: tag, label: "Tag badge", widget: string }
+              - { name: title, label: Title, widget: string }
+              - { name: body, label: Body, widget: text }
+              - { name: items, label: "Bullet points", widget: list, required: false }
+              - name: figures
+                label: "Figures (right-hand column)"
+                label_singular: Figure
+                widget: list
+                required: false
+                fields:
+                  - { name: src, label: "File", widget: file }
+                  - { name: type, label: Type, widget: select, options: ["image", "video", "gif"], default: image }
+                  - { name: caption, label: Caption, widget: text }
+                  - { name: w, label: "Width in pixels", widget: number, value_type: int }
+                  - { name: h, label: "Height in pixels", widget: number, value_type: int }
+              - name: rig
+                label: "Apparatus panel (optional)"
+                widget: object
+                required: false
+                fields:
+                  - { name: id, label: "Anchor id", widget: string, required: false }
+                  - { name: name, label: "Apparatus name", widget: string }
+                  - { name: role, label: "What it is for", widget: string, required: false }
+                  - { name: body, label: Description, widget: text, required: false }
+                  - name: specs
+                    label: Specifications
+                    label_singular: Row
+                    widget: list
+                    required: false
+                    fields:
+                      - { name: label, label: Label, widget: string }
+                      - { name: value, label: Value, widget: string }
+                  - { name: figures, label: "Extra figures", widget: list, required: false }
+                  - name: figure
+                    label: "Photograph of the apparatus"
+                    widget: object
+                    required: false
+                    fields:
+                      - { name: src, label: "File", widget: file }
+                      - { name: type, label: Type, widget: select, options: ["image", "video", "gif"], default: image }
+                      - { name: caption, label: Caption, widget: text }
+                      - { name: w, label: "Width in pixels", widget: number, value_type: int }
+                      - { name: h, label: "Height in pixels", widget: number, value_type: int }
+          - { name: methodTitle, label: "Method, section title", widget: string }
+          - { name: methodLede, label: "Method, section lede", widget: text }
           - name: sections
-            label: "Sections"
+            label: "Method sections"
             label_singular: Section
             widget: list
             fields:
               - { name: title, label: Title, widget: string }
               - { name: body, label: Body, widget: text }
               - { name: items, label: "Bullet points", widget: list, required: false }
+              - name: figures
+                label: "Figures (right-hand column)"
+                label_singular: Figure
+                widget: list
+                required: false
+                fields:
+                  - { name: src, label: "File", widget: file }
+                  - { name: type, label: Type, widget: select, options: ["image", "video", "gif"], default: image }
+                  - { name: caption, label: Caption, widget: text }
+                  - { name: w, label: "Width in pixels", widget: number, value_type: int }
+                  - { name: h, label: "Height in pixels", widget: number, value_type: int }
+              - name: rig
+                label: "Apparatus panel (optional)"
+                widget: object
+                required: false
+                fields:
+                  - { name: id, label: "Anchor id", widget: string, required: false }
+                  - { name: name, label: "Apparatus name", widget: string }
+                  - { name: role, label: "What it is for", widget: string, required: false }
+                  - { name: body, label: Description, widget: text, required: false }
+                  - name: specs
+                    label: Specifications
+                    label_singular: Row
+                    widget: list
+                    required: false
+                    fields:
+                      - { name: label, label: Label, widget: string }
+                      - { name: value, label: Value, widget: string }
+                  - { name: figures, label: "Extra figures", widget: list, required: false }
+                  - name: figure
+                    label: "Photograph of the apparatus"
+                    widget: object
+                    required: false
+                    fields:
+                      - { name: src, label: "File", widget: file }
+                      - { name: type, label: Type, widget: select, options: ["image", "video", "gif"], default: image }
+                      - { name: caption, label: Caption, widget: text }
+                      - { name: w, label: "Width in pixels", widget: number, value_type: int }
+                      - { name: h, label: "Height in pixels", widget: number, value_type: int }
+          - { name: crewTitle, label: "Lab crew, section title", widget: string }
+          - { name: crewLede, label: "Lab crew, section lede", widget: text }
+          - { name: crewGroupLabel, label: "Group label above the names", widget: string, required: false }
+          - name: crew
+            label: "Lab crew"
+            label_singular: "Member"
+            widget: list
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: role, label: Role, widget: string }
           - name: links
             label: Links
             widget: list
@@ -259,6 +398,7 @@ collections:
         file: "docs/.vitepress/data/research.json"
         description: "Hero, workflow steps, disciplines, the three planet panels, and missions."
         fields:
+          - { name: topics, label: "Topic keywords", widget: list, required: false }
           - name: hero
             label: "Hero (top banner)"
             widget: object
@@ -312,7 +452,9 @@ collections:
                   - { name: label, label: "Category label", widget: string }
                   - { name: name, label: Name, widget: string }
                   - { name: own, label: "One of my own codes", widget: boolean, default: false }
+                  - { name: badge, label: "Badge text", widget: string, required: false }
                   - { name: href, label: "Link (blank = not a link)", widget: string, required: false }
+                  - { name: linkLabel, label: "Link label", widget: string, required: false }
                   - { name: desc, label: Description, widget: text }
           - name: codeBand
             label: "Code band (links to the Code section)"
@@ -321,8 +463,14 @@ collections:
               - { name: eyebrow, label: Eyebrow, widget: string }
               - { name: title, label: Title, widget: string }
               - { name: lede, label: Lede, widget: text }
-              - { name: ctaLabel, label: "Button label", widget: string }
-              - { name: ctaHref, label: "Button link", widget: string }
+              - name: ctas
+                label: Buttons
+                label_singular: Button
+                widget: list
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - { name: href, label: URL, widget: string }
+                  - { name: kind, label: Style, widget: select, options: ["primary", "ghost"], required: false }
           - name: planets
             label: "Planet panels"
             label_singular: "Planet"
@@ -333,6 +481,13 @@ collections:
               - { name: accent, label: "Accent colour (hex)", widget: string }
               - { name: title, label: Title, widget: string }
               - { name: desc, label: Description, widget: text }
+              # The planet artwork. Declared so a CMS save keeps it: Sveltia
+              # drops any key the collection does not list, and dropping these
+              # puts the three planet panels back to empty.
+              - { name: image, label: "Planet image (transparent PNG/WebP)", widget: image, required: false }
+              - { name: imageAlt, label: "Image, alt text", widget: string, required: false }
+              - { name: imageCredit, label: "Image credit", widget: string, required: false }
+              - { name: tabs, label: "Tab labels", widget: list, required: false }
               - name: subtopics
                 label: Subtopics
                 widget: list
@@ -385,6 +540,17 @@ collections:
             fields:
               - { name: text, label: Label, widget: string }
               - { name: link, label: Link, widget: string }
+              # The drawer sub-items. Declared so a CMS save keeps them;
+              # without this, saving the menu flattens Research and Code to
+              # plain links on every phone.
+              - name: items
+                label: "Sub-items (drawer)"
+                label_singular: "Sub-item"
+                widget: list
+                required: false
+                fields:
+                  - { name: text, label: Label, widget: string }
+                  - { name: link, label: Link, widget: string }
           - name: mega
             label: "Desktop menu (with flyout panels)"
             label_singular: "Menu item"

@@ -1,13 +1,14 @@
 {
   "name": "okaragoz-site",
   "version": "1.0.0",
-  "description": "Personal academic website of Dr. Oguzcan Karagoz — planetary scientist",
+  "description": "Personal academic website of Dr. Oguzcan Karagoz \u2014 planetary scientist",
   "type": "module",
   "scripts": {
-    "dev": "vitepress dev docs",
-    "build": "vitepress build docs",
+    "dev": "node scripts/build-posts.mjs && vitepress dev docs",
+    "build": "node scripts/build-posts.mjs && vitepress build docs",
     "preview": "vitepress preview docs",
-    "update:pubs": "node scripts/update-publications.mjs"
+    "update:pubs": "node scripts/update-publications.mjs",
+    "build:posts": "node scripts/build-posts.mjs"
   },
   "devDependencies": {
     "markdown-it-mathjax3": "^4.3.2",
