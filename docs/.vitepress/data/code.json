@@ -1,0 +1,278 @@
+{
+  "hero": {
+    "eyebrow": "Scientific software",
+    "title": "Code",
+    "lede": "The numerical codes behind the modelling work — two I write and maintain, and the community codes I contribute to."
+  },
+  "intro": "Most of my results come out of simulations, so the code is part of the research rather than a tool beside it. Both of my own codes are written in Julia, documented in full, and benchmarked against published reference cases before they are used for science.",
+  "projects": [
+    {
+      "slug": "mileva",
+      "logo": "/images/code/mileva-logo.png",
+      "name": "MILEVA",
+      "expansion": "Mantle Interaction and Lithospheric Evolution in Viscous Annuli",
+      "tagline": "A finite-volume mantle-convection code in Julia.",
+      "accent": "#b4541f",
+      "role": "Author",
+      "facts": [
+        {
+          "label": "Language",
+          "value": "Julia"
+        },
+        {
+          "label": "Method",
+          "value": "Finite volume, staggered grid"
+        },
+        {
+          "label": "Transport",
+          "value": "Lagrangian markers"
+        },
+        {
+          "label": "Geometry",
+          "value": "2-D spherical annulus · 3-D Yin-Yang shell"
+        }
+      ],
+      "summary": "MILEVA simulates thermal and compositional convection in Earth-like and planetary mantles. It solves the coupled Stokes, energy and composition equations on a staggered finite-volume grid — velocities on cell faces, pressure at cell centres — while temperature and composition ride on Lagrangian markers.",
+      "architecture": "A flat-include research code. include/mileva.jl pulls in config/, utils/, markers/, physics/, solvers/ and parallel/; main_SphCon.jl holds the time loop.",
+      "run": "julia --project=. -t 4 examples/annulus_convection_2d.jl 1e4 64",
+      "runNote": "A run is a Julia script: edit three configuration structs — cfg, mat and temp — and call main_SphCon. VTK frames, checkpoints and diagnostics.csv land in cfg.outputDir.",
+      "media": {
+        "src": "/images/code/mileva-plumes3d.gif",
+        "type": "gif",
+        "caption": "Three-dimensional plumes in the Yin-Yang spherical shell at Ra = 10^6.",
+        "w": 480,
+        "h": 480
+      },
+      "sections": [
+        {
+          "title": "Physics",
+          "items": [
+            "Thermochemical Stokes flow with the full deviatoric stress at variable viscosity, in Boussinesq or anelastic form.",
+            "Composite rheology: diffusion and dislocation creep, Arrhenius and Frank-Kamenetskii laws, yielding, viscoelastoplasticity, damage and grain-size evolution.",
+            "Thermal and compositional buoyancy — basalt, depletion, thermochemical piles and phase transitions.",
+            "Partial melting with depletion feedback, eruption, intrusion and heat-pipe cooling.",
+            "Radiogenic heating, fixed or cooling core boundaries, a free surface and isostasy."
+          ]
+        },
+        {
+          "title": "Numerics and solvers",
+          "items": [
+            "Direct solvers including MUMPS in 2-D, geometric multigrid, and MPI domain decomposition.",
+            "Stokes solvers that hold up at viscosity contrasts to 10^18.",
+            "Conservative markers, with the energy budget logged on every run."
+          ]
+        },
+        {
+          "title": "Verification",
+          "items": [
+            "The 2-D annulus is checked against Hernlund & Tackley (2008) and the annulus column of Fleury et al. (2024).",
+            "Conservation identities are checked every run.",
+            "The primordial-material case reproduces reference case M100dD of Gülcher, Ballmer & Tackley (2021)."
+          ]
+        }
+      ],
+      "gallery": [
+        {
+          "src": "/images/code/mileva-geometries.jpg",
+          "type": "image",
+          "caption": "The two geometries MILEVA solves in: the 2-D spherical annulus, and the 3-D Yin-Yang shell built from two overlapping latitude–longitude patches coupled by Schwarz iteration.",
+          "w": 1600,
+          "h": 440
+        },
+        {
+          "src": "/images/code/mileva-stagnant-lid.jpg",
+          "type": "image",
+          "caption": "A stagnant lid failing and regrowing, as a time strip.",
+          "w": 1800,
+          "h": 387
+        },
+        {
+          "src": "/images/code/mileva-primordial.jpg",
+          "type": "image",
+          "caption": "Temperature above a dense primordial layer — reference case M100dD of Gülcher, Ballmer & Tackley (2021).",
+          "w": 1800,
+          "h": 303
+        },
+        {
+          "src": "/images/code/mileva-mars.jpg",
+          "type": "image",
+          "caption": "Convection under Mars-like conditions, from the Mars and Mercury example.",
+          "w": 1800,
+          "h": 387
+        }
+      ],
+      "galleryColumns": 1,
+      "examples": [
+        "Onset of convection",
+        "Isoviscous convection",
+        "Plume from the core-mantle boundary",
+        "Stagnant lid, failing and regrowing",
+        "Primordial material and thermochemical piles",
+        "Continents",
+        "Mars and Mercury",
+        "3-D Yin-Yang plumes"
+      ],
+      "links": [
+        {
+          "label": "Documentation",
+          "href": "https://okaragoz.github.io/MILEVA-docs/",
+          "kind": "primary"
+        }
+      ]
+    },
+    {
+      "slug": "milet",
+      "name": "MILET",
+      "expansion": "Modeling in Lithospheric Evolution Tectonics",
+      "tagline": "A thermomechanical finite-element framework for lithosphere and mantle dynamics.",
+      "accent": "#2f5fa8",
+      "role": "Author",
+      "facts": [
+        {
+          "label": "Language",
+          "value": "Julia, built on Gridap.jl"
+        },
+        {
+          "label": "Method",
+          "value": "Finite element, Taylor–Hood Q2/Q1"
+        },
+        {
+          "label": "Transport",
+          "value": "Marker-in-cell, RK4 advection"
+        },
+        {
+          "label": "Geometry",
+          "value": "2-D and 3-D Cartesian · Projected spherical chunk"
+        }
+      ],
+      "summary": "MILET couples Stokes flow to heat transport on an inf-sup stable Taylor–Hood discretisation, with material carried by markers. It is built for problems where composition, rheology and metamorphic phase change evolve together — lithospheric foundering, delamination, drips and subduction.",
+      "architecture": "Built on Gridap.jl. Runs are driven from main.jl; shipped cases include SolCx, Blankenbach 1a, subduction and a 3-D plume run on the multigrid solver.",
+      "run": "julia --project=. main.jl cases/solcx_fixed.toml",
+      "runNote": "Each simulation is a TOML parameter file merged onto cases/_defaults.toml. Results are written to output/<case>/ and viewed in ParaView.",
+      "media": {
+        "src": "/images/code/milet-subduction.mp4",
+        "type": "video",
+        "caption": "Subduction in 2-D, reproducing Model 1 of Glerum et al. (2018).",
+        "w": 886,
+        "h": 246
+      },
+      "sections": [
+        {
+          "title": "Physics",
+          "items": [
+            "Incompressible Boussinesq and truncated anelastic liquid approximation (TALA) Stokes flow; markers carry composition, temperature, stress, plastic strain, grain size and porosity.",
+            "Visco-elasto-plastic composite creep with Drucker–Prager yield, strain softening and Arrhenius healing.",
+            "Rate-limited divariant metamorphic reactions with reaction-progress softening, and melting with melt weakening.",
+            "McKenzie-type two-phase flow: porous melt migration through a compacting matrix, reducing to single-phase Stokes at zero porosity.",
+            "Grain growth balanced against paleowattmeter reduction, coupled back into the creep mechanisms.",
+            "Shear, adiabatic and radiogenic heating; sticky-air and ALE free surfaces."
+          ]
+        },
+        {
+          "title": "Numerics and solvers",
+          "items": [
+            "Direct (MUMPS) and iterative solvers, including a geometric-multigrid FGMRES solver for 3-D Stokes.",
+            "Picard and Newton nonlinear loops with CFL-limited time stepping.",
+            "Adaptive mesh refinement, checkpoint/restart and VTK output for ParaView."
+          ]
+        },
+        {
+          "title": "Verification",
+          "items": [
+            "SolCx Stokes benchmark (Duretz et al. 2011).",
+            "Blankenbach et al. (1989) case 1a.",
+            "Smoke and benchmark tests shipped under test/."
+          ]
+        }
+      ],
+      "gallery": [
+        {
+          "src": "/images/code/milet-chunk-plumes.mp4",
+          "type": "video",
+          "caption": "Mantle plumes in a 2-D spherical chunk.",
+          "w": 928,
+          "h": 526
+        },
+        {
+          "src": "/images/code/milet-convection3d.mp4",
+          "type": "video",
+          "caption": "Three-dimensional thermal convection in a box at Ra = 10^5.",
+          "w": 652,
+          "h": 664
+        },
+        {
+          "src": "/images/code/milet-ridge-transform.mp4",
+          "type": "video",
+          "caption": "A mid-ocean ridge with a transform in 3-D, showing seafloor dynamic topography.",
+          "w": 1054,
+          "h": 826
+        }
+      ],
+      "galleryColumns": 3,
+      "examples": [
+        "Subduction",
+        "Continental collision",
+        "Continental rifting",
+        "Mid-ocean ridge spreading",
+        "Ridge with a transform (3-D)",
+        "Transform and strike-slip",
+        "Lithospheric drip and delamination",
+        "Eclogite foundering on a Venus plateau",
+        "Stagnant lid and plutonic squishy lid",
+        "Mantle plumes in a spherical chunk",
+        "3-D thermal convection in a box",
+        "Sagduction"
+      ],
+      "links": [
+        {
+          "label": "Documentation",
+          "href": "https://okaragoz.github.io/MILET-docs/",
+          "kind": "primary"
+        },
+        {
+          "label": "Simulations and figure scripts (Zenodo)",
+          "href": "https://doi.org/10.5281/zenodo.20932417",
+          "kind": "ghost"
+        }
+      ],
+      "citation": "Karagoz, O. (2026). A Mantle Viscosity Threshold for Eclogite Foundering on Venus. Journal of Geophysical Research: Planets, in revision."
+    }
+  ],
+  "contributionsTitle": "Community codes",
+  "contributionsLede": "Alongside my own codes I contribute modules, benchmarks and post-processing to established open-source codes in the field.",
+  "contributions": [
+    {
+      "name": "ASPECT",
+      "lang": "C++ · deal.II · Trilinos",
+      "accent": "#5a7aaa",
+      "desc": "Planetary interior contributions: non-Newtonian viscosity laws for stagnant-lid regimes, thermal boundary-condition modules for Venus and Mars, and benchmarks for plume–lithosphere interaction under single-lid conditions.",
+      "tags": [
+        "Viscosity models",
+        "Planetary BCs",
+        "Benchmarks"
+      ]
+    },
+    {
+      "name": "LaMEM",
+      "lang": "C · PETSc · MPI",
+      "accent": "#5a9a60",
+      "desc": "Ice-shell rheology for icy-moon applications, cryogenic extensions of the viscoelastoplastic constitutive laws, parallel scaling benchmarks, and graben and thrust-fault test cases.",
+      "tags": [
+        "Ice rheology",
+        "Parallel scaling",
+        "Icy-moon modules"
+      ]
+    },
+    {
+      "name": "iSALE",
+      "lang": "Fortran · Python",
+      "accent": "#aa6a5a",
+      "desc": "Post-processing for impact melt volume, shock-pressure mapping and tectonic response; equation-of-state tables for planetary silicates and ices; visualisation tools extending pySALEPlot to multi-layer icy targets.",
+      "tags": [
+        "EOS tables",
+        "pySALEPlot",
+        "Icy targets"
+      ]
+    }
+  ]
+}

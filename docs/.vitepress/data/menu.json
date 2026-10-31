@@ -23,6 +23,28 @@
       "link": "/publications"
     },
     {
+      "text": "Code",
+      "link": "/code/",
+      "items": [
+        {
+          "link": "/code/",
+          "text": "Overview"
+        },
+        {
+          "link": "/code/mileva",
+          "text": "MILEVA"
+        },
+        {
+          "link": "/code/milet",
+          "text": "MILET"
+        }
+      ]
+    },
+    {
+      "text": "Lab",
+      "link": "/lab/"
+    },
+    {
       "text": "Blog",
       "link": "/blog/"
     },
@@ -101,6 +123,47 @@
     {
       "text": "Publications",
       "link": "/publications",
+      "columns": []
+    },
+    {
+      "text": "Code",
+      "link": "/code/",
+      "columns": [
+        {
+          "title": "My codes",
+          "links": [
+            {
+              "text": "MILEVA",
+              "link": "/code/mileva",
+              "desc": "Finite-volume mantle convection in Julia"
+            },
+            {
+              "text": "MILET",
+              "link": "/code/milet",
+              "desc": "Finite-element lithosphere and mantle dynamics"
+            }
+          ]
+        },
+        {
+          "title": "Start here",
+          "links": [
+            {
+              "text": "Code overview",
+              "link": "/code/",
+              "desc": "What each code does, and how they differ"
+            },
+            {
+              "text": "Community codes",
+              "link": "/code/#contributions",
+              "desc": "ASPECT, LaMEM and iSALE contributions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Lab",
+      "link": "/lab/",
       "columns": []
     },
     {

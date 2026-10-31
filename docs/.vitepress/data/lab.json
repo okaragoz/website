@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "eyebrow": "Analogue modelling",
+    "title": "Lab",
+    "lede": "Three-dimensional scaled laboratory experiments, where the deformation is produced in front of you rather than solved for."
+  },
+  "intro": "Numerical models are only as good as the physics written into them. The laboratory is where that physics is put in the way of a real material: a scaled, three-dimensional experiment deforms under its own buoyancy and viscosity, and the velocity field is measured rather than prescribed. Running the two side by side is what makes a thermo-mechanical model worth believing.",
+  "facts": [
+    { "label": "Scale", "value": "Three-dimensional, dynamically scaled" },
+    { "label": "Materials", "value": "Polydimethylsiloxane and silicone oils" },
+    { "label": "Measurement", "value": "Particle image velocimetry" },
+    { "label": "Forcing", "value": "Thermally dependent, convection-driven" }
+  ],
+  "sections": [
+    {
+      "title": "Three-dimensional scaled experiments",
+      "body": "The experiments are built in three dimensions, not as a cross-section. Lateral escape, along-strike variation and the way a structure terminates are all part of the result, and none of them survive a two-dimensional box. Each model is dynamically scaled so that the ratios governing the natural system — buoyancy against viscous resistance, and the timescale of deformation against the timescale of thermal diffusion — are reproduced at laboratory size and laboratory duration.",
+      "items": [
+        "Geometry, density and viscosity scaled together, so that a centimetre and an hour in the tank stand for a known distance and time in the planet.",
+        "Boundary conditions imposed on a three-dimensional volume: basal drag, lateral confinement and a free upper surface.",
+        "Repeat runs across the parameter range rather than a single illustrative experiment."
+      ]
+    },
+    {
+      "title": "Materials: polydimethylsiloxane and silicone oils",
+      "body": "The working materials are polydimethylsiloxane and a set of silicone oils. Polydimethylsiloxane behaves as a very nearly Newtonian fluid at the strain rates these experiments run at, which makes it a dependable stand-in for ductile lithosphere and for the deeper, hotter layers beneath it. Blending it, and layering it against silicone oils of different density and viscosity, builds the stratification a planet actually has.",
+      "items": [
+        "Viscosity contrast between layers is the control variable: it sets whether a dense layer drips, founders coherently, or simply spreads.",
+        "Effective viscosities are measured for every batch rather than taken from a datasheet, because they shift with blend ratio, filler content and temperature.",
+        "Density contrasts are tuned with inert fillers, so buoyancy and viscosity can be varied independently."
+      ]
+    },
+    {
+      "title": "Measuring the flow: particle image velocimetry",
+      "body": "The models are seeded with passive tracer particles and imaged through the run, and particle image velocimetry turns those image pairs into a velocity field. That is the point of the method: instead of inferring motion from the final geometry, the full field is recovered while the experiment is still running, which makes strain rate, vorticity and the partitioning of deformation directly measurable.",
+      "items": [
+        "Surface and internal velocity fields recovered through the experiment, not only at its end.",
+        "Strain-rate and vorticity fields derived from the measured velocities, so localisation can be followed as it develops.",
+        "The same quantities a numerical model outputs — which is what makes the two directly comparable."
+      ]
+    },
+    {
+      "title": "Thermally dependent, convection-driven deformation",
+      "body": "Where the process in question is driven by heat, the experiments are run with a thermal boundary condition rather than an imposed velocity. The material's viscosity then depends on its own temperature field, convection organises itself, and the surface deformation is a consequence of that flow instead of something applied at the edge of the box. This is the regime that matters for single-lid planets, where there is no plate boundary to impose motion.",
+      "items": [
+        "Temperature-dependent viscosity, so the cold upper layer stiffens into a lid exactly as it does on a stagnant-lid planet.",
+        "Convection allowed to set its own wavelength and vigour rather than being seeded.",
+        "Deformation at the surface read as the product of the interior flow beneath it."
+      ]
+    },
+    {
+      "title": "Against the thermo-mechanical models",
+      "body": "Each experiment is set up with a numerical counterpart in mind. The laboratory run supplies a measured velocity field under known material properties; the thermo-mechanical model is asked to reproduce it with the same scaled parameters. Where they agree, the numerical rheology is doing its job and can be pushed to planetary conditions the tank cannot reach. Where they disagree, the experiment is usually telling you something is missing from the constitutive law.",
+      "items": [
+        "Measured effective viscosities and velocity fields used as the benchmark, not a qualitative resemblance of the final shape.",
+        "The same scaled parameters driving both, so a mismatch points at the physics rather than at the setup.",
+        "Results fed back into the rheology used in MILEVA and MILET."
+      ]
+    }
+  ],
+  "gallery": [],
+  "galleryNote": "Experiment photographs and particle image velocimetry fields go here.",
+  "links": [
+    { "label": "The numerical side", "href": "/code/", "kind": "ghost" }
+  ]
+}

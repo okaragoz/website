@@ -104,6 +104,121 @@ collections:
           - { name: ctaGhostHref, label: "Secondary button link", widget: string }
           - { name: researchSectionTitle, label: "Research section title", widget: string }
           - { name: blogSectionTitle, label: "Blog section title", widget: string }
+      - name: code_content
+        label: "Code Page"
+        file: "docs/.vitepress/data/code.json"
+        description: "The Code section: MILEVA, MILET, and the community-code contributions."
+        fields:
+          - name: hero
+            label: "Hero (top banner)"
+            widget: object
+            fields:
+              - { name: eyebrow, label: Eyebrow, widget: string }
+              - { name: title, label: Title, widget: string }
+              - { name: lede, label: Lede, widget: text }
+          - { name: intro, label: "Intro paragraph", widget: text }
+          - name: projects
+            label: "My codes"
+            label_singular: "Code"
+            widget: list
+            fields:
+              - { name: slug, label: "URL slug (/code/<slug>)", widget: string }
+              - { name: name, label: Name, widget: string }
+              - { name: expansion, label: "What the name stands for", widget: string }
+              - { name: tagline, label: Tagline, widget: string }
+              - { name: accent, label: "Accent colour (hex)", widget: string }
+              - { name: role, label: "Role badge", widget: string }
+              - { name: summary, label: Summary, widget: text }
+              - name: facts
+                label: "Spec table"
+                label_singular: Row
+                widget: list
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - { name: value, label: Value, widget: string }
+              - name: media
+                label: "Figure"
+                widget: object
+                fields:
+                  - { name: src, label: "File (video or GIF)", widget: file }
+                  - { name: type, label: Type, widget: select, options: ["video", "gif"] }
+                  - { name: caption, label: Caption, widget: text }
+              - name: sections
+                label: "Detail sections"
+                label_singular: Section
+                widget: list
+                fields:
+                  - { name: title, label: "Section title", widget: string }
+                  - { name: items, label: "Bullet points", widget: list }
+              - { name: examples, label: "Worked examples", widget: list }
+              - name: links
+                label: Links
+                widget: list
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - { name: href, label: URL, widget: string }
+                  - { name: kind, label: Style, widget: select, options: ["primary", "ghost"] }
+              - { name: citation, label: Citation, widget: text, required: false }
+          - { name: contributionsTitle, label: "Community codes — title", widget: string }
+          - { name: contributionsLede, label: "Community codes — lede", widget: text }
+          - name: contributions
+            label: "Community codes"
+            label_singular: "Code"
+            widget: list
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: lang, label: "Language / stack", widget: string }
+              - { name: accent, label: "Accent colour (hex)", widget: string }
+              - { name: desc, label: Description, widget: text }
+              - { name: tags, label: Tags, widget: list }
+      - name: lab_content
+        label: "Lab Page"
+        file: "docs/.vitepress/data/lab.json"
+        description: "The analogue-modelling laboratory page. Add experiment photographs and particle image velocimetry figures under Figures."
+        fields:
+          - name: hero
+            label: "Hero (top banner)"
+            widget: object
+            fields:
+              - { name: eyebrow, label: Eyebrow, widget: string }
+              - { name: title, label: Title, widget: string }
+              - { name: lede, label: Lede, widget: text }
+          - { name: intro, label: "Intro paragraph", widget: text }
+          - name: facts
+            label: "Spec table"
+            label_singular: Row
+            widget: list
+            fields:
+              - { name: label, label: Label, widget: string }
+              - { name: value, label: Value, widget: string }
+          - name: gallery
+            label: "Figures"
+            label_singular: Figure
+            widget: list
+            required: false
+            fields:
+              - { name: src, label: "Image or video", widget: file }
+              - { name: type, label: Type, widget: select, options: ["image", "video", "gif"], default: image }
+              - { name: caption, label: Caption, widget: text }
+              - { name: w, label: "Width in pixels", widget: number, value_type: int }
+              - { name: h, label: "Height in pixels", widget: number, value_type: int }
+          - { name: galleryNote, label: "Note about the figures", widget: text, required: false }
+          - name: sections
+            label: "Sections"
+            label_singular: Section
+            widget: list
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: body, label: Body, widget: text }
+              - { name: items, label: "Bullet points", widget: list, required: false }
+          - name: links
+            label: Links
+            widget: list
+            required: false
+            fields:
+              - { name: label, label: Label, widget: string }
+              - { name: href, label: URL, widget: string }
+              - { name: kind, label: Style, widget: select, options: ["primary", "ghost"] }
       - name: news
         label: "News Banner"
         file: "docs/.vitepress/data/news.json"
@@ -182,6 +297,32 @@ collections:
                   - { name: role, label: "Role it plays", widget: string }
                   - { name: body, label: Body, widget: text }
                   - { name: worlds, label: "Worlds it applies to", widget: list }
+          - name: methods
+            label: "Approaches & Tools"
+            widget: object
+            fields:
+              - { name: eyebrow, label: Eyebrow, widget: string }
+              - { name: title, label: Title, widget: string }
+              - { name: lede, label: Lede, widget: text }
+              - name: items
+                label: "Methods and codes"
+                label_singular: "Method"
+                widget: list
+                fields:
+                  - { name: label, label: "Category label", widget: string }
+                  - { name: name, label: Name, widget: string }
+                  - { name: own, label: "One of my own codes", widget: boolean, default: false }
+                  - { name: href, label: "Link (blank = not a link)", widget: string, required: false }
+                  - { name: desc, label: Description, widget: text }
+          - name: codeBand
+            label: "Code band (links to the Code section)"
+            widget: object
+            fields:
+              - { name: eyebrow, label: Eyebrow, widget: string }
+              - { name: title, label: Title, widget: string }
+              - { name: lede, label: Lede, widget: text }
+              - { name: ctaLabel, label: "Button label", widget: string }
+              - { name: ctaHref, label: "Button link", widget: string }
           - name: planets
             label: "Planet panels"
             label_singular: "Planet"

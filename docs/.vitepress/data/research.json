@@ -21,6 +21,9 @@
       "accent": "#C87030",
       "title": "Volcanic Resurfacing & Single-Lid Tectonics",
       "desc": "Venus lacks plate tectonics yet displays a geologically young, heavily resurfaced terrain. I investigate how mantle plumes, coronae, tessera plateaus, and compressional fold belts record the planet's long-term geodynamic evolution, and what Venus reveals about the limits of Earth-like planetary behaviour.",
+      "image": "/images/planets/venus.webp",
+      "imageAlt": "Venus in Magellan radar, the volcanic plains and tessera highlands",
+      "imageCredit": "Magellan radar mosaic with Pioneer Venus data. NASA / JPL-Caltech / USGS.",
       "tabs": [
         "Structural",
         "Tectonics",
@@ -50,6 +53,9 @@
       "accent": "#C44C30",
       "title": "Compressional Tectonics & Thick Lithosphere",
       "desc": "Mars preserves a four-billion-year tectonic record dominated by its anomalously thick, cold lithosphere. Wrinkle ridges, lobate scarps, and compressional fold systems are the dominant structural expressions, recording global contraction, flexural loading, and the temporal evolution of Martian crustal stress.",
+      "image": "/images/planets/mars.webp",
+      "imageAlt": "Mars centred on Valles Marineris, with the Tharsis volcanoes at the limb",
+      "imageCredit": "Viking Orbiter mosaic centred on Valles Marineris and Tharsis. NASA / JPL-Caltech / USGS.",
       "tabs": [
         "Structural",
         "Tectonics",
@@ -79,6 +85,9 @@
       "accent": "#4A6FA5",
       "title": "Ice Shell Tectonics, Impact Cratering & Interior Structure",
       "desc": "Ganymede records a unique episode of extensional ice-shell tectonics, punctuated by some of the solar system's largest impact basins. I study grooved terrain deformation, impact crater morphology via iSALE hydrocode simulations, and the coupling between the subsurface ocean and icy crust: directly relevant to JUICE mission science.",
+      "image": "/images/planets/ganymede.webp",
+      "imageAlt": "Ganymede's dark cratered terrain against the younger grooved terrain",
+      "imageCredit": "Voyager and Galileo global mosaic. NASA / JPL-Caltech / USGS.",
       "tabs": [
         "Structural",
         "Tectonics",
@@ -336,5 +345,61 @@
         "body": "Reproducing the measured geometry in scaled laboratory experiments and finite-element simulations, to test which mechanisms and histories could physically have produced it."
       }
     ]
+  },
+  "methods": {
+    "eyebrow": "Research Methods",
+    "title": "Approaches & Tools",
+    "lede": "Two codes I write myself, the community codes I run alongside them, and the laboratory work that keeps both honest.",
+    "items": [
+      {
+        "label": "Numerical · Mantle convection",
+        "name": "MILEVA",
+        "own": true,
+        "href": "/code/mileva",
+        "desc": "My finite-volume mantle-convection code in Julia, for the 2-D spherical annulus and the 3-D Yin-Yang shell. Thermochemical convection with composite rheology, melting and phase transitions — the tool behind the stagnant-lid and plume work on Venus and Mars."
+      },
+      {
+        "label": "Numerical · Lithosphere dynamics",
+        "name": "MILET",
+        "own": true,
+        "href": "/code/milet",
+        "desc": "My thermomechanical finite-element framework in Julia, built on Gridap.jl. Visco-elasto-plastic lithosphere with metamorphic phase change and two-phase melt migration — used for foundering, delamination, drips and subduction."
+      },
+      {
+        "label": "Physical",
+        "name": "Analogue Modelling",
+        "own": false,
+        "href": "/lab/",
+        "desc": "Three-dimensional scaled laboratory experiments in polydimethylsiloxane and silicone oils, with the velocity field measured by particle image velocimetry. Viscosity contrasts and effective viscosities set the behaviour; thermally dependent, convection-driven runs drive the deformation from the interior."
+      },
+      {
+        "label": "Numerical · Mantle convection",
+        "name": "ASPECT",
+        "own": false,
+        "href": "",
+        "desc": "Finite-element mantle convection in C++. Planetary interior simulations: thermochemical evolution, plume dynamics and lithospheric thickening under single-lid regimes, with contributed viscosity laws and planetary boundary conditions."
+      },
+      {
+        "label": "Numerical · Geomechanics",
+        "name": "LaMEM",
+        "own": false,
+        "href": "",
+        "desc": "Massively parallel staggered-grid finite differences for coupled geodynamic and geomechanical problems. Applied to lithospheric deformation, viscoelastoplastic fault systems and compressional regimes, with contributed ice-shell rheology."
+      },
+      {
+        "label": "Numerical · Impact",
+        "name": "iSALE",
+        "own": false,
+        "href": "",
+        "desc": "Hypervelocity impact hydrocode: shock propagation, melt generation and crater scaling in planetary materials. Applied to multi-ring basins and impact-driven tectonics on icy and rocky targets."
+      }
+    ]
+  },
+  "codeBand": {
+    "eyebrow": "Development",
+    "title": "Numerical geodynamics",
+    "lede": "The modelling here runs on code I write and maintain. MILEVA and MILET are documented in full, benchmarked against published reference cases, and shown with their own simulation output.",
+    "ctaLabel": "Explore the code",
+    "ctaHref": "/code/"
   }
 }

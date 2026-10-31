@@ -19,6 +19,11 @@ import Mesh from './Mesh.vue'
 import MegaMenu from './MegaMenu.vue'
 import OrbitFlow from './OrbitFlow.vue'
 import SocialIcon from './SocialIcon.vue'
+import CodeIndex from './CodeIndex.vue'
+import CodeProject from './CodeProject.vue'
+import CodeMedia from './CodeMedia.vue'
+import Sci from './Sci.vue'
+import Lab from './Lab.vue'
 import './custom.css'
 
 /* ------------------------------------------------------------------
@@ -166,6 +171,11 @@ export default {
     app.component('MegaMenu', MegaMenu)
     app.component('OrbitFlow', OrbitFlow)
     app.component('SocialIcon', SocialIcon)
+    app.component('CodeIndex', CodeIndex)
+    app.component('CodeProject', CodeProject)
+    app.component('CodeMedia', CodeMedia)
+    app.component('Sci', Sci)
+    app.component('Lab', Lab)
   },
   setup() {
     if (import.meta.env.SSR) return
