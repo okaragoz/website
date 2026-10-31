@@ -1,15 +1,27 @@
 {
   "hero": {
-    "eyebrow": "Analogue modelling",
+    "eyebrow": "Planetary Tectonics Analog Modelling",
     "title": "Lab",
     "lede": "Three-dimensional scaled laboratory experiments, where the deformation is produced in front of you rather than solved for."
   },
   "intro": "Numerical models are only as good as the physics written into them. The laboratory is where that physics is put in the way of a real material: a scaled, three-dimensional experiment deforms under its own buoyancy and viscosity, and the velocity field is measured rather than prescribed. Running the two side by side is what makes a thermo-mechanical model worth believing.",
   "facts": [
-    { "label": "Scale", "value": "Three-dimensional, dynamically scaled" },
-    { "label": "Materials", "value": "Polydimethylsiloxane and silicone oils" },
-    { "label": "Measurement", "value": "Particle image velocimetry" },
-    { "label": "Forcing", "value": "Thermally dependent, convection-driven" }
+    {
+      "label": "Scale",
+      "value": "Three-dimensional, dynamically scaled"
+    },
+    {
+      "label": "Materials",
+      "value": "Polydimethylsiloxane and silicone oils"
+    },
+    {
+      "label": "Measurement",
+      "value": "Particle image velocimetry in 2-D and 3-D, with a five-axis robotic arm scanning the surface"
+    },
+    {
+      "label": "Forcing",
+      "value": "Density anomaly standing in for eclogite, and thermally dependent convection"
+    }
   ],
   "sections": [
     {
@@ -31,12 +43,12 @@
       ]
     },
     {
-      "title": "Measuring the flow: particle image velocimetry",
-      "body": "The models are seeded with passive tracer particles and imaged through the run, and particle image velocimetry turns those image pairs into a velocity field. That is the point of the method: instead of inferring motion from the final geometry, the full field is recovered while the experiment is still running, which makes strain rate, vorticity and the partitioning of deformation directly measurable.",
+      "title": "Starting from a density anomaly",
+      "body": "Most of these experiments begin compositionally rather than thermally. A layer is mixed to be denser than the fluid below it, standing in for eclogite: the dense product of a basaltic crust taken through its phase change. Left alone it is unstable, and what follows is the question — whether it drips, founders as a coherent block, or spreads without ever detaching. That outcome is set by the viscosity contrast across the interface and by how fast the dense layer can deform relative to how fast it is loaded.",
       "items": [
-        "Surface and internal velocity fields recovered through the experiment, not only at its end.",
-        "Strain-rate and vorticity fields derived from the measured velocities, so localisation can be followed as it develops.",
-        "The same quantities a numerical model outputs, which is what makes the two directly comparable."
+        "The density contrast is tuned with inert fillers, so it can be varied without changing the viscosity alongside it.",
+        "The same setup covers drip, delamination and foundering: they are the same instability at different viscosity contrasts, not different experiments.",
+        "Surface topography is tracked throughout, because the uplift and subsidence above a founding layer is what a planet actually shows us."
       ]
     },
     {
@@ -49,6 +61,47 @@
       ]
     },
     {
+      "title": "Measuring the flow: particle image velocimetry",
+      "body": "The models are seeded with passive tracer particles and imaged through the run, and particle image velocimetry turns those image pairs into a velocity field. That is the point of the method: instead of inferring motion from the final geometry, the full field is recovered while the experiment is still running, which makes strain rate, vorticity and the partitioning of deformation directly measurable.",
+      "items": [
+        "Surface and internal velocity fields recovered through the experiment, not only at its end.",
+        "Strain-rate and vorticity fields derived from the measured velocities, so localisation can be followed as it develops.",
+        "The same quantities a numerical model outputs, which is what makes the two directly comparable."
+      ],
+      "rig": {
+        "id": "piv-rig",
+        "name": "Particle image velocimetry",
+        "role": "Analogue tectonics · strain measurement",
+        "body": "Stereo imaging of the model surface and section, from which the velocity field and the strain are computed. A five-axis robotic arm scans the surface alongside, so the topography is measured rather than inferred from the images. The high-speed camera covers events too quick to resolve at ordinary frame rates; the stereo pair carries the three-dimensional measurement.",
+        "specs": [
+          {
+            "label": "High-speed camera",
+            "value": "Phantom VEO E-310 L, 3200 Hz"
+          },
+          {
+            "label": "Stereo cameras",
+            "value": "LaVision, two sCMOS at 5.5 MPx, 50 Hz"
+          },
+          {
+            "label": "Analysis",
+            "value": "2-D and 3-D strain software"
+          },
+          {
+            "label": "Surface scanning",
+            "value": "Five-axis robotic arm"
+          }
+        ],
+        "figures": [],
+        "figure": {
+          "src": "/images/lab/piv-rig.jpg",
+          "type": "image",
+          "w": 1400,
+          "h": 933,
+          "caption": "The particle image velocimetry setup."
+        }
+      }
+    },
+    {
       "title": "Against the thermo-mechanical models",
       "body": "Each experiment is set up with a numerical counterpart in mind. The laboratory run supplies a measured velocity field under known material properties; the thermo-mechanical model is asked to reproduce it with the same scaled parameters. Where they agree, the numerical rheology is doing its job and can be pushed to planetary conditions the tank cannot reach. Where they disagree, the experiment is usually telling you something is missing from the constitutive law.",
       "items": [
@@ -58,9 +111,152 @@
       ]
     }
   ],
-  "gallery": [],
-  "galleryNote": "Experiment photographs and particle image velocimetry fields go here.",
   "links": [
-    { "label": "The numerical side", "href": "/code/", "kind": "ghost" }
-  ]
+    {
+      "label": "The numerical side",
+      "href": "/code/",
+      "kind": "ghost"
+    }
+  ],
+  "experimentsTitle": "Experiments",
+  "experimentsLede": "Three families of run, separated by what drives them. The first two are density-driven and ask what becomes of a layer too dense to stay where it is; the third is kinematic, and asks how shortening is taken up.",
+  "experiments": [
+    {
+      "id": "drip",
+      "tag": "Density-driven",
+      "title": "Lithospheric drip",
+      "body": "Where the contrast is high the layer pinches into a narrow drip. The run is followed from the first perturbation through necking to detachment, which is the moment that decides whether the dense material is lost to the interior or stays hanging from the layer that made it.",
+      "items": [
+        "Growth rate and final drip diameter measured against the viscosity contrast across the interface.",
+        "Detachment either completes or stalls; both outcomes are recorded, since a stalled drip is its own result.",
+        "Surface topography tracked throughout, because uplift and subsidence above the drip is what a planet shows."
+      ],
+      "figures": [
+        {
+          "src": "/images/lab/drip-still.jpg",
+          "type": "image",
+          "w": 900,
+          "h": 675,
+          "caption": "A drip part-way down, photographed in another run."
+        },
+        {
+          "src": "/images/lab/drip-timelapse.gif",
+          "type": "gif",
+          "w": 360,
+          "h": 340,
+          "caption": "A drip at a different viscosity contrast, as a time-lapse: the instability grows, necks and detaches."
+        }
+      ]
+    },
+    {
+      "id": "foundering",
+      "tag": "Density-driven",
+      "title": "Foundering across a layer",
+      "body": "Lower the contrast, or let the whole layer go at once, and the behaviour changes: the dense material comes away as a coherent sheet, or as several instabilities competing for the material feeding them. In three dimensions that competition is visible; a cross-section would show one instability and miss it entirely.",
+      "items": [
+        "Spacing and number of drips measured across the full layer rather than along a single section.",
+        "Drips that merge, and drips starved by a neighbour, are both ordinary outcomes here.",
+        "The same apparatus covers drip, delamination and coherent foundering: one instability at different viscosity contrasts."
+      ],
+      "figures": [
+        {
+          "src": "/images/lab/drip-column.jpg",
+          "type": "image",
+          "w": 1100,
+          "h": 1467,
+          "caption": "Sheet-like foundering: the dense layer descends as a coherent curtain rather than pinching into a narrow drip. Which of the two happens is set by the viscosity contrast across the interface."
+        },
+        {
+          "src": "/images/lab/multiple-drips.jpg",
+          "type": "image",
+          "w": 1000,
+          "h": 1334,
+          "caption": "Several instabilities developing across the layer at once, with one already detached and pooled at the base of the tank."
+        }
+      ]
+    },
+    {
+      "id": "shortening",
+      "tag": "Shortening",
+      "title": "Mountain building",
+      "body": "Not every run is density-driven. Layered material put under progressive shortening on the deformation apparatus builds a thrust wedge, and the question becomes how that shortening is distributed: which thrusts take it up, in what order they step forward, and what the surface does above them.",
+      "items": [
+        "Passive markers through the section record the internal deformation, not only the surface expression.",
+        "Thrust sequence and spacing read directly off the section as the wedge grows.",
+        "Layer strength and thickness varied between runs to change how the wedge partitions the shortening."
+      ],
+      "figures": [
+        {
+          "src": "/images/lab/mountain-building.gif",
+          "type": "gif",
+          "w": 640,
+          "h": 287,
+          "caption": "Layered analogue material under progressive shortening, building a thrust wedge. The markers scattered through the section record how the deformation is taken up inside it.",
+          "wide": true
+        }
+      ],
+      "rig": {
+        "id": "deformation-rig",
+        "name": "Deformation apparatus after Hofmann",
+        "role": "Analogue tectonics · thermomechanical deformation",
+        "body": "A driven box that shortens or extends the model at a controlled rate while holding a temperature gradient across it, so that deformation and the thermal state evolve together rather than one being imposed on a fixed version of the other.",
+        "specs": [
+          {
+            "label": "Drive velocity",
+            "value": "8 to 40 µm/s"
+          },
+          {
+            "label": "Base temperature",
+            "value": "up to 150 °C"
+          },
+          {
+            "label": "Surface temperature",
+            "value": "20 to 80 °C"
+          }
+        ],
+        "figures": [],
+        "figure": {
+          "src": "/images/lab/deformation-rig.jpg",
+          "type": "image",
+          "w": 1400,
+          "h": 933,
+          "caption": "The deformation apparatus after Hofmann."
+        }
+      }
+    }
+  ],
+  "methodTitle": "Method",
+  "methodLede": "How the experiments are built, measured and checked.",
+  "crewTitle": "Lab crew",
+  "crewLede": "The experiments are not a one-person job. The lab runs on:",
+  "crew": [
+    {
+      "name": "Mandira N. Nagarsenkar",
+      "role": "Robotics"
+    },
+    {
+      "name": "Noah Kittel",
+      "role": "MSc student"
+    },
+    {
+      "name": "Gordon Mette",
+      "role": "Lab technician"
+    },
+    {
+      "name": "Dagmar Flemming",
+      "role": "Lab technician"
+    },
+    {
+      "name": "Nils Einfeld",
+      "role": "Bachelor student"
+    }
+  ],
+  "crewGroupLabel": "Current",
+  "leadFigure": {
+    "src": "/images/lab/setup-rig.jpg",
+    "type": "image",
+    "w": 1300,
+    "h": 1330,
+    "caption": "The tank under its lighting, with the cameras that supply the image pairs."
+  }
 }

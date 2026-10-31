@@ -1,27 +1,30 @@
 <script setup>
 /*
-  The laboratory side of the work: three-dimensional scaled analogue
-  experiments. Content lives in data/lab.json (CMS: Pages → Lab Page).
+  The laboratory: three-dimensional scaled analogue experiments.
 
-  The gallery renders only once there are figures in the data, so the page
-  reads as finished while the experiment photographs are still being chosen.
+  Built on the same template as the code pages: a lead row carrying the
+  summary and the specification beside one figure, then full-width prose with
+  its figures side by side beneath it. Figures in a row share a tile so they
+  line up, and none is ever drawn larger than the file actually is.
+
+  Content lives in data/lab.json (CMS: Pages → Lab Page).
 */
-import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
+import { computed } from 'vue'
 import labData from '../data/lab.json'
 import PageHero from './PageHero.vue'
 import CodeMedia from './CodeMedia.vue'
 
 const { hero, intro, facts, sections, links } = labData
-const gallery = computed(() => labData.gallery || [])
+const experiments = computed(() => labData.experiments || [])
+const crew = computed(() => labData.crew || [])
 
-const narrow = ref(false)
-function sync() { narrow.value = window.innerWidth < 760 }
-onMounted(() => { sync(); window.addEventListener('resize', sync) })
-onBeforeUnmount(() => window.removeEventListener('resize', sync))
+/* Figures sit in a row under the prose. Up to three share a tile so their
+   edges line up; a figure marked wide takes the row to itself. */
+const sideFigs = (figs) => (figs || []).filter((f) => !f.wide)
+const wideFigs = (figs) => (figs || []).filter((f) => f.wide)
+const cols = (figs) => Math.min(sideFigs(figs).length, 3) || 1
+const tile = (figs) => (cols(figs) > 1 ? '4 / 3' : '')
 
-const cols = computed(() => (narrow.value ? 1 : Math.min(gallery.value.length, 3) || 1))
-
-/* Section headings double as anchors, so the menu can point at one. */
 function slug(t) {
   return t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 }
@@ -32,27 +35,117 @@ function slug(t) {
   <PageHero :eyebrow="hero.eyebrow" :title="hero.title" :lede="hero.lede" />
 
   <div class="ok-lab__lead">
-    <p class="ok-lab__intro">{{ intro }}</p>
-    <dl class="ok-lab__facts">
-      <div v-for="f in facts" :key="f.label" class="ok-lab__row">
-        <dt class="ok-lab__k">{{ f.label }}</dt>
-        <dd class="ok-lab__v">{{ f.value }}</dd>
-      </div>
-    </dl>
+    <div class="ok-lab__leadtext">
+      <p class="ok-lab__intro">{{ intro }}</p>
+      <dl class="ok-lab__facts">
+        <div v-for="f in facts" :key="f.label" class="ok-lab__row">
+          <dt class="ok-lab__k">{{ f.label }}</dt>
+          <dd class="ok-lab__v">{{ f.value }}</dd>
+        </div>
+      </dl>
+    </div>
+    <div v-if="labData.leadFigure" class="ok-lab__leadfig">
+      <CodeMedia :src="labData.leadFigure.src" :type="labData.leadFigure.type || 'image'"
+                 :caption="labData.leadFigure.caption"
+                 :w="labData.leadFigure.w" :h="labData.leadFigure.h" />
+    </div>
   </div>
 
-  <section v-if="gallery.length" class="ok-lab__sec">
-    <div class="ok-lab__gallery" :style="{ '--ok-gal-cols': cols }">
-      <CodeMedia v-for="g in gallery" :key="g.src" :src="g.src" :type="g.type || 'image'"
-                 :caption="g.caption" :w="g.w" :h="g.h" :tile="cols > 1 ? '4 / 3' : ''" />
-    </div>
+  <!-- ── What the lab runs ── -->
+  <section v-if="experiments.length" class="ok-lab__part" id="experiments">
+    <h2 class="ok-lab__parth">{{ labData.experimentsTitle }}</h2>
+    <p class="ok-lab__partlede">{{ labData.experimentsLede }}</p>
+
+    <article v-for="e in experiments" :key="e.id" :id="e.id" class="ok-lab__entry">
+      <div class="ok-lab__text">
+          <span class="ok-lab__tag">{{ e.tag }}</span>
+        <h3 class="ok-lab__title">{{ e.title }}</h3>
+        <p class="ok-lab__body">{{ e.body }}</p>
+        <ul v-if="e.items && e.items.length" class="ok-lab__list">
+          <li v-for="(it, i) in e.items" :key="i">{{ it }}</li>
+        </ul>
+        <aside v-if="e.rig" class="ok-lab__rig">
+          <span class="ok-lab__rigeyebrow">Run on</span>
+          <h4 class="ok-lab__rigname">{{ e.rig.name }}</h4>
+          <div class="ok-lab__rigbody">
+            <dl class="ok-lab__facts">
+              <div v-for="r in e.rig.specs" :key="r.label" class="ok-lab__row">
+                <dt class="ok-lab__k">{{ r.label }}</dt>
+                <dd class="ok-lab__v">{{ r.value }}</dd>
+              </div>
+            </dl>
+            <CodeMedia v-if="e.rig.figure" :src="e.rig.figure.src"
+                       :type="e.rig.figure.type || 'image'" :caption="e.rig.figure.caption"
+                       :w="e.rig.figure.w" :h="e.rig.figure.h" />
+          </div>
+        </aside>
+      </div>
+      <div v-if="sideFigs(e.figures).length" class="ok-lab__figs"
+           :style="{ '--ok-lab-cols': cols(e.figures) }">
+        <CodeMedia v-for="g in sideFigs(e.figures)" :key="g.src"
+                   :src="g.src" :type="g.type || 'image'" :caption="g.caption"
+                   :w="g.w" :h="g.h" :plate="!!g.plate" :tile="tile(e.figures)" />
+      </div>
+      <div v-if="wideFigs(e.figures).length" class="ok-lab__wide">
+        <CodeMedia v-for="g in wideFigs(e.figures)" :key="g.src"
+                   :src="g.src" :type="g.type || 'image'" :caption="g.caption"
+                   :w="g.w" :h="g.h" />
+      </div>
+    </article>
   </section>
 
-  <section v-for="s in sections" :key="s.title" :id="slug(s.title)" class="ok-lab__sec">
-    <h2 class="ok-lab__h2">{{ s.title }}</h2>
-    <p class="ok-lab__body">{{ s.body }}</p>
-    <ul v-if="s.items && s.items.length" class="ok-lab__list">
-      <li v-for="(it, i) in s.items" :key="i">{{ it }}</li>
+  <!-- ── How it is done ── -->
+  <section class="ok-lab__part" id="method">
+    <h2 class="ok-lab__parth">{{ labData.methodTitle }}</h2>
+    <p class="ok-lab__partlede">{{ labData.methodLede }}</p>
+
+    <section v-for="s in sections" :key="s.title" :id="slug(s.title)" class="ok-lab__entry">
+      <div class="ok-lab__text">
+          <h3 class="ok-lab__title">{{ s.title }}</h3>
+        <p class="ok-lab__body">{{ s.body }}</p>
+        <ul v-if="s.items && s.items.length" class="ok-lab__list">
+          <li v-for="(it, i) in s.items" :key="i">{{ it }}</li>
+        </ul>
+        <aside v-if="s.rig" class="ok-lab__rig">
+          <span class="ok-lab__rigeyebrow">Measured with</span>
+          <h4 class="ok-lab__rigname">{{ s.rig.name }}</h4>
+          <div class="ok-lab__rigbody">
+            <dl class="ok-lab__facts">
+              <div v-for="r in s.rig.specs" :key="r.label" class="ok-lab__row">
+                <dt class="ok-lab__k">{{ r.label }}</dt>
+                <dd class="ok-lab__v">{{ r.value }}</dd>
+              </div>
+            </dl>
+            <CodeMedia v-if="s.rig.figure" :src="s.rig.figure.src"
+                       :type="s.rig.figure.type || 'image'" :caption="s.rig.figure.caption"
+                       :w="s.rig.figure.w" :h="s.rig.figure.h" />
+          </div>
+        </aside>
+      </div>
+      <div v-if="sideFigs(s.figures).length" class="ok-lab__figs"
+           :style="{ '--ok-lab-cols': cols(s.figures) }">
+        <CodeMedia v-for="g in sideFigs(s.figures)" :key="g.src"
+                   :src="g.src" :type="g.type || 'image'" :caption="g.caption"
+                   :w="g.w" :h="g.h" :plate="!!g.plate" :tile="tile(s.figures)" />
+      </div>
+      <div v-if="wideFigs(s.figures).length" class="ok-lab__wide">
+        <CodeMedia v-for="g in wideFigs(s.figures)" :key="g.src"
+                   :src="g.src" :type="g.type || 'image'" :caption="g.caption"
+                   :w="g.w" :h="g.h" />
+      </div>
+    </section>
+  </section>
+
+  <!-- ── Who runs it ── -->
+  <section v-if="crew.length" class="ok-lab__part" id="crew">
+    <h2 class="ok-lab__parth">{{ labData.crewTitle }}</h2>
+    <p class="ok-lab__partlede">{{ labData.crewLede }}</p>
+    <p v-if="labData.crewGroupLabel" class="ok-lab__crewlabel">{{ labData.crewGroupLabel }}</p>
+    <ul class="ok-lab__crew">
+      <li v-for="c in crew" :key="c.name" class="ok-lab__member">
+        <span class="ok-lab__membername">{{ c.name }}</span>
+        <span class="ok-lab__memberrole">{{ c.role }}</span>
+      </li>
     </ul>
   </section>
 
@@ -68,52 +161,96 @@ function slug(t) {
 </template>
 
 <style scoped>
+/* ── The template ──
+   A lead row carrying the summary and the specification beside one figure,
+   then full-width prose with its figures in a row beneath. Vertical rhythm
+   steps between neighbours in the site's Fibonacci scale (13, 21, 34, 55, 89). */
 .ok-lab__lead {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
   gap: var(--ok-s-7);
   align-items: start;
   margin-top: var(--ok-s-7);
 }
-@media (max-width: 860px) { .ok-lab__lead { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-7); } }
+.ok-lab__leadtext, .ok-lab__leadfig { min-width: 0; }
+@media (max-width: 860px) {
+  /* Figure first on a phone: a screenful of prose above it would push it out
+     of view before anyone saw it. */
+  .ok-lab__lead { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-6); }
+  .ok-lab__leadfig { order: -1; }
+}
+.ok-lab__text { min-width: 0; max-width: 72ch; }
 
-.ok-lab__intro { margin: 0; font-size: var(--ok-t-body); line-height: 1.78; color: var(--ok-ink-2); }
+.ok-lab__intro { margin: 0 0 var(--ok-s-7); font-size: var(--ok-t-body); line-height: 1.78; color: var(--ok-ink-2); }
 
+/* ── Spec tables ── */
 .ok-lab__facts { margin: 0; }
 .ok-lab__row {
   display: grid;
-  grid-template-columns: 104px minmax(0, 1fr);
+  grid-template-columns: 124px minmax(0, 1fr);
   gap: var(--ok-s-4);
   padding: 10px 0;
   border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
 }
 .ok-lab__row:last-child { border-bottom: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; }
-.ok-lab__k { font-size: var(--ok-t-caption); color: var(--ok-ink-3); margin: 0; }
-.ok-lab__v { font-size: var(--ok-t-body-sm); color: var(--ok-ink); margin: 0; }
+.ok-lab__k { font-size: var(--ok-t-caption); color: var(--ok-ink-3); margin: 0; line-height: 1.5; }
+.ok-lab__v { font-size: var(--ok-t-body-sm); color: var(--ok-ink); margin: 0; line-height: 1.5; }
+@media (max-width: 520px) { .ok-lab__row { grid-template-columns: minmax(0, 1fr); gap: 2px; } }
 
-.ok-lab__gallery {
-  display: grid;
-  grid-template-columns: repeat(var(--ok-gal-cols, 1), minmax(0, 1fr));
-  gap: var(--ok-s-5) var(--ok-s-4);
-  align-items: start;
-}
-@media (max-width: 760px) { .ok-lab__gallery { grid-template-columns: minmax(0, 1fr); } }
-
-.ok-lab__sec { margin-top: var(--ok-band, 96px); scroll-margin-top: 90px; }
-.ok-lab__h2 {
-  font-family: var(--ok-font-ui);
-  font-size: clamp(20px, 2.2vw, 26px);
-  font-weight: 600;
-  letter-spacing: -.02em;
+/* ── The three parts ── */
+.ok-lab__part { margin-top: var(--ok-band, 96px); scroll-margin-top: 90px; }
+.ok-lab__parth {
+  font-family: var(--ok-font-display);
+  font-size: clamp(26px, 3.2vw, 36px);
+  font-weight: 300;
+  letter-spacing: var(--ok-track-md, -.02em);
   color: var(--ok-ink);
-  margin: 0 0 var(--ok-s-4);
+  margin: 0;
 }
-.ok-lab__body { font-size: var(--ok-t-body-sm); line-height: 1.78; color: var(--ok-ink-2); margin: 0; max-width: 72ch; }
+.ok-lab__partlede {
+  margin: var(--ok-s-4) 0 0;
+  max-width: 62ch;
+  font-size: var(--ok-t-body-sm);
+  line-height: 1.75;
+  color: var(--ok-ink-3);
+}
 
-.ok-lab__list { margin: var(--ok-s-5) 0 0; padding: 0; list-style: none; max-width: 72ch; }
+/* ── One entry ── */
+.ok-lab__entry {
+  margin-top: var(--ok-s-8, 89px);
+  padding-top: var(--ok-s-7);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
+  scroll-margin-top: 90px;
+}
+/* The tag sits above the title, so the title starts at the gutter like every
+   other block rather than being indented by the badge beside it. */
+.ok-lab__tag {
+  display: inline-block;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: .02em;
+  color: var(--ok-primary-ink);
+  border: 1px solid currentColor; border-radius: var(--ok-r-pill);
+  padding: 1px 10px;
+  margin-bottom: var(--ok-s-3);
+}
+.ok-lab__title {
+  font-family: var(--ok-font-ui);
+  font-size: clamp(19px, 2.1vw, 24px);
+  font-weight: 600; letter-spacing: -.02em;
+  color: var(--ok-ink); margin: 0;
+}
+.ok-lab__body {
+  margin: var(--ok-s-4) 0 0;
+  font-size: var(--ok-t-body-sm);
+  line-height: 1.78;
+  color: var(--ok-ink-2);
+}
+
+/* The marker hangs in the gutter, so list text lines up with the paragraph
+   above it on both edges instead of running wider on the right. */
+.ok-lab__list { margin: var(--ok-s-6) 0 0; padding: 0; list-style: none; }
 .ok-lab__list li {
   position: relative;
-  padding: 12px 0 12px 22px;
+  padding: 12px 0;
   border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   font-size: var(--ok-t-body-sm);
   line-height: 1.7;
@@ -123,10 +260,80 @@ function slug(t) {
 .ok-lab__list li::before {
   content: "";
   position: absolute;
-  left: 2px; top: 20px;
+  left: -16px; top: 20px;
   width: 6px; height: 1px;
   background: var(--ok-hairline-strong);
 }
+@media (max-width: 560px) {
+  .ok-lab__list li { padding-left: 16px; }
+  .ok-lab__list li::before { left: 0; }
+}
+
+/* ── The machine a run is made on, stated beside the run ── */
+.ok-lab__rig {
+  margin-top: var(--ok-s-6);
+  padding: var(--ok-s-5);
+  border: 1px solid var(--ok-hairline);
+  border-radius: var(--ok-r-lg);
+  background: var(--ok-canvas-soft);
+}
+.ok-lab__rigeyebrow { font-size: var(--ok-t-caption); color: var(--ok-ink-3); }
+.ok-lab__rigname {
+  font-family: var(--ok-font-ui);
+  font-size: var(--ok-t-body-sm); font-weight: 600; letter-spacing: -.01em;
+  color: var(--ok-ink); margin: 4px 0 var(--ok-s-4);
+}
+.ok-lab__rig .ok-lab__row { padding: 7px 0; }
+/* Numbers and the machine they belong to, divided at φ. */
+.ok-lab__rigbody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.618fr);
+  gap: var(--ok-s-6);
+  align-items: start;
+}
+@media (max-width: 760px) { .ok-lab__rigbody { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-5); } }
+
+/* ── Figures: a row under the prose ── */
+.ok-lab__figs {
+  margin-top: var(--ok-s-7);
+  display: grid;
+  grid-template-columns: repeat(var(--ok-lab-cols, 1), minmax(0, 1fr));
+  gap: var(--ok-s-5) var(--ok-s-4);
+  align-items: start;
+}
+@media (max-width: 760px) { .ok-lab__figs { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-6); } }
+.ok-lab__wide { margin-top: var(--ok-s-7); display: grid; gap: var(--ok-s-6); }
+
+/* ── Crew ── */
+.ok-lab__crewlabel {
+  margin: var(--ok-s-6) 0 0;
+  font-size: var(--ok-t-caption);
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ok-ink-3);
+}
+/* One row across the measure; it folds only when the names would not fit. */
+.ok-lab__crew {
+  margin: var(--ok-s-4) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0 var(--ok-s-5);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
+}
+@media (max-width: 1000px) { .ok-lab__crew { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .ok-lab__crew { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .ok-lab__crew { grid-template-columns: minmax(0, 1fr); } }
+.ok-lab__member {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: var(--ok-s-4) 0;
+}
+.ok-lab__membername { font-size: var(--ok-t-body-sm); color: var(--ok-ink); }
+.ok-lab__memberrole { font-size: var(--ok-t-caption); color: var(--ok-ink-3); }
 
 .ok-lab__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ok-s-5); margin-top: var(--ok-band, 96px); }
 </style>

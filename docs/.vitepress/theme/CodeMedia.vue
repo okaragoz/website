@@ -30,6 +30,8 @@ const props = defineProps({
   cap: { type: Number, default: 0 },         // max rendered height, px
   tile: { type: String, default: '' },       // fixed aspect, e.g. '4 / 3'
   fill: { type: Boolean, default: false },   // take height from the row instead
+  plate: { type: Boolean, default: false },  // figure is drawn on white
+  invert: { type: Boolean, default: false }, // line art: flip it for dark
 })
 
 const reduce = ref(false)
@@ -53,8 +55,15 @@ const style = computed(() => {
   }
   // In a tiled row every figure gets the same box and is fitted inside it, so
   // clips of different aspect still line up. Scaling each to its own ratio
-  // would leave a ragged row of mismatched heights.
-  if (props.tile) return { aspectRatio: props.tile, objectFit: 'contain' }
+  // would leave a ragged row of mismatched heights. The tile still may not
+  // draw the file larger than it is.
+  if (props.tile) {
+    return {
+      aspectRatio: props.tile,
+      objectFit: 'contain',
+      ...(props.w ? { maxWidth: props.w + 'px' } : {}),
+    }
+  }
   if (!props.w || !props.h) return null
   const byCap = props.cap ? (props.cap * props.w) / props.h : Infinity
   return { maxWidth: Math.round(Math.min(props.w, byCap)) + 'px', aspectRatio: `${props.w} / ${props.h}` }
@@ -62,7 +71,8 @@ const style = computed(() => {
 </script>
 
 <template>
-  <figure class="ok-codefig" :class="{ 'ok-codefig--fill': fill }">
+  <figure class="ok-codefig"
+          :class="{ 'ok-codefig--fill': fill, 'ok-codefig--plate': plate, 'ok-codefig--invert': invert }">
     <video
       v-if="type === 'video'"
       class="ok-codefig__media"
@@ -102,6 +112,25 @@ const style = computed(() => {
   background: var(--ok-canvas-soft);
   border: 1px solid var(--ok-hairline);
   border-radius: var(--ok-r-lg);
+}
+/* Plots and diagrams are drawn on white. Dropped straight onto a dark page
+   they read as slabs cut out of it, so on dark they sit on a deliberate white
+   plate with its own padding: the white becomes part of the figure rather
+   than a hole in the page. Photographs, which carry their own ground, are
+   left alone. */
+/* Line art is only ink on paper: inverting the luminance and rotating the hue
+   back puts white lines on the dark page with their colours intact, which
+   reads as part of the page rather than a lightbox cut into it. Colour plots
+   must never take this path — it would corrupt the scale they are read by. */
+.dark .ok-codefig--invert .ok-codefig__media {
+  filter: invert(1) hue-rotate(180deg);
+  background: none;
+  border-color: rgba(255, 255, 255, .14);
+}
+.dark .ok-codefig--plate .ok-codefig__media {
+  background: #fff;
+  padding: var(--ok-s-4);
+  border-color: rgba(255, 255, 255, .16);
 }
 /* Filling a row, the frame would be drawn around the letterbox rather than
    around the picture, so the figure stands on its own instead. */

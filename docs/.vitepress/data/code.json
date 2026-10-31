@@ -86,35 +86,39 @@
           "type": "image",
           "caption": "The four geometries MILEVA solves in: the 2-D spherical and cylindrical annulus, the 3-D spherical chunk, and the 3-D Yin-Yang sphere built from two overlapping latitude–longitude patches coupled by Schwarz iteration.",
           "w": 1600,
-          "h": 440
+          "h": 440,
+          "invert": true
         },
         {
-          "src": "/images/code/mileva-annulus-2d.gif",
+          "src": "/images/code/mileva-hero.webp",
           "type": "gif",
-          "caption": "A plume rising from the core-mantle boundary in the 2-D spherical annulus.",
+          "caption": "MILEVA's own mark: a cutaway of the spherical annulus the code solves in.",
           "w": 400,
-          "h": 314
+          "h": 400
         },
         {
           "src": "/images/code/mileva-stagnant-lid.jpg",
           "type": "image",
           "caption": "A stagnant lid failing and regrowing, as a time strip.",
           "w": 1800,
-          "h": 387
+          "h": 387,
+          "plate": true
         },
         {
           "src": "/images/code/mileva-primordial.jpg",
           "type": "image",
           "caption": "Temperature above a dense primordial layer. Reference case M100dD of Gülcher, Ballmer & Tackley (2021).",
           "w": 1800,
-          "h": 303
+          "h": 303,
+          "plate": true
         },
         {
           "src": "/images/code/mileva-mars.jpg",
           "type": "image",
           "caption": "Convection under Mars-like conditions, from the Mars and Mercury example.",
           "w": 1800,
-          "h": 387
+          "h": 387,
+          "plate": true
         }
       ],
       "galleryColumns": 1,

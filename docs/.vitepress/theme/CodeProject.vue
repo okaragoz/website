@@ -76,7 +76,7 @@ const hero = computed(() => p.value?.media?.[0] || {})
     <h2 class="ok-codeproj__h2">From the example gallery</h2>
     <div class="ok-codeproj__gallery" :style="{ '--ok-gal-cols': cols }">
       <CodeMedia v-for="g in p.gallery" :key="g.src" :src="g.src" :type="g.type" :caption="g.caption"
-                 :w="g.w" :h="g.h" :cap="cols > 1 ? 0 : galleryCap" :tile="cols > 1 ? '4 / 3' : ''" />
+                 :w="g.w" :h="g.h" :plate="!!g.plate" :invert="!!g.invert" :cap="cols > 1 ? 0 : galleryCap" :tile="cols > 1 ? '4 / 3' : ''" />
     </div>
   </section>
 

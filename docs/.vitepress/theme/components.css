@@ -8,7 +8,8 @@
    into card and avatar images. Neutralise that once here; each
    component sets its own geometry below.
    ------------------------------------------------------------ */
-.vp-doc :is(.ok-post, .ok-card, .ok-hero, .ok-phero, .ok-faq, .ok-pubs, .ok-research, .ok-ct) img {
+.vp-doc :is(.ok-post, .ok-card, .ok-hero, .ok-phero, .ok-faq, .ok-pubs, .ok-research, .ok-ct,
+            .ok-lab, .ok-codeproj, .ok-codepage) :is(img, video) {
   margin: 0;
   border-radius: 0;
   box-shadow: none;
