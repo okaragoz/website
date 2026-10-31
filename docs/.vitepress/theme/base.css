@@ -219,7 +219,7 @@ body {
   letter-spacing: var(--ok-track-md);
   margin-top: var(--ok-s-7);
   padding-top: var(--ok-s-5);
-  border-top: 1px solid var(--ok-hairline);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   text-wrap: balance;
 }
 .vp-doc h3 {
@@ -267,7 +267,7 @@ body {
   padding: 0.16em 0.42em;
 }
 
-.vp-doc hr { border: none; border-top: 1px solid var(--ok-hairline); margin: var(--ok-s-7) 0; }
+.vp-doc hr { border: none; border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; margin: var(--ok-s-7) 0; }
 
 .vp-doc table {
   display: table;
@@ -280,11 +280,11 @@ body {
   text-align: left;
   font-weight: 600;
   color: var(--ok-ink);
-  border-bottom: 1px solid var(--ok-hairline-strong);
+  border-bottom: 1px solid var(--ok-hairline-strong); border-image: var(--ok-rule-h) 1;
   padding: var(--ok-s-3) var(--ok-s-4);
 }
 .vp-doc td {
-  border-bottom: 1px solid var(--ok-hairline);
+  border-bottom: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   padding: var(--ok-s-3) var(--ok-s-4);
   color: var(--ok-ink-2);
 }

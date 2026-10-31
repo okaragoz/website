@@ -52,8 +52,8 @@ const { hero, intro, projects, contributions, contributionsTitle, contributionsL
       </div>
 
       <div class="ok-proj__fig">
-        <CodeMedia :src="p.media.src" :type="p.media.type" :caption="p.media.caption"
-                   :w="p.media.w" :h="p.media.h" />
+        <CodeMedia v-for="m in p.media" :key="m.src"
+                   :src="m.src" :type="m.type" :caption="m.caption" :w="m.w" :h="m.h" />
       </div>
     </div>
   </section>
@@ -101,6 +101,8 @@ const { hero, intro, projects, contributions, contributionsTitle, contributionsL
   .ok-proj__grid { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-6); }
   .ok-proj__fig { order: -1; }
 }
+/* Two rows: the three-dimensional run above the two-dimensional one. */
+.ok-proj__fig { display: grid; grid-template-rows: auto auto; gap: var(--ok-s-6); }
 
 .ok-proj__head { display: flex; align-items: center; gap: var(--ok-s-3); flex-wrap: wrap; }
 .ok-proj__logo { width: 40px; height: 40px; border-radius: 8px; display: block; }
@@ -144,9 +146,9 @@ const { hero, intro, projects, contributions, contributionsTitle, contributionsL
   grid-template-columns: 110px minmax(0, 1fr);
   gap: var(--ok-s-4);
   padding: 10px 0;
-  border-top: 1px solid var(--ok-hairline);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
 }
-.ok-facts__row:last-child { border-bottom: 1px solid var(--ok-hairline); }
+.ok-facts__row:last-child { border-bottom: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; }
 .ok-facts__k { font-size: var(--ok-t-caption); color: var(--ok-ink-3); margin: 0; }
 .ok-facts__v { font-size: var(--ok-t-body-sm); color: var(--ok-ink); margin: 0; }
 

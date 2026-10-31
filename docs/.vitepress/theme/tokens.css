@@ -122,6 +122,18 @@
   --ok-hairline: #e3e9f2;
   --ok-hairline-strong: #ccd7e6;
 
+  /* Rules.
+     A separator is drawn as a gradient rather than a flat colour: the site's
+     indigo at the centre of the span, falling to nothing at both ends, so a
+     line reads as something that belongs to the page rather than a boundary
+     stamped across it. Painted through `border-image`, which replaces the
+     border colour but needs the matching axis — `--ok-rule-h` on a top or
+     bottom border, `--ok-rule-v` on a left or right one. A box border keeps
+     the flat hairline: fading all four sides at once only looks muddy. */
+  --ok-rule-tint: rgba(68, 54, 232, .34);
+  --ok-rule-h: linear-gradient(90deg, transparent 0%, var(--ok-rule-tint) 28%, var(--ok-rule-tint) 72%, transparent 100%);
+  --ok-rule-v: linear-gradient(180deg, transparent 0%, var(--ok-rule-tint) 28%, var(--ok-rule-tint) 72%, transparent 100%);
+
   --ok-primary: #4436e8;        /* the single CTA voltage */
   --ok-primary-hover: #3a2dd0;
   --ok-primary-press: #2c2299;
@@ -174,6 +186,10 @@
 
   --ok-hairline: rgba(255, 255, 255, .10);
   --ok-hairline-strong: rgba(255, 255, 255, .18);
+
+  /* Lifted and cooled on dark, where the light indigo would disappear into
+     the canvas at the same alpha. */
+  --ok-rule-tint: rgba(150, 140, 255, .40);
 
   /* Voltage lifts on dark so it keeps its contrast against the canvas. */
   --ok-primary: #7b6fff;

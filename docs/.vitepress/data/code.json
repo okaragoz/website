@@ -36,13 +36,22 @@
       "architecture": "A flat-include research code. include/mileva.jl pulls in config/, utils/, markers/, physics/, solvers/ and parallel/; main_SphCon.jl holds the time loop.",
       "run": "julia --project=. -t 4 examples/annulus_convection_2d.jl 1e4 64",
       "runNote": "A run is a Julia script: edit three configuration structs — cfg, mat and temp — and call main_SphCon. VTK frames, checkpoints and diagnostics.csv land in cfg.outputDir.",
-      "media": {
-        "src": "/images/code/mileva-plumes3d.gif",
-        "type": "gif",
-        "caption": "Three-dimensional plumes in the Yin-Yang spherical shell at Ra = 10^6.",
-        "w": 480,
-        "h": 480
-      },
+      "media": [
+        {
+          "src": "/images/code/mileva-plumes3d.gif",
+          "type": "gif",
+          "caption": "Three-dimensional plumes in the Yin-Yang spherical shell at Ra = 10^6.",
+          "w": 480,
+          "h": 480
+        },
+        {
+          "src": "/images/code/mileva-annulus-2d.gif",
+          "type": "gif",
+          "caption": "A plume rising from the core-mantle boundary in the 2-D spherical annulus.",
+          "w": 400,
+          "h": 314
+        }
+      ],
       "sections": [
         {
           "title": "Physics",
@@ -149,13 +158,22 @@
       "architecture": "Built on Gridap.jl. Runs are driven from main.jl; shipped cases include SolCx, Blankenbach 1a, subduction and a 3-D plume run on the multigrid solver.",
       "run": "julia --project=. main.jl cases/solcx_fixed.toml",
       "runNote": "Each simulation is a TOML parameter file merged onto cases/_defaults.toml. Results are written to output/<case>/ and viewed in ParaView.",
-      "media": {
-        "src": "/images/code/milet-subduction.mp4",
-        "type": "video",
-        "caption": "Subduction in 2-D, reproducing Model 1 of Glerum et al. (2018).",
-        "w": 886,
-        "h": 246
-      },
+      "media": [
+        {
+          "src": "/images/code/milet-convection3d.mp4",
+          "type": "video",
+          "caption": "Three-dimensional thermal convection in a box at Ra = 10^5.",
+          "w": 652,
+          "h": 664
+        },
+        {
+          "src": "/images/code/milet-chunk-plumes.mp4",
+          "type": "video",
+          "caption": "Mantle plumes in a 2-D projected spherical chunk.",
+          "w": 928,
+          "h": 526
+        }
+      ],
       "sections": [
         {
           "title": "Physics",

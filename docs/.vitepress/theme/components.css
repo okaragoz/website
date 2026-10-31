@@ -256,7 +256,9 @@
    higher specificity than anything reasonable here, so overriding the value
    is more reliable than trying to outrank the rule. */
 .VPNavBar.top { --vp-nav-bg-color: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
-.VPNavBar:not(.top) { border-bottom-color: var(--ok-hairline); }
+/* VitePress draws the navbar's own bottom border, so the gradient is applied
+   here rather than through the token. */
+.VPNavBar:not(.top) { border-bottom-color: var(--ok-hairline); border-image: var(--ok-rule-h) 1; }
 .VPNavBar .divider { display: none; }
 
 .VPNavBarTitle, .VPNavBarTitle .title { display: flex; align-items: center; height: var(--vp-nav-height); }
@@ -327,7 +329,8 @@
   background: none;
   border-radius: var(--ok-r-md);
   font-family: var(--ok-font-ui);
-  font-size: var(--ok-t-body);
+  /* One step down the scale: the bar carries more items than it used to. */
+  font-size: var(--ok-t-body-sm);
   font-weight: 500;
   line-height: 1;
   color: var(--ok-ink-2);
@@ -350,8 +353,8 @@
   background: color-mix(in srgb, var(--ok-canvas) 94%, transparent);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border-top: 1px solid var(--ok-hairline);
-  border-bottom: 1px solid var(--ok-hairline);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
+  border-bottom: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   box-shadow: 0 18px 44px -22px rgba(11, 26, 46, .28);
 }
 .ok-mega__panel-inner {
@@ -367,7 +370,7 @@
   flex-direction: column;
   gap: var(--ok-s-2);
   padding-left: var(--ok-s-6);
-  border-left: 1px solid var(--ok-hairline);
+  border-left: 1px solid var(--ok-hairline); border-image: var(--ok-rule-v) 1;
 }
 .ok-mega__col:first-child { padding-left: 0; border-left: none; }
 .ok-mega__coltitle {
@@ -525,7 +528,7 @@
 .ok-idcard__affil { font-size: var(--ok-t-caption); line-height: 1.5; color: var(--ok-ink-3); margin: 0; }
 .ok-idcard__contact {
   padding-left: var(--ok-s-6);
-  border-left: 1px solid var(--ok-hairline);
+  border-left: 1px solid var(--ok-hairline); border-image: var(--ok-rule-v) 1;
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -571,7 +574,7 @@
     gap: var(--ok-s-5);
     max-width: 440px;
   }
-  .ok-idcard__contact { padding-left: 0; border-left: none; padding-top: var(--ok-s-5); border-top: 1px solid var(--ok-hairline); width: 100%; align-items: center; }
+  .ok-idcard__contact { padding-left: 0; border-left: none; padding-top: var(--ok-s-5); border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; width: 100%; align-items: center; }
   .ok-idcard__portrait { width: 120px; height: 120px; }
 }
 
@@ -777,7 +780,7 @@
   gap: var(--ok-s-4);
   margin-top: auto;
   padding-top: var(--ok-s-4);
-  border-top: 1px solid var(--ok-hairline);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
 }
 .ok-post__by { display: flex; align-items: center; gap: var(--ok-s-3); margin-right: auto; }
 .ok-post__avatar { width: 32px; height: 32px; border-radius: var(--ok-r-pill); object-fit: cover; object-position: center 22%; }
@@ -890,7 +893,7 @@
   font-size: var(--ok-t-caption);
   font-weight: 600;
   color: var(--ok-ink-2);
-  border-bottom: 1px solid var(--ok-hairline-strong);
+  border-bottom: 1px solid var(--ok-hairline-strong); border-image: var(--ok-rule-h) 1;
 }
 .ok-pubs__table th:nth-child(1), .ok-pubs__table td:nth-child(1) { width: 58%; }
 .ok-pubs__table th:nth-child(2), .ok-pubs__table td:nth-child(2) { width: 10%; }
@@ -898,7 +901,7 @@
 .ok-pubs__table td {
   padding: var(--ok-s-4);
   vertical-align: baseline;
-  border-bottom: 1px solid var(--ok-hairline);
+  border-bottom: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   color: var(--ok-ink-2);
   font-size: var(--ok-t-body-sm);
 }
@@ -934,7 +937,7 @@
 @media (max-width: 640px) {
   .ok-pubs__table thead { display: none; }
   .ok-pubs__table, .ok-pubs__table tbody { display: block; width: 100%; }
-  .ok-pubs__table tr { display: block; padding: var(--ok-s-4) 0; border-bottom: 1px solid var(--ok-hairline); }
+  .ok-pubs__table tr { display: block; padding: var(--ok-s-4) 0; border-bottom: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; }
   .ok-pubs__table tbody tr:hover { background: transparent; }
   .ok-pubs__table td { display: inline; border: none; padding: 0; font-size: var(--ok-t-caption); }
   .ok-pubs__title { display: block !important; margin-bottom: var(--ok-s-2); width: auto; }
@@ -995,7 +998,7 @@
 }
 
 /* Contact block */
-.ok-ct { display: flex; flex-direction: column; gap: var(--ok-s-4); padding-top: var(--ok-s-5); border-top: 1px solid var(--ok-hairline); }
+.ok-ct { display: flex; flex-direction: column; gap: var(--ok-s-4); padding-top: var(--ok-s-5); border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; }
 .ok-ct__email { font-size: var(--ok-t-body-sm); font-weight: 500; color: var(--ok-primary-ink); text-decoration: none; word-break: break-word; }
 .ok-ct__email:hover { text-decoration: underline; text-underline-offset: 3px; }
 .ok-ct__addr { font-size: var(--ok-t-caption); line-height: 1.55; color: var(--ok-ink-3); margin: var(--ok-s-2) 0 0; }
@@ -1008,10 +1011,10 @@
   grid-template-columns: 180px minmax(0, 1fr);
   gap: var(--ok-s-5);
   padding: var(--ok-s-5) 0;
-  border-top: 1px solid var(--ok-hairline);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   align-items: baseline;
 }
-.ok-cv__item:last-child { border-bottom: 1px solid var(--ok-hairline); }
+.ok-cv__item:last-child { border-bottom: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; }
 .ok-cv__years { font-size: var(--ok-t-body-sm); color: var(--ok-ink-3); white-space: nowrap; }
 .ok-cv__role { font-size: var(--ok-t-heading-sm); font-weight: 600; letter-spacing: var(--ok-track-sm); color: var(--ok-ink); }
 .ok-cv__place { color: var(--ok-ink-3); font-size: var(--ok-t-body-sm); margin-top: var(--ok-s-1); }
@@ -1036,8 +1039,8 @@
   text-wrap: balance;
 }
 .ok-faq__list { display: flex; flex-direction: column; }
-.ok-faq__item { border-bottom: 1px solid var(--ok-hairline); }
-.ok-faq__item:first-child { border-top: 1px solid var(--ok-hairline); }
+.ok-faq__item { border-bottom: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; }
+.ok-faq__item:first-child { border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; }
 .ok-faq__q {
   width: 100%;
   display: flex; align-items: center; justify-content: space-between; gap: var(--ok-s-4);
@@ -1095,7 +1098,7 @@
   isolation: isolate;
   overflow: hidden;
   background: var(--ok-canvas-soft);
-  border-top: 1px solid var(--ok-hairline);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   color: var(--ok-ink-3);
   margin-top: 0;
 }
@@ -1183,7 +1186,7 @@
   max-width: var(--ok-w-wide);
   margin-inline: auto;
   padding: var(--ok-s-5) var(--ok-gutter) var(--ok-s-7);
-  border-top: 1px solid var(--ok-hairline);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   font-size: var(--ok-t-caption);
   color: var(--ok-ink-3);
   display: flex;

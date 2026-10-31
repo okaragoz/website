@@ -29,6 +29,9 @@ onBeforeUnmount(() => window.removeEventListener('resize', syncCap))
 /* Wide time-strips stay one per row; squarer clips go three-up. A narrow
    screen collapses either to a single column. */
 const cols = computed(() => (narrow.value ? 1 : (p.value?.galleryColumns || 1)))
+
+/* The lead figure is the first of the pair shown on the index. */
+const hero = computed(() => p.value?.media?.[0] || {})
 </script>
 
 <template>
@@ -51,8 +54,7 @@ const cols = computed(() => (narrow.value ? 1 : (p.value?.galleryColumns || 1)))
     </div>
 
     <div class="ok-codeproj__fig">
-      <CodeMedia :src="p.media.src" :type="p.media.type" :caption="p.media.caption"
-                 :w="p.media.w" :h="p.media.h" />
+      <CodeMedia :src="hero.src" :type="hero.type" :caption="hero.caption" :w="hero.w" :h="hero.h" />
     </div>
   </div>
 
@@ -161,9 +163,9 @@ const cols = computed(() => (narrow.value ? 1 : (p.value?.galleryColumns || 1)))
   grid-template-columns: 110px minmax(0, 1fr);
   gap: var(--ok-s-4);
   padding: 10px 0;
-  border-top: 1px solid var(--ok-hairline);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
 }
-.ok-facts__row:last-child { border-bottom: 1px solid var(--ok-hairline); }
+.ok-facts__row:last-child { border-bottom: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; }
 .ok-facts__k { font-size: var(--ok-t-caption); color: var(--ok-ink-3); margin: 0; }
 .ok-facts__v { font-size: var(--ok-t-body-sm); color: var(--ok-ink); margin: 0; }
 
@@ -185,12 +187,12 @@ const cols = computed(() => (narrow.value ? 1 : (p.value?.galleryColumns || 1)))
 .ok-codeproj__list li {
   position: relative;
   padding: 12px 0 12px 22px;
-  border-top: 1px solid var(--ok-hairline);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   font-size: var(--ok-t-body-sm);
   line-height: 1.7;
   color: var(--ok-ink-2);
 }
-.ok-codeproj__list li:last-child { border-bottom: 1px solid var(--ok-hairline); }
+.ok-codeproj__list li:last-child { border-bottom: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; }
 .ok-codeproj__list li::before {
   content: "";
   position: absolute;

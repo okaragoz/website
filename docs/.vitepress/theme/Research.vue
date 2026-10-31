@@ -333,7 +333,7 @@ function scrollToPlanet(name) {
 .ok-disc {
   padding-top: var(--ok-band);
   margin-bottom: var(--ok-band);
-  border-top: 1px solid var(--ok-hairline);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   text-align: center;
 }
 .ok-disc__eyebrow { font-size: var(--ok-t-body-sm); font-weight: 500; color: var(--ok-ink-3); margin: 0 0 var(--ok-s-4); }
@@ -430,7 +430,7 @@ function scrollToPlanet(name) {
 
 .ok-planet {
   padding-top: var(--ok-band); margin-bottom: var(--ok-band);
-  border-top: 1px solid var(--ok-hairline);
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   opacity: 0; transform: translateY(20px);
 }
 .ok-planet.ok-in { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s ease; }
@@ -482,7 +482,7 @@ function scrollToPlanet(name) {
   text-align: left;
 }
 
-.ok-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--ok-hairline); margin-bottom: 28px; }
+.ok-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; margin-bottom: 28px; }
 .ok-tab {
   font-size: var(--ok-t-body-sm); font-weight: 500; letter-spacing: .01em;
   color: var(--ok-ink-3); padding: 8px 20px 8px 0; cursor: pointer;
@@ -512,7 +512,7 @@ function scrollToPlanet(name) {
 .ok-subtopic__body { font-size: var(--ok-t-body); color: var(--ok-ink-2); line-height: 1.72; }
 
 .ok-methods-section {
-  margin-top: var(--ok-band); padding-top: var(--ok-band); border-top: 1px solid var(--ok-hairline);
+  margin-top: var(--ok-band); padding-top: var(--ok-band); border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1;
   opacity: 0; transform: translateY(16px);
 }
 .ok-methods-section.ok-in { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s ease; }
@@ -583,12 +583,12 @@ function scrollToPlanet(name) {
 /* ── Through to the long-form articles ── */
 .ok-more {
   margin-top: var(--ok-band); padding-top: var(--ok-band);
-  border-top: 1px solid var(--ok-hairline); text-align: center;
+  border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; text-align: center;
 }
 .ok-more .ok-lead { margin-bottom: var(--ok-s-5); }
 
 /* ── Missions ── */
-.ok-missions-section { margin-top: var(--ok-band); padding-top: var(--ok-band); border-top: 1px solid var(--ok-hairline); }
+.ok-missions-section { margin-top: var(--ok-band); padding-top: var(--ok-band); border-top: 1px solid var(--ok-hairline); border-image: var(--ok-rule-h) 1; }
 .ok-missions { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--ok-s-4); margin-top: var(--ok-s-6); }
 @media (max-width: 800px) { .ok-missions { grid-template-columns: 1fr; } }
 .ok-mission { background: var(--ok-canvas-soft); border: 1px solid var(--ok-hairline); border-radius: var(--ok-r-2xl); padding: var(--ok-s-5); }
