@@ -6,11 +6,19 @@
   own figure; the community codes he contributes to follow as a quieter grid.
   Content comes from data/code.json (CMS: Code → Code Page).
 */
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import codeData from '../data/code.json'
 import PageHero from './PageHero.vue'
 import CodeMedia from './CodeMedia.vue'
 
 const { hero, intro, projects, contributions, contributionsTitle, contributionsLede } = codeData
+
+/* Below the breakpoint the card is a single column, where a figure should
+   take its natural height rather than half of a row. */
+const narrow = ref(true)
+function sync() { narrow.value = window.innerWidth <= 900 }
+onMounted(() => { sync(); window.addEventListener('resize', sync) })
+onBeforeUnmount(() => window.removeEventListener('resize', sync))
 </script>
 
 <template>
@@ -52,8 +60,11 @@ const { hero, intro, projects, contributions, contributionsTitle, contributionsL
       </div>
 
       <div class="ok-proj__fig">
-        <CodeMedia v-for="m in p.media" :key="m.src"
-                   :src="m.src" :type="m.type" :caption="m.caption" :w="m.w" :h="m.h" />
+        <div class="ok-proj__figstack">
+          <CodeMedia v-for="m in p.media" :key="m.src"
+                     :src="m.src" :type="m.type" :caption="m.caption" :w="m.w" :h="m.h"
+                     :fill="!narrow" />
+        </div>
       </div>
     </div>
   </section>
@@ -93,7 +104,10 @@ const { hero, intro, projects, contributions, contributionsTitle, contributionsL
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
   gap: var(--ok-s-7);
-  align-items: start;
+  /* Stretch, not start: the figure column takes its height from the text
+     beside it and the figures size themselves to fit, so the two columns end
+     level instead of one running past the bottom of the card. */
+  align-items: stretch;
 }
 @media (max-width: 900px) {
   /* The figure goes first on a phone: it is the thing worth seeing, and a
@@ -101,8 +115,36 @@ const { hero, intro, projects, contributions, contributionsTitle, contributionsL
   .ok-proj__grid { grid-template-columns: minmax(0, 1fr); gap: var(--ok-s-6); }
   .ok-proj__fig { order: -1; }
 }
-/* Two rows: the three-dimensional run above the two-dimensional one. */
-.ok-proj__fig { display: grid; grid-template-rows: auto auto; gap: var(--ok-s-6); }
+/* Two rows: the three-dimensional run above the two-dimensional one.
+
+   The stack is taken out of flow so that it cannot drive the row height —
+   otherwise the tallest figure sets how tall the card is and the text column
+   is padded out to match, which is the gap that opened under the buttons.
+   The cell contributes nothing, the row is sized by the text beside it, and
+   the figures are then fitted into whatever height that turns out to be. */
+.ok-proj__fig { position: relative; min-height: 360px; }
+.ok-proj__figstack {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: var(--ok-s-6);
+}
+.ok-proj__fig :deep(.ok-codefig) {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  /* The figure has no frame here, so without a clear gap the caption reads as
+     part of the picture it sits under. */
+  gap: var(--ok-s-4);
+  min-height: 0;
+}
+.ok-proj__fig :deep(.ok-codefig__cap) { margin-top: 0; }
+@media (max-width: 900px) {
+  /* Single column: the figures go back to their own height, in flow. */
+  .ok-proj__fig { position: static; min-height: 0; }
+  .ok-proj__figstack { position: static; grid-template-rows: auto auto; gap: var(--ok-s-6); }
+  .ok-proj__fig :deep(.ok-codefig) { display: block; }
+}
 
 .ok-proj__head { display: flex; align-items: center; gap: var(--ok-s-3); flex-wrap: wrap; }
 .ok-proj__logo { width: 40px; height: 40px; border-radius: 8px; display: block; }

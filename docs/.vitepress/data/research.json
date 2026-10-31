@@ -356,14 +356,14 @@
         "name": "MILEVA",
         "own": true,
         "href": "/code/mileva",
-        "desc": "My finite-volume mantle-convection code in Julia, for the 2-D spherical annulus and the 3-D Yin-Yang shell. Thermochemical convection with composite rheology, melting and phase transitions — the tool behind the stagnant-lid and plume work on Venus and Mars."
+        "desc": "My finite-volume mantle-convection code in Julia, for the 2-D spherical annulus and the 3-D Yin-Yang shell. Thermochemical convection with composite rheology, melting and phase transitions. It is the tool behind the stagnant-lid and plume work on Venus and Mars."
       },
       {
         "label": "Numerical · Lithosphere dynamics",
         "name": "MILET",
         "own": true,
         "href": "/code/milet",
-        "desc": "My thermomechanical finite-element framework in Julia, built on Gridap.jl. Visco-elasto-plastic lithosphere with metamorphic phase change and two-phase melt migration — used for foundering, delamination, drips and subduction."
+        "desc": "My thermomechanical finite-element framework in Julia, built on Gridap.jl. Visco-elasto-plastic lithosphere with metamorphic phase change and two-phase melt migration, used for foundering, delamination, drips and subduction."
       },
       {
         "label": "Physical",

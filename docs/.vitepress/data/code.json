@@ -2,7 +2,7 @@
   "hero": {
     "eyebrow": "Scientific software",
     "title": "Code",
-    "lede": "The numerical codes behind the modelling work — two I write and maintain, and the community codes I contribute to."
+    "lede": "The numerical codes behind the modelling work: two that I write and maintain, and the community codes I contribute to."
   },
   "intro": "Most of my results come out of simulations, so the code is part of the research rather than a tool beside it. Both of my own codes are written in Julia, documented in full, and benchmarked against published reference cases before they are used for science.",
   "projects": [
@@ -13,7 +13,7 @@
       "expansion": "Mantle Interaction and Lithospheric Evolution in Viscous Annuli",
       "tagline": "A finite-volume mantle-convection code in Julia.",
       "accent": "#b4541f",
-      "role": "Author",
+      "role": "Lead developer",
       "facts": [
         {
           "label": "Language",
@@ -29,13 +29,13 @@
         },
         {
           "label": "Geometry",
-          "value": "2-D spherical annulus · 3-D Yin-Yang shell"
+          "value": "2-D spherical and cylindrical annulus · 3-D spherical chunk and Yin-Yang sphere"
         }
       ],
-      "summary": "MILEVA simulates thermal and compositional convection in Earth-like and planetary mantles. It solves the coupled Stokes, energy and composition equations on a staggered finite-volume grid — velocities on cell faces, pressure at cell centres — while temperature and composition ride on Lagrangian markers.",
+      "summary": "MILEVA simulates thermal and compositional convection in Earth-like and planetary mantles. It solves the coupled Stokes, energy and composition equations on a staggered finite-volume grid, with velocities on cell faces and pressure at cell centres, while temperature and composition ride on Lagrangian markers.",
       "architecture": "A flat-include research code. include/mileva.jl pulls in config/, utils/, markers/, physics/, solvers/ and parallel/; main_SphCon.jl holds the time loop.",
       "run": "julia --project=. -t 4 examples/annulus_convection_2d.jl 1e4 64",
-      "runNote": "A run is a Julia script: edit three configuration structs — cfg, mat and temp — and call main_SphCon. VTK frames, checkpoints and diagnostics.csv land in cfg.outputDir.",
+      "runNote": "A run is a Julia script: edit the three configuration structs cfg, mat and temp, then call main_SphCon. VTK frames, checkpoints and diagnostics.csv land in cfg.outputDir.",
       "media": [
         {
           "src": "/images/code/mileva-plumes3d.gif",
@@ -45,11 +45,11 @@
           "h": 480
         },
         {
-          "src": "/images/code/mileva-annulus-2d.gif",
+          "src": "/images/code/mileva-viscosity.gif",
           "type": "gif",
-          "caption": "A plume rising from the core-mantle boundary in the 2-D spherical annulus.",
-          "w": 400,
-          "h": 314
+          "caption": "Viscosity over 1 Gyr in the 2-D spherical annulus, with three continental rafts. Model R of van der Wiel et al. (2024).",
+          "w": 440,
+          "h": 338
         }
       ],
       "sections": [
@@ -58,7 +58,7 @@
           "items": [
             "Thermochemical Stokes flow with the full deviatoric stress at variable viscosity, in Boussinesq or anelastic form.",
             "Composite rheology: diffusion and dislocation creep, Arrhenius and Frank-Kamenetskii laws, yielding, viscoelastoplasticity, damage and grain-size evolution.",
-            "Thermal and compositional buoyancy — basalt, depletion, thermochemical piles and phase transitions.",
+            "Thermal and compositional buoyancy: basalt, depletion, thermochemical piles and phase transitions.",
             "Partial melting with depletion feedback, eruption, intrusion and heat-pipe cooling.",
             "Radiogenic heating, fixed or cooling core boundaries, a free surface and isostasy."
           ]
@@ -84,9 +84,16 @@
         {
           "src": "/images/code/mileva-geometries.jpg",
           "type": "image",
-          "caption": "The two geometries MILEVA solves in: the 2-D spherical annulus, and the 3-D Yin-Yang shell built from two overlapping latitude–longitude patches coupled by Schwarz iteration.",
+          "caption": "The four geometries MILEVA solves in: the 2-D spherical and cylindrical annulus, the 3-D spherical chunk, and the 3-D Yin-Yang sphere built from two overlapping latitude–longitude patches coupled by Schwarz iteration.",
           "w": 1600,
           "h": 440
+        },
+        {
+          "src": "/images/code/mileva-annulus-2d.gif",
+          "type": "gif",
+          "caption": "A plume rising from the core-mantle boundary in the 2-D spherical annulus.",
+          "w": 400,
+          "h": 314
         },
         {
           "src": "/images/code/mileva-stagnant-lid.jpg",
@@ -98,7 +105,7 @@
         {
           "src": "/images/code/mileva-primordial.jpg",
           "type": "image",
-          "caption": "Temperature above a dense primordial layer — reference case M100dD of Gülcher, Ballmer & Tackley (2021).",
+          "caption": "Temperature above a dense primordial layer. Reference case M100dD of Gülcher, Ballmer & Tackley (2021).",
           "w": 1800,
           "h": 303
         },
@@ -135,7 +142,7 @@
       "expansion": "Modeling in Lithospheric Evolution Tectonics",
       "tagline": "A thermomechanical finite-element framework for lithosphere and mantle dynamics.",
       "accent": "#2f5fa8",
-      "role": "Author",
+      "role": "Lead developer",
       "facts": [
         {
           "label": "Language",
@@ -154,7 +161,7 @@
           "value": "2-D and 3-D Cartesian · Projected spherical chunk"
         }
       ],
-      "summary": "MILET couples Stokes flow to heat transport on an inf-sup stable Taylor–Hood discretisation, with material carried by markers. It is built for problems where composition, rheology and metamorphic phase change evolve together — lithospheric foundering, delamination, drips and subduction.",
+      "summary": "MILET couples Stokes flow to heat transport on an inf-sup stable Taylor–Hood discretisation, with material carried by markers. It is built for problems where composition, rheology and metamorphic phase change evolve together: lithospheric foundering, delamination, drips and subduction.",
       "architecture": "Built on Gridap.jl. Runs are driven from main.jl; shipped cases include SolCx, Blankenbach 1a, subduction and a 3-D plume run on the multigrid solver.",
       "run": "julia --project=. main.jl cases/solcx_fixed.toml",
       "runNote": "Each simulation is a TOML parameter file merged onto cases/_defaults.toml. Results are written to output/<case>/ and viewed in ParaView.",
@@ -167,11 +174,11 @@
           "h": 664
         },
         {
-          "src": "/images/code/milet-chunk-plumes.mp4",
+          "src": "/images/code/milet-subduction.mp4",
           "type": "video",
-          "caption": "Mantle plumes in a 2-D projected spherical chunk.",
-          "w": 928,
-          "h": 526
+          "caption": "Subduction in 2-D, reproducing Model 1 of Glerum et al. (2018).",
+          "w": 886,
+          "h": 246
         }
       ],
       "sections": [

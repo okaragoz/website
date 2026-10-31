@@ -14,7 +14,7 @@
   "sections": [
     {
       "title": "Three-dimensional scaled experiments",
-      "body": "The experiments are built in three dimensions, not as a cross-section. Lateral escape, along-strike variation and the way a structure terminates are all part of the result, and none of them survive a two-dimensional box. Each model is dynamically scaled so that the ratios governing the natural system — buoyancy against viscous resistance, and the timescale of deformation against the timescale of thermal diffusion — are reproduced at laboratory size and laboratory duration.",
+      "body": "The experiments are built in three dimensions, not as a cross-section. Lateral escape, along-strike variation and the way a structure terminates are all part of the result, and none of them survive a two-dimensional box. Each model is dynamically scaled so that the ratios governing the natural system are reproduced at laboratory size and laboratory duration: buoyancy against viscous resistance, and the timescale of deformation against the timescale of thermal diffusion.",
       "items": [
         "Geometry, density and viscosity scaled together, so that a centimetre and an hour in the tank stand for a known distance and time in the planet.",
         "Boundary conditions imposed on a three-dimensional volume: basal drag, lateral confinement and a free upper surface.",
@@ -36,7 +36,7 @@
       "items": [
         "Surface and internal velocity fields recovered through the experiment, not only at its end.",
         "Strain-rate and vorticity fields derived from the measured velocities, so localisation can be followed as it develops.",
-        "The same quantities a numerical model outputs — which is what makes the two directly comparable."
+        "The same quantities a numerical model outputs, which is what makes the two directly comparable."
       ]
     },
     {

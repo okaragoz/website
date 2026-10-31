@@ -29,6 +29,7 @@ const props = defineProps({
   h: { type: Number, default: 0 },
   cap: { type: Number, default: 0 },         // max rendered height, px
   tile: { type: String, default: '' },       // fixed aspect, e.g. '4 / 3'
+  fill: { type: Boolean, default: false },   // take height from the row instead
 })
 
 const reduce = ref(false)
@@ -39,6 +40,17 @@ onMounted(() => {
 // Widest this may draw: its own pixel width, or the width at which it would
 // hit the height cap — whichever is smaller.
 const style = computed(() => {
+  // Filling: the row decides the height and the figure fits inside it. Used
+  // where a column of figures has to end level with a column of text, so the
+  // figures give way rather than running past the bottom of the card.
+  if (props.fill) {
+    return {
+      height: '100%',
+      width: 'auto',
+      maxWidth: props.w ? `min(100%, ${props.w}px)` : '100%',
+      objectFit: 'contain',
+    }
+  }
   // In a tiled row every figure gets the same box and is fitted inside it, so
   // clips of different aspect still line up. Scaling each to its own ratio
   // would leave a ragged row of mismatched heights.
@@ -50,7 +62,7 @@ const style = computed(() => {
 </script>
 
 <template>
-  <figure class="ok-codefig">
+  <figure class="ok-codefig" :class="{ 'ok-codefig--fill': fill }">
     <video
       v-if="type === 'video'"
       class="ok-codefig__media"
@@ -91,6 +103,9 @@ const style = computed(() => {
   border: 1px solid var(--ok-hairline);
   border-radius: var(--ok-r-lg);
 }
+/* Filling a row, the frame would be drawn around the letterbox rather than
+   around the picture, so the figure stands on its own instead. */
+.ok-codefig--fill .ok-codefig__media { background: none; border: none; }
 .ok-codefig__cap {
   margin-top: var(--ok-s-3);
   font-size: var(--ok-t-caption);
