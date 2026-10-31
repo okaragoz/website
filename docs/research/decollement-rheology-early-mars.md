@@ -1,13 +1,13 @@
 ---
-title: "What the Spacing of Martian Ridges Says About the Rock Beneath Them"
+title: "Why Mars's Ridges Sit 40 Kilometres Apart"
 date: 2026-10-31
-excerpt: "Wrinkle ridges around Tharsis sit about 40 kilometres apart. That spacing is a measurement of how weak the layer underneath them had to be, and it points at salt."
-image: "/images/research/figures/decollement-fig3-spacing.webp"
+excerpt: "The wrinkle ridges around Tharsis are evenly spaced, and that spacing is not decoration. It measures how weak the layer beneath them had to be, and it points at salt."
+image: "https://images.unsplash.com/photo-1635349429385-201ee3a51b88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000"
 category: research
 tags: ["research"]
 ---
 
-# What the Spacing of Martian Ridges Says About the Rock Beneath Them
+# Why Mars's Ridges Sit 40 Kilometres Apart
 
 The circum-Tharsis wrinkle ridge system is the strongest tectonic imprint early Mars left behind. Tharsis grew into the largest volcanic province on the planet, and in building it loaded the lithosphere and redistributed stress across thousands of kilometres. The ridges are what that did to the crust.
 

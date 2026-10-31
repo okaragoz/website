@@ -49,9 +49,9 @@
   "research": [
     {
       "slug": "decollement-rheology-early-mars",
-      "title": "What the Spacing of Martian Ridges Says About the Rock Beneath Them",
+      "title": "Why Mars's Ridges Sit 40 Kilometres Apart",
       "date": "2026-10-31",
-      "image": "/images/research/figures/decollement-fig3-spacing.webp",
+      "image": "https://images.unsplash.com/photo-1635349429385-201ee3a51b88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000",
       "excerpt": "The circum-Tharsis wrinkle ridge system is the strongest tectonic imprint early Mars left behind. Tharsis grew into the largest volcanic province on the planet, and in building it loaded the lithosphere and redistributed stress across thousands of kilometres. The ridges are what that did to the…",
       "url": "/research/decollement-rheology-early-mars",
       "readingTime": 7
