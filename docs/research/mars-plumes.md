@@ -2,7 +2,7 @@
 title: "Unraveling Mars's Hidden Plume History Through Wrinkle Ridges"
 date: 2025-02-26
 excerpt: "Tharsis is a volcanic bulge 6,000 kilometres across and more than 20 kilometres high. We mapped 650 wrinkle ridges to work out whether the volcanism that built it ever moved."
-image: "/images/research/figures/tharsis-stress-centres.webp"
+image: "https://images.unsplash.com/photo-1650208312823-4a676f114aff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000"
 category: research
 tags: ["research"]
 ---

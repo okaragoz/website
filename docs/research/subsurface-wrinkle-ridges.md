@@ -2,7 +2,7 @@
 title: "Peering Beneath Mars's Wrinkles: What Hidden Faults Tell Us About the Red Planet's Geology"
 date: 2024-12-25
 excerpt: "We cannot drill into Mars, but impact craters and canyon walls have already cut through its wrinkle ridges. Twelve of those natural cross-sections show what the faults underneath actually look like."
-image: "/images/research/figures/wrinkle-ridge-dem.webp"
+image: "https://images.unsplash.com/photo-1527826507412-72e447368aa1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000"
 category: research
 tags: ["research"]
 ---

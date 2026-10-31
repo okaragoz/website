@@ -1,13 +1,13 @@
 ---
-title: "Why Mars's Ridges Sit 40 Kilometres Apart"
+title: "What the Crust of Early Mars Was Sliding On"
 date: 2026-10-31
 excerpt: "The wrinkle ridges around Tharsis are evenly spaced, and that spacing is not decoration. It measures how weak the layer beneath them had to be, and it points at salt."
-image: "https://images.unsplash.com/photo-1635349429385-201ee3a51b88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000"
+image: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000"
 category: research
 tags: ["research"]
 ---
 
-# Why Mars's Ridges Sit 40 Kilometres Apart
+# What the Crust of Early Mars Was Sliding On
 
 The circum-Tharsis wrinkle ridge system is the strongest tectonic imprint early Mars left behind. Tharsis grew into the largest volcanic province on the planet, and in building it loaded the lithosphere and redistributed stress across thousands of kilometres. The ridges are what that did to the crust.
 

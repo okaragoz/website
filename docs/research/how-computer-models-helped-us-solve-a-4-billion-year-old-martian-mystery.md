@@ -2,7 +2,7 @@
 title: "How Computer Models Helped Us Solve a 4-Billion-Year-Old Martian Mystery"
 date: 2025-12-28
 excerpt: "Extension along the Martian dichotomy and compression 800 kilometres out into the lowlands. Three numerical models, and only one of them produces the Mars we actually see."
-image: "/images/research/figures/mars-dichotomy-map.webp"
+image: "https://images.unsplash.com/photo-1635349429385-201ee3a51b88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000"
 category: research
 tags: ["research"]
 ---
@@ -13,7 +13,7 @@ Open a topographic map of Mars and the first thing you notice is that the northe
 
 What drew me in was smaller than the dichotomy itself. At Nilosyrtis Mensae, along the boundary, there are extensional faults where the surface has pulled apart. About 800 kilometres out into the lowlands there are compressional ridges where it has been squeezed. The two sets run roughly parallel.
 
-<CodeMedia src="/images/research/figures/mars-dichotomy-map.webp" type="image" :w="1600" :h="1007"
+<CodeMedia src="/images/research/figures/mars-dichotomy-map.webp" type="image" :w="1400" :h="881"
            caption="Mars with the dichotomy boundary marked. The extensional structures sit along the boundary itself; the compressional ones lie several hundred kilometres out into the northern lowlands." />
 
 That pairing is familiar from Earth. It is what gravity-driven systems on passive continental margins look like: extension at the top of the slope, compression at the toe, with the whole thing sliding on something weak in between. The Gulf of Mexico and the Angolan margin both do it. The question was whether Mars could, and what would have to be buried underneath for it to work.

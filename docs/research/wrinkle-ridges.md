@@ -2,7 +2,7 @@
 title: "What Ancient Ridge Formations Tell Us About the Red Planet's Crust"
 date: 2024-12-25
 excerpt: "Six wrinkle ridges on Lunae Planum, measured across 500 topographic profiles, and what their shape says about a weak layer two to four kilometres beneath the Martian surface."
-image: "/images/research/figures/wrinkle-ridges-ctx.webp"
+image: "https://images.unsplash.com/photo-1689235421711-903a1574ed7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000"
 category: research
 tags: ["research"]
 ---

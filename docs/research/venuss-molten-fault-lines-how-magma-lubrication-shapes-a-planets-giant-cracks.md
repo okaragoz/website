@@ -2,7 +2,7 @@
 title: "Venus's Molten Fault Lines: How Magma Lubrication Shapes a Planet's Giant Cracks"
 date: 2025-12-28
 excerpt: "Eight fault zones in Eastern Aphrodite Terra, up to 706 kilometres long, slipping at angles that should have locked them. On a planet with no water, the lubricant appears to be melt."
-image: "/images/research/figures/venus-melt-block-diagram.webp"
+image: "https://images.unsplash.com/photo-1663640397122-d50df280b1db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000"
 category: research
 ---
 

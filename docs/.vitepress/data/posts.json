@@ -49,9 +49,9 @@
   "research": [
     {
       "slug": "decollement-rheology-early-mars",
-      "title": "Why Mars's Ridges Sit 40 Kilometres Apart",
+      "title": "What the Crust of Early Mars Was Sliding On",
       "date": "2026-10-31",
-      "image": "https://images.unsplash.com/photo-1635349429385-201ee3a51b88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000",
+      "image": "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000",
       "excerpt": "The circum-Tharsis wrinkle ridge system is the strongest tectonic imprint early Mars left behind. Tharsis grew into the largest volcanic province on the planet, and in building it loaded the lithosphere and redistributed stress across thousands of kilometres. The ridges are what that did to the…",
       "url": "/research/decollement-rheology-early-mars",
       "readingTime": 7
@@ -60,7 +60,7 @@
       "slug": "venuss-molten-fault-lines-how-magma-lubrication-shapes-a-planets-giant-cracks",
       "title": "Venus's Molten Fault Lines: How Magma Lubrication Shapes a Planet's Giant Cracks",
       "date": "2025-12-28",
-      "image": "/images/research/figures/venus-melt-block-diagram.webp",
+      "image": "https://images.unsplash.com/photo-1663640397122-d50df280b1db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000",
       "excerpt": "Venus gets called Earth's sister planet on the strength of its size, mass and bulk composition. The surface is a different matter: around 460 °C, no water anywhere, and a tectonic style that does not resemble ours.",
       "url": "/research/venuss-molten-fault-lines-how-magma-lubrication-shapes-a-planets-giant-cracks",
       "readingTime": 7
@@ -69,7 +69,7 @@
       "slug": "venus-atahensik-corona",
       "title": "Venus's Giant Eye: How Low-Angle Faults Reveal a Planet's Volcanic Past",
       "date": "2025-12-28",
-      "image": "/images/research/figures/venus-corona-faults.webp",
+      "image": "https://images.unsplash.com/photo-1643330683233-ff2ac89b002c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000",
       "excerpt": "Coronae are among the strangest structures in the solar system: roughly circular features, hundreds to thousands of kilometres across, each ringed by a fractured annulus of ridges around a sunken middle. They are unique to Venus, and what makes them has been argued about for thirty years.",
       "url": "/research/venus-atahensik-corona",
       "readingTime": 8
@@ -78,7 +78,7 @@
       "slug": "how-computer-models-helped-us-solve-a-4-billion-year-old-martian-mystery",
       "title": "How Computer Models Helped Us Solve a 4-Billion-Year-Old Martian Mystery",
       "date": "2025-12-28",
-      "image": "/images/research/figures/mars-dichotomy-map.webp",
+      "image": "https://images.unsplash.com/photo-1635349429385-201ee3a51b88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000",
       "excerpt": "Open a topographic map of Mars and the first thing you notice is that the northern half sits about three kilometres lower than the southern half. That is the Martian dichotomy, and how it got there has been argued over for decades.",
       "url": "/research/how-computer-models-helped-us-solve-a-4-billion-year-old-martian-mystery",
       "readingTime": 7
@@ -87,7 +87,7 @@
       "slug": "mars-plumes",
       "title": "Unraveling Mars's Hidden Plume History Through Wrinkle Ridges",
       "date": "2025-02-26",
-      "image": "/images/research/figures/tharsis-stress-centres.webp",
+      "image": "https://images.unsplash.com/photo-1650208312823-4a676f114aff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000",
       "excerpt": "Tharsis is hard to miss. It is a volcanic bulge roughly 6,000 kilometres across, standing more than 20 kilometres above the surrounding plains, built up over something like four billion years. The question people have asked for decades is what put it there. The question I find more interesting is…",
       "url": "/research/mars-plumes",
       "readingTime": 5
@@ -96,7 +96,7 @@
       "slug": "wrinkle-ridges",
       "title": "What Ancient Ridge Formations Tell Us About the Red Planet's Crust",
       "date": "2024-12-25",
-      "image": "/images/research/figures/wrinkle-ridges-ctx.webp",
+      "image": "https://images.unsplash.com/photo-1689235421711-903a1574ed7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000",
       "excerpt": "Look at enough images of Mars and the ridges start to stand out: long, sinuous features running for hundreds of kilometres across the plains. They are called wrinkle ridges, and they form when the crust is squeezed horizontally until it buckles and thrusts up along a fault. Their shape is therefore…",
       "url": "/research/wrinkle-ridges",
       "readingTime": 4
@@ -105,7 +105,7 @@
       "slug": "subsurface-wrinkle-ridges",
       "title": "Peering Beneath Mars's Wrinkles: What Hidden Faults Tell Us About the Red Planet's Geology",
       "date": "2024-12-25",
-      "image": "/images/research/figures/wrinkle-ridge-dem.webp",
+      "image": "https://images.unsplash.com/photo-1527826507412-72e447368aa1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000",
       "excerpt": "From orbit a wrinkle ridge is a gentle bump. What makes it is a fault, and the fault is underground, which is the awkward part: we cannot drill into Mars to look at it.",
       "url": "/research/subsurface-wrinkle-ridges",
       "readingTime": 7

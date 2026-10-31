@@ -2,7 +2,7 @@
 title: "Venus's Giant Eye: How Low-Angle Faults Reveal a Planet's Volcanic Past"
 date: 2025-12-28
 excerpt: "Atahensik Corona is 700 by 900 kilometres of fractured Venusian crust. The faults around its rim moved one way, then reversed, and that reversal reconciles two decades of argument about what coronae are."
-image: "/images/research/figures/venus-corona-faults.webp"
+image: "https://images.unsplash.com/photo-1643330683233-ff2ac89b002c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000"
 category: research
 tags: ["research"]
 ---
