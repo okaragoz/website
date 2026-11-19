@@ -154,6 +154,10 @@ async function main() {
   const peer = []
   const abstracts = []
 
+  // Where each title key was filed, so a later record of the same work can
+  // replace the one already there rather than only being dropped.
+  const placed = new Map()
+
   // ORCID first (authoritative), then Scholar extras only if not already present
   for (const p of [...orcid, ...scholar]) {
     const k = keyOf(p.title)
@@ -163,13 +167,26 @@ async function main() {
     // work (or junk); ORCID already covers it, so only take Scholar items that
     // carry a real venue (genuine Scholar-only conference entries).
     if (p.type === 'scholar' && !norm(p.venue)) continue
-    if (seenKey.has(k)) continue             // near-duplicate across sources
+    const entry = { title: fixCaps(p.title), year: p.year, venue: decodeEntities(p.venue), url: p.url }
+    if (isArticlePreprint(p)) entry.preprint = true
+    if (seenKey.has(k)) {                    // near-duplicate across sources
+      // A preprint and the article it became are two separate ORCID deposits
+      // with different DOIs, handed over in no fixed order. The published one
+      // wins whichever arrives second, so a paper cannot revert to "preprint"
+      // on the site the week after it comes out.
+      const at = placed.get(k)
+      if (at && at.list[at.i].preprint && !entry.preprint && classify(p) === 'peer') {
+        at.list[at.i] = entry
+        if (p.doi) seenDoi.add(p.doi)
+      }
+      continue
+    }
     if (p.doi && seenDoi.has(p.doi)) continue
     seenKey.add(k)
     if (p.doi) seenDoi.add(p.doi)
-    const entry = { title: fixCaps(p.title), year: p.year, venue: decodeEntities(p.venue), url: p.url }
-    if (isArticlePreprint(p)) entry.preprint = true
-    ;(classify(p) === 'peer' ? peer : abstracts).push(entry)
+    const list = classify(p) === 'peer' ? peer : abstracts
+    placed.set(k, { list, i: list.length })
+    list.push(entry)
   }
 
   const byYear = (a, b) => (b.year || '').localeCompare(a.year || '')
