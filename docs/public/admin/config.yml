@@ -291,6 +291,40 @@ collections:
                       - { name: caption, label: Caption, widget: text }
                       - { name: w, label: "Width in pixels", widget: number, value_type: int }
                       - { name: h, label: "Height in pixels", widget: number, value_type: int }
+          - { name: toolsTitle, label: "Tools, section title", widget: string, required: false }
+          - { name: toolsLede, label: "Tools, section lede", widget: text, required: false }
+          - name: tools
+            label: "Tools"
+            label_singular: Tool
+            widget: list
+            required: false
+            fields:
+              - { name: id, label: "Anchor id (used in the URL)", widget: string }
+              - { name: tag, label: "Tag badge", widget: string, required: false }
+              - { name: title, label: Title, widget: string }
+              - { name: body, label: Body, widget: text }
+              - { name: items, label: "Bullet points", widget: list, required: false }
+              - { name: status, label: "Status note (small print under the bullets)", widget: text, required: false }
+              - name: links
+                label: "Buttons"
+                label_singular: Button
+                widget: list
+                required: false
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - { name: href, label: URL, widget: string }
+                  - { name: kind, label: Style, widget: select, options: ["primary", "ghost"] }
+              - name: figures
+                label: "Figures (right-hand column)"
+                label_singular: Figure
+                widget: list
+                required: false
+                fields:
+                  - { name: src, label: "File", widget: file }
+                  - { name: type, label: Type, widget: select, options: ["image", "video", "gif"], default: image }
+                  - { name: caption, label: Caption, widget: text }
+                  - { name: w, label: "Width in pixels", widget: number, value_type: int }
+                  - { name: h, label: "Height in pixels", widget: number, value_type: int }
           - { name: methodTitle, label: "Method, section title", widget: string }
           - { name: methodLede, label: "Method, section lede", widget: text }
           - name: sections

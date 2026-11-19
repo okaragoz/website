@@ -26,9 +26,8 @@
   "sections": [
     {
       "title": "Scaling laws",
-      "body": "An experiment is only an analogue if the numbers carry. A tank of silicone is centimetres across and runs for an afternoon; the lithosphere it stands for is tens of kilometres thick and takes millions of years, and the two are the same problem only when the dimensionless groups that govern them match. Geometry, density and viscosity are therefore chosen together rather than separately, and the scaling is fixed before a run rather than fitted to it afterwards. What comes out of that is a conversion: a centimetre and an hour in the tank stand for a stated distance and a stated time in the planet, and every measurement quoted from a run is quoted through it.",
+      "body": "An experiment is only an analogue if the numbers carry. A tank of silicone is centimetres across and runs for an afternoon; the lithosphere it stands for is tens of kilometres thick and takes millions of years, and the two are the same problem only when the dimensionless groups that govern them match. Geometry, density and viscosity are therefore chosen together rather than separately, and the scaling is fixed before a run rather than fitted to it afterwards. Working that out is what ScaleLAB is for, and its answer is not a formality: every measurement quoted from a run is quoted through that conversion.",
       "items": [
-        "Length, density and viscosity scales set first; the time and velocity scales follow from them rather than being chosen.",
         "The dimensionless groups matched rather than the quantities themselves: the Rayleigh number for the vigour of convection, the viscosity contrast across the interface, and the ratio of buoyancy to viscous resistance.",
         "Deformation timescale held against thermal diffusion timescale, so a run that is fast enough to watch is not also one that has had time to cool.",
         "Effective viscosities measured for every batch and fed back into the scaling, because a blend that has drifted makes the conversion wrong rather than merely imprecise.",
@@ -54,18 +53,10 @@
       ]
     },
     {
-      "title": "Starting from a density anomaly",
-      "body": "Most of these experiments begin compositionally rather than thermally. A layer is mixed to be denser than the fluid below it, standing in for eclogite: the dense product of a basaltic crust taken through its phase change. Left alone it is unstable, and what follows is the question of whether it drips, founders as a coherent block, or spreads without ever detaching. That outcome is set by the viscosity contrast across the interface and by how fast the dense layer can deform relative to how fast it is loaded.",
+      "title": "What drives a run",
+      "body": "Two things set these experiments going, and choosing between them is the first decision of a run. Most begin compositionally: a layer is mixed to be denser than the fluid below it, standing in for eclogite, the dense product of a basaltic crust taken through its phase change. Left alone it is unstable, and what follows is the question of whether it drips, founders as a coherent block, or spreads without ever detaching. Where the process in question is driven by heat instead, the run is given a thermal boundary condition rather than an imposed velocity: the material's viscosity then depends on its own temperature field, convection organises itself, and the surface deformation is a consequence of that flow instead of something applied at the edge of the box. That second regime is the one that matters for single-lid planets, where there is no plate boundary to impose motion.",
       "items": [
-        "The density contrast is tuned with inert fillers, so it can be varied without changing the viscosity alongside it.",
-        "The same setup covers drip, delamination and foundering: they are the same instability at different viscosity contrasts, not different experiments.",
-        "Surface topography is tracked throughout, because the uplift and subsidence above a founding layer is what a planet actually shows us."
-      ]
-    },
-    {
-      "title": "Thermally dependent, convection-driven deformation",
-      "body": "Where the process in question is driven by heat, the experiments are run with a thermal boundary condition rather than an imposed velocity. The material's viscosity then depends on its own temperature field, convection organises itself, and the surface deformation is a consequence of that flow instead of something applied at the edge of the box. This is the regime that matters for single-lid planets, where there is no plate boundary to impose motion.",
-      "items": [
+        "A compositionally driven run is released and then left alone: nothing is imposed at the boundary, so the instability picks its own form and its own wavelength.",
         "Temperature-dependent viscosity, so the cold upper layer stiffens into a lid exactly as it does on a stagnant-lid planet.",
         "Convection allowed to set its own wavelength and vigour rather than being seeded.",
         "Deformation at the surface read as the product of the interior flow beneath it."
@@ -237,6 +228,41 @@
           "caption": "The thermo-mechanical deformation apparatus."
         }
       }
+    }
+  ],
+  "toolsTitle": "Tools",
+  "toolsLede": "Before a run can be built it has to be scaled, and before it can be scaled somebody has to work out what the tank is allowed to stand for. That part is software, and it is published on the open web so that anyone designing a comparable experiment can use it.",
+  "tools": [
+    {
+      "id": "scalelab",
+      "tag": "Experiment design",
+      "title": "ScaleLAB",
+      "body": "Every analogue run begins with a question that has to be settled before any fluid is poured: what does this tank actually stand for? ScaleLAB answers it, and it answers it from the laboratory end, because the laboratory is the part that cannot be argued with. The box is a given size, the fluids reach a given range of viscosity, and the run has to finish inside a working day. From those fixed quantities the tool works outwards to the natural system they can represent, building the viscosity and strength profile a planet would have under a stated gravity, geotherm and strain rate from published rock flow laws, and reporting the ratios of length, time, stress, viscosity and velocity that tie the two together. What comes back is a recipe rather than a verdict: which materials to blend, to what thickness, and what a centimetre and an hour in the tank are worth out there.",
+      "items": [
+        "Viscosity and strength profiles built from published flow laws, with diffusion and dislocation creep carried separately and a Mohr-Coulomb brittle layer above them.",
+        "Scaling ratios for length, time, stress, viscosity and velocity solved together, so a change to one is answered by the rest instead of quietly leaving the set inconsistent.",
+        "Required model viscosities and densities reported against what the lab can actually build, with a scan across gradient and thickness showing which cases are buildable at all.",
+        "Interactive views of the geometry and the rheology: the layer stack as it would stand in the box, and viscosity, strength and temperature against depth for the planet and the model side by side.",
+        "Worked presets for a Venus corona drip, a continental rift on Earth, a Martian mantle plume, Mercurian lobate scarps and lunar wrinkle ridges.",
+        "Export of the whole setup to a LaMEM script at laboratory scale, an ASPECT parameter file at natural scale, and a neutral JSON that carries the same numbers into MILEVA and MILET."
+      ],
+      "status": "Announced in November 2026 and still in development. The simulation exports are templates rather than parameter files that have been run, and a handful of flow laws and material entries are flagged inside the tool for checking against their sources.",
+      "links": [
+        {
+          "label": "Open ScaleLAB",
+          "href": "https://okaragoz.github.io/ScaleLAB/",
+          "kind": "primary"
+        }
+      ],
+      "figures": [
+        {
+          "src": "/images/lab/scalelab.webp",
+          "type": "image",
+          "w": 1440,
+          "h": 800,
+          "caption": "ScaleLAB with an eclogite root loaded as the driving body: the laboratory setup on the left, the scaling ratios it returns along the top, and the layer stack drawn as it would be built in the box."
+        }
+      ]
     }
   ],
   "methodTitle": "Method",

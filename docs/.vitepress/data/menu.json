@@ -42,7 +42,25 @@
     },
     {
       "text": "Lab",
-      "link": "/lab/"
+      "link": "/lab/",
+      "items": [
+        {
+          "link": "/lab/",
+          "text": "Overview"
+        },
+        {
+          "link": "/lab/#scalelab",
+          "text": "ScaleLAB"
+        },
+        {
+          "link": "/lab/#experiments",
+          "text": "Experiments"
+        },
+        {
+          "link": "/lab/#method",
+          "text": "Method"
+        }
+      ]
     },
     {
       "text": "Blog",
@@ -164,7 +182,38 @@
     {
       "text": "Lab",
       "link": "/lab/",
-      "columns": []
+      "columns": [
+        {
+          "title": "Tools",
+          "links": [
+            {
+              "text": "ScaleLAB",
+              "link": "/lab/#scalelab",
+              "desc": "Design and scale an analogue experiment in the browser"
+            }
+          ]
+        },
+        {
+          "title": "Start here",
+          "links": [
+            {
+              "text": "Lab overview",
+              "link": "/lab/",
+              "desc": "Three-dimensional scaled analogue experiments"
+            },
+            {
+              "text": "Experiments",
+              "link": "/lab/#experiments",
+              "desc": "Drips, foundering layers and thrust wedges"
+            },
+            {
+              "text": "Method",
+              "link": "/lab/#method",
+              "desc": "Scaling, materials and particle image velocimetry"
+            }
+          ]
+        }
+      ]
     },
     {
       "text": "Blog",

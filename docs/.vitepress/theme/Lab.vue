@@ -17,6 +17,7 @@ import CodeMedia from './CodeMedia.vue'
 
 const { hero, intro, facts, sections, links } = labData
 const experiments = computed(() => labData.experiments || [])
+const tools = computed(() => labData.tools || [])
 const crew = computed(() => labData.crew || [])
 
 /* Every entry is one row: the prose in the left column, its figures stacked
@@ -54,6 +55,45 @@ function slug(t) {
                  :w="labData.leadFigure.w" :h="labData.leadFigure.h" />
     </div>
   </div>
+
+  <!-- ── What it is set up with ── -->
+  <section v-if="tools.length" class="ok-lab__part" id="tools">
+    <h2 class="ok-lab__parth">{{ labData.toolsTitle }}</h2>
+    <p class="ok-lab__partlede">{{ labData.toolsLede }}</p>
+
+    <!-- Not split like an experiment. A screenshot of an interface is only
+         worth showing at a size where its labels can be read, and a third of
+         the measure is not that size, so it takes the full width instead.
+         It sits directly under the opening paragraph rather than at the
+         bottom: this is the first thing on the page, and the tool should be
+         visible before the reader has to work through the specification. -->
+    <article v-for="t in tools" :key="t.id" :id="t.id" class="ok-lab__entry ok-lab__entry--tool">
+      <div class="ok-lab__text">
+        <span v-if="t.tag" class="ok-lab__tag">{{ t.tag }}</span>
+        <h3 class="ok-lab__title">{{ t.title }}</h3>
+        <p class="ok-lab__body">{{ t.body }}</p>
+      </div>
+      <div v-if="figsOf(t.figures).length" class="ok-lab__figs">
+        <CodeMedia v-for="g in figsOf(t.figures)" :key="g.src"
+                   :src="g.src" :type="g.type || 'image'" :caption="g.caption"
+                   :w="g.w" :h="g.h" :cap="capFor(t.figures)" />
+      </div>
+      <div class="ok-lab__text">
+        <ul v-if="t.items && t.items.length" class="ok-lab__list">
+          <li v-for="(it, i) in t.items" :key="i">{{ it }}</li>
+        </ul>
+        <p v-if="t.status" class="ok-lab__status">{{ t.status }}</p>
+        <div v-if="t.links && t.links.length" class="ok-lab__toolcta">
+          <a v-for="l in t.links" :key="l.href"
+             class="ok-btn" :class="l.kind === 'primary' ? 'ok-btn--primary ok-btn--lg' : 'ok-btn--quiet'"
+             :href="l.href" target="_blank" rel="noopener">
+            {{ l.label }}
+            <span class="ok-btn__chev" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  </section>
 
   <!-- ── What the lab runs ── -->
   <section v-if="experiments.length" class="ok-lab__part" id="experiments">
@@ -279,6 +319,23 @@ function slug(t) {
   .ok-lab__list li { padding-left: 16px; }
   .ok-lab__list li::before { left: 0; }
 }
+
+/* ── A tool, and what is not finished about it ──
+   The caveat is set in the quiet ink the captions use, so it reads as a note
+   against the tool rather than as another claim for it. */
+/* The tool opens the page, so it stands closer to its own heading than an
+   entry buried in a run of them needs to. Its figure already carries 55px of
+   margin on both sides, so the row gap here is small on purpose: the two
+   together are the band break, and the full 34 on top of them is a hole. */
+.ok-lab__entry--tool { margin-top: var(--ok-s-7); row-gap: var(--ok-s-4); }
+.ok-lab__entry--tool .ok-lab__list { margin-top: 0; }
+.ok-lab__status {
+  margin: var(--ok-s-5) 0 0;
+  font-size: var(--ok-t-caption);
+  line-height: 1.65;
+  color: var(--ok-ink-3);
+}
+.ok-lab__toolcta { display: flex; flex-wrap: wrap; gap: var(--ok-s-4); margin-top: var(--ok-s-5); }
 
 /* ── The machine a run is made on, stated beside the run ── */
 .ok-lab__rig {
