@@ -1,7 +1,7 @@
 ---
 title: "The Line Between Science and Pseudoscience: Understanding Popper's Falsification Principle"
 date: 2024-12-29
-excerpt: "Sir Karl Popper (1902-1994) stands as one of the twentieth century's most influential philosophers of science. Born in Vienna during the twilight of the…"
+excerpt: "Popper's test is not whether a theory can be confirmed. It is whether anything could have shown it wrong. I use it more or less weekly, and not always comfortably."
 image: "/images/2025/12/images.webp"
 category: blog
 tags: ["blog"]
@@ -9,66 +9,59 @@ tags: ["blog"]
 
 # The Line Between Science and Pseudoscience: Understanding Popper's Falsification Principle
 
-Every so often someone asks me, half-jokingly, whether what I do is "real science." It's a fair question, and it's the same one Karl Popper spent his life trying to answer. How do you tell the difference between a theory that's genuinely scientific and one that just sounds scientific? His answer has stuck with me ever since I first read it, so let me walk you through it.
+A good deal of my work involves claims about places nobody can visit. A weak layer several kilometres under the surface of Mars, the viscosity of something that was buried four billion years ago, a flow law for rock at a temperature I will never reach in a laboratory. These are perfectly ordinary claims in planetary science, and they are all inferences from a surface we can photograph to an interior we cannot touch. Every so often somebody asks me, with varying degrees of politeness, whether that is really science.
 
-## Who was Karl Popper?
+It is a fair question, and the sharpest version of it was worked out by a young man in Vienna a century ago.
 
-Sir Karl Popper (1902–1994) is, for my money, one of the most influential philosophers of science we've ever had. He grew up in Vienna in the last days of the Austro-Hungarian Empire: a city absolutely buzzing with ideas. Freud's psychoanalysis, the Vienna Circle's logical positivism, endless arguments about Marx and Einstein and the nature of knowledge itself. If you wanted to be confused by clever people, 1920s Vienna was the place to be.
+## Who Popper was
 
-What I love about Popper is that he wasn't a cloistered academic. He trained as a teacher, worked with troubled kids in Vienna's working-class districts alongside Alfred Adler, and watched totalitarian movements rise around him in the 1920s and '30s. Those experiences left him convinced that ideas have consequences: that telling good ideas from bad ones, especially in science and politics, really matters.
+Karl Popper (1902-1994) grew up in Vienna in the last years of the Austro-Hungarian Empire, in a city that was arguing with itself about more or less everything. Freud's psychoanalysis, the logical positivism of the Vienna Circle, Marx, Einstein, and under all of it the question of what it means to know anything.
 
-Fleeing the Nazis, he spent the war in New Zealand before landing at the London School of Economics, where he taught for decades. His big books (*The Logic of Scientific Discovery* (1934), *The Open Society and Its Enemies* (1945), and *Conjectures and Refutations* (1963)) made him a defender of both scientific rationality and political liberalism. He was knighted in 1965.
+He was not a sheltered academic. He trained as a teacher, worked with children in the poor districts of Vienna alongside Alfred Adler, and watched totalitarian movements take hold around him through the 1920s and 1930s. That is the background to his conviction that telling good ideas from bad ones is not a parlour game. He fled the Nazis, spent the war in New Zealand, and ended up at the London School of Economics, where he taught for decades. *The Logic of Scientific Discovery* (1934), *The Open Society and Its Enemies* (1945) and *Conjectures and Refutations* (1963) made him a defender of scientific rationality and political liberalism in roughly equal measure. He was knighted in 1965.
 
-But his real legacy, I think, is one deceptively simple idea he worked out as a young man: falsification.
+The thing he is remembered for, though, he had worked out as a young man, and it fits in a sentence.
 
-## The problem that started it all
+## The problem he noticed
 
-Picture Popper in 1919, surrounded by theories that all claimed to be scientific. Einstein's relativity sat right next to Marx's historical materialism, Freud's psychoanalysis, and Adler's psychology. They were all fascinating. But Popper noticed something that nagged at him: they weren't scientific in the same way.
+Picture Vienna in 1919. Einstein's relativity, Marx's theory of history, Freud's psychoanalysis and Adler's individual psychology are all on the table and all presenting themselves as science. Popper found them all interesting. What bothered him was that they were not scientific in the same way, and it took him a while to say why.
 
-It wasn't about which ones were true: he happily admitted science gets things wrong and pseudoscience sometimes stumbles onto truth. What bothered him was subtler. Freud, Adler, and Marx seemed to explain *everything*. No matter what happened, a believer could always find confirmation.
+It was not about which ones were true. He was quite happy to concede that science gets things wrong and that pseudoscience occasionally stumbles onto something. The difference he saw was stranger. Freud, Adler and Marx seemed to explain everything. Whatever happened, a believer could find confirmation in it.
 
-His time working with Adler drove this home. Once Popper described a case that didn't seem to fit Adler's theory of inferiority feelings at all. Adler analyzed it confidently anyway, without ever seeing the child. When Popper asked how he could be so sure, Adler said, "Because of my thousandfold experience." Popper's reply has stuck with me: "And with this new case, I suppose, your experience has become thousand-and-one-fold."
+Working with Adler brought it home. Popper once described a case that did not look to him like it fitted Adler's theory of inferiority feelings at all. Adler analysed it confidently, without having seen the child. Asked how he could be so sure, Adler said: "Because of my thousandfold experience." Popper's reply is the whole argument in one line: "And with this new case, I suppose, your experience has become thousand-and-one-fold."
 
-That's the whole problem in one line. Every observation got read through the theory, then chalked up as more proof. But proof of what? Only that a case *could* be interpreted that way, not that the theory was right. A man drowns a child? Repression. A man saves a child? Sublimation. The theory always fits, and a theory that always fits never risks anything.
+Every observation was read through the theory and then counted as evidence for it. But evidence of what? Only that the case could be described in those terms. A man drowns a child: repression. A man saves a child: sublimation. The theory fits either outcome, which means neither outcome was ever at risk, which means neither outcome told you anything.
 
-Einstein's relativity played a completely different game. It made a genuinely risky bet: starlight would bend around the Sun by a specific, measurable amount. When Eddington's 1919 eclipse measurements matched, that *meant* something, because the observation could just as easily have proven Einstein wrong.
+Relativity was playing a different game entirely. It made a specific and dangerous prediction: starlight passing the Sun would bend by a particular amount, and you could go and measure it. When Eddington's eclipse observations in 1919 came back matching, that mattered, precisely because they could have come back not matching and sunk the theory.
 
-## The falsification criterion
+## The criterion
 
-That contrast led Popper somewhere radical: **a theory is scientific not because you can confirm it, but because you could falsify it.**
+So Popper landed somewhere that still sounds backwards the first time you hear it: **a theory is scientific not because it can be confirmed, but because it could have been refuted.**
 
-A real scientific theory sticks its neck out. It forbids things. It makes predictions that, if they failed, would sink the whole idea. And the more a theory forbids, the better it is, because it's taking bigger risks and telling you more about the world.
+A scientific theory sticks its neck out. It forbids things. It says that certain observations will not happen, and if they do, the theory is finished. The more a theory forbids, the better it is, because it is risking more and therefore telling you more.
 
-A few of his core points:
+Four things follow, and he states them more or less like this. Confirmations are worthless on their own, because if you go looking for supporting cases you will always find them. A confirmation only counts when it came from a prediction that could have failed. Every decent theory is a prohibition, and one compatible with any outcome whatsoever is empty. And being unfalsifiable is not a virtue; it is the defect.
 
-  1. **Confirmations are cheap.** Go looking for supporting examples and you'll always find them.
-  2. **Only risky predictions count.** A confirmation matters when the theory predicted something that could have gone the other way.
-  3. **Every good theory is a prohibition.** It rules things out. A theory compatible with any outcome tells you nothing.
-  4. **Being unfalsifiable is a flaw, not a strength.** If no possible observation could ever prove a theory wrong, it isn't science.
+## Where I actually use it
 
-## Why I keep coming back to this
+This is not seminar furniture. It is a working filter, and I reach for it often.
 
-This isn't just philosophy-seminar stuff. It's a practical filter, and I use it constantly.
+Astrology was Popper's own favourite example, and it still works. Astrologers accumulate confirming evidence endlessly: horoscopes that feel accurate, predictions that seem to land. The predictions are loose enough that a miss can always be reinterpreted. Nothing can go wrong, which is exactly why nothing can go right either.
 
-Take astrology: Popper's favorite example. Astrologers pile up "confirming evidence": horoscopes that feel accurate, predictions that seem to land. But the predictions are vague enough to explain away any miss. The theory can't fail, which is exactly why it can never really succeed.
+Marx's theory of history is the more interesting case, because Popper thought the early version was genuinely testable and had been tested and failed. What happened next is the part he objected to: rather than abandoning the theory, its defenders adjusted both the theory and the reading of the evidence until they agreed again. He called that a conventionalist twist, and his complaint was not that it is dishonest but that it buys agreement by giving up the thing that made the theory scientific in the first place.
 
-Or Marx's theory of history. Popper points out that some of Marx's early predictions *were* testable, and they were falsified. But instead of letting the theory go, his followers quietly reinterpreted both the theory and the evidence until they agreed again: a "conventionalist twist" that rescued the theory by stripping it of its scientific status.
+The reason I keep the test close is that my own field is not immune. A model of a planetary interior with enough free parameters will fit any surface observation you give it, and fitting the observation is then no evidence at all. The useful version of the question is the one Popper asks: what would this model have to produce for me to drop it? If I cannot answer, I do not have a result yet. I have a curve.
 
-## A more generous reading
+## He was not a bomb-thrower
 
-I should be fair to Popper here, because he wasn't a bomb-thrower. He never said unfalsifiable ideas are meaningless or worthless. Myths, metaphysics, even pseudoscience can hold real insight: he liked pointing out that plenty of scientific theories started life as myths, like Empedocles' early guess at evolution by trial and error.
+It is worth being fair to him here, because he gets quoted as if he were. Popper never said that unfalsifiable ideas are meaningless or worthless. Myth, metaphysics, even pseudoscience can contain real insight, and he was fond of pointing out that scientific theories often began as myths. Empedocles guessed at something close to evolution by trial and error long before anyone could test it.
 
-The point isn't to sneer at everything non-scientific. It's to recognize that empirical science asks for a particular kind of courage: the willingness to be proven wrong. Theories that hide from refutation behind vagueness or after-the-fact patches might feel satisfying, but they don't actually push our understanding of the world forward.
+The criterion is not a tool for dismissing everything that is not science. It marks out what empirical science demands, which is a particular kind of exposure: the willingness to be found wrong. A theory that protects itself with vagueness or with after-the-fact repairs can be satisfying to hold, and it will not move our understanding of anything.
 
 ## Why it still matters
 
-In a world arguing about vaccines, climate change, and AI, Popper hands us a simple set of questions to ask of any claim:
+In arguments about vaccines, climate or whatever the current technology is, Popper hands you a short list of questions that cuts through a lot of noise. What would count as evidence against this? Does it predict anything specific enough to fail? When the evidence turns hostile, do its defenders change their minds or change the theory? Are the predictions loose enough to survive any outcome at all?
 
-  * What would count as evidence *against* it?
-  * Does it make specific, testable predictions?
-  * When the evidence turns hostile, do its defenders genuinely reconsider, or just tweak the theory to absorb the blow?
-  * Are the predictions vague enough to fit literally any outcome?
+A theory that explains everything explains nothing. Science does not advance by piling up confirmations; it advances by surviving serious attempts to destroy it.
 
-A theory that can explain anything explains nothing. Science doesn't move forward by collecting confirmations; it moves forward by surviving honest attempts to tear it down.
+Which is the part I find worth defending. The authority of a scientific claim does not come from certainty. It comes from the fact that somebody built it so it could have failed, and then went looking.
 
-That's the part I find genuinely beautiful. The strength of science isn't its certainty: it's its vulnerability. The best theories are the ones brave enough to be wrong, and tough enough not to be.

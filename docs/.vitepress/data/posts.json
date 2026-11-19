@@ -1,11 +1,20 @@
 {
   "blog": [
     {
+      "slug": "are-cats-really-liquids",
+      "title": "Are Cats Really Liquids? The Surprisingly Serious Science Behind a Very Funny Question",
+      "date": "2026-11-19",
+      "image": "https://images.unsplash.com/photo-1615678857339-4e7e51ce22db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=2000",
+      "excerpt": "I spend a good part of my working life watching silicone move. A few centimetres of it sit in a tank in the laboratory, standing in for tens of kilometres of lithosphere, and over an afternoon it does what rock takes ten million years to do. Visitors almost always ask the same question, usually…",
+      "url": "/blog/are-cats-really-liquids",
+      "readingTime": 16
+    },
+    {
       "slug": "infernal-republic",
       "title": "Infernal Republic",
       "date": "2026-04-19",
       "image": "/images/2026/04/orcagna_inferno_ullstein_high_03075375_flex_gr_format_l-1.jpg",
-      "excerpt": "Here, I had to test a Roman Republic-style political simulation into a literary moral map. A senate governs under normal conditions, but crises can activate an emergency autocrat. Beneath that constitutional switch sits a richer system of patronage, propaganda, delayed legislation, factional…",
+      "excerpt": "This started as a straightforward political simulation and then acquired a second floor. The base model is Roman: a senate governs under ordinary conditions, and a crisis can activate an emergency autocrat. Underneath the constitutional switch sits the machinery that actually decides outcomes…",
       "url": "/blog/infernal-republic",
       "readingTime": 9
     },
@@ -14,7 +23,7 @@
       "title": "The Earth’s Layers as a Dessert?",
       "date": "2025-04-12",
       "image": "/images/2025/04/3-dessert-2.png",
-      "excerpt": "Some numbers in science just refuse to fit inside my head. The core of the Sun burns at over 15 million °C. The Earth has been around for 4.6 billion years. Nanoparticles measure mere billionths of a meter. I can write those values down, but I can’t really feel them: they’re too big, too small, too…",
+      "excerpt": "Some numbers refuse to fit inside my head. The core of the Sun at 15 million °C. The Earth at 4.6 billion years old. A nanoparticle at a billionth of a metre. I can write them down and do arithmetic with them, and I cannot feel any of them, because they are too far outside anything I have touched…",
       "url": "/blog/the-earths-layers-explained-by-dessert",
       "readingTime": 6
     },
@@ -23,27 +32,27 @@
       "title": "The Line Between Science and Pseudoscience: Understanding Popper's Falsification Principle",
       "date": "2024-12-29",
       "image": "/images/2025/12/images.webp",
-      "excerpt": "Every so often someone asks me, half-jokingly, whether what I do is \"real science.\" It's a fair question, and it's the same one Karl Popper spent his life trying to answer. How do you tell the difference between a theory that's genuinely scientific and one that just sounds scientific? His answer…",
+      "excerpt": "A good deal of my work involves claims about places nobody can visit. A weak layer several kilometres under the surface of Mars, the viscosity of something that was buried four billion years ago, a flow law for rock at a temperature I will never reach in a laboratory. These are perfectly ordinary…",
       "url": "/blog/pseudoscience-falsification",
-      "readingTime": 5
+      "readingTime": 6
     },
     {
       "slug": "dual-face-ethics",
       "title": "The Dual Face of Scientific Ethics: Navigating Responsibilities Between Laboratory and Society",
       "date": "2024-12-25",
       "image": "https://images.unsplash.com/photo-1625244514957-a8cdb2b7df0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDEzfHxldGhpY3N8ZW58MHx8fHwxNzY2OTExNzUwfDA&ixlib=rb-4.1.0&q=80&w=2000",
-      "excerpt": "I don't think the bond between science and society has ever felt this tangled, or this high-stakes. Our capabilities are racing ahead - gene editing one year, artificial intelligence the next - and the old question keeps getting louder: when something goes wrong, who's on the hook? The scientist at…",
+      "excerpt": "Every so often a result leaves the building and stops being yours. Someone else reads it, uses it, funds the next step or kills it, and the question of who is answerable for what happens next turns out to have no settled answer. The scientist who did the work? The society that paid for it and now…",
       "url": "/blog/dual-face-ethics",
-      "readingTime": 10
+      "readingTime": 9
     },
     {
       "slug": "paper-mills",
       "title": "Paper Mills: The Dark Side of Academic Publishing",
       "date": "2024-08-29",
       "image": "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDh8fGxpZXxlbnwwfHx8fDE3NjY5MTIyMjF8MA&ixlib=rb-4.1.0&q=80&w=2000",
-      "excerpt": "If you've ever wondered whether the phrase \"counterfeit consciousness\" sounds like a valid scientific term, you're not alone. Welcome to the weird world of paper mills, where fake research is big business and the scientific literature is drowning in fraud.",
+      "excerpt": "Somewhere in the published literature there is a paper discussing \"bosom peril.\" Elsewhere there is one on \"counterfeit consciousness.\" Neither phrase means anything, and both got past peer review, and once you know why, a fair amount of what is wrong with academic publishing falls into place.",
       "url": "/blog/paper-mills",
-      "readingTime": 9
+      "readingTime": 8
     }
   ],
   "research": [

@@ -1,7 +1,7 @@
 ---
 title: Infernal Republic
 date: 2026-04-19
-excerpt: Here, I had to test a Roman Republic-style political simulation into a literary moral map. A senate governs under normal conditions, but crises can activate an…
+excerpt: A Roman Republic political simulation with a second layer laid over it, in which every actor is assigned a station in Dante's hell at every moment in time.
 image: /images/2026/04/orcagna_inferno_ullstein_high_03075375_flex_gr_format_l-1.jpg
 tags:
   - blog
@@ -10,13 +10,19 @@ category: blog
 
 # Infernal Republic
 
-Here, I had to test a Roman Republic-style political simulation into a literary moral map. A senate governs under normal conditions, but crises can activate an emergency autocrat. Beneath that constitutional switch sits a richer system of patronage, propaganda, delayed legislation, factional conflict, and informal influence networks. On top of the political model, every actor is assigned a Dantean station through time, from Limbo down to Treachery.
+This started as a straightforward political simulation and then acquired a second floor. The base model is Roman: a senate governs under ordinary conditions, and a crisis can activate an emergency autocrat. Underneath the constitutional switch sits the machinery that actually decides outcomes, which is patronage, propaganda, legislation that arrives late, factional conflict and informal influence. What I added on top is a moral layer. At every time step, every council member and the autocrat occupy a station in Dante's hell.
 
-The base model already tracks a senate, an autocrat, crises, legal resistance, propaganda, patronage, delayed legislation, internal factions, and the shifting weight matrix of real political influence. I then added a second layer that interprets every person in the system through Dante’s architecture of sin. Each council member and the autocrat receive a moral station at every moment in time. The upper circles describe softer corruptions such as lust, gluttony, greed, wrath, and heresy. The deeper circles capture harder political pathologies. Violence is separated into violence against others, violence against self, and violence against God and nature. Fraud is split into the ten Malebolge-style classes, from panders and seducers down to liars and falsifiers. Treachery marks the deepest betrayal of the republic. The result is not a theological claim. It is an interpretive model. Dante’s moral geography becomes a way to visualize how political systems decay, recover, or harden under pressure. A person does not simply become more powerful or less powerful. They also move downward or upward in a moral landscape shaped by coercion, deception, institutional betrayal, and constitutional repair.
+The upper circles cover the softer corruptions: lust, gluttony, greed, wrath, and what I treat as heresy, meaning the rejection of constitutional norms. Below that the stations get more specific. Violence splits three ways, against others, against self, and against God and nature. Fraud splits into the ten Malebolge classes, from panders and seducers down to the liars and falsifiers at the bottom. Treachery is reserved for betrayal of the republic itself.
 
-In the simulation, the formal constitution and the informal network of influence do not always match. During peacetime, the senate can dominate decision-making even when the autocrat is ambitious. During a severe crisis, the emergency authority can surge. If law, transparency, and resilience are weak, short-term emergency power can become long-term capture. When resilience is strong, the republic can survive the shock and pull the system back upward. The Dante layer makes those transitions visible. Early institutional decay tends to appear as heresy, the rejection of constitutional norms. Periods of manipulation and information control often lead to fraud. Acute emergencies push many actors into violence. When the crisis passes and law returns, some actors drift back toward the lighter circles, while others remain fixed in deeper stations. In the sample run, the republic endured a long, deceptive phase, fell into a violent wartime episode, then partially recovered. The autocrat, however, remained morally anchored in treachery. What makes this useful is that it joins mathematics, political theory, and narrative symbolism in a single frame. The model still produces quantitative output such as effective power weights, faction support, legal barriers, crisis severity, and long-term entrenchment. But the Inferno mapping turns those abstractions into a visual story of republican decline and resistance. It shows not only who ruled, but what kind of moral order that rule produced.
+None of this is a theological claim. It is a way of looking. Dante's geography happens to be an unusually well-specified vocabulary for political decay, and borrowing it means a person in the simulation does not only gain or lose power, they also move up or down through a landscape built out of coercion, deception, institutional betrayal and repair.
 
-This is also a reminder that political breakdown is rarely a single event. Republics often decay in layers. First, norms weaken. Then the law bends. Then deception spreads. Then violence becomes thinkable. Only at the end does treachery appear as an obvious final condition. Dante gives us a language for that descent. Simulation gives us a way to watch it unfold.
+The interesting behaviour comes from the gap between the formal constitution and the real distribution of influence, because the two rarely agree. In peacetime the senate can dominate decisions even when the autocrat is ambitious. In a severe crisis the emergency authority surges. If law, transparency and resilience are weak at that moment, a temporary grant of power turns into permanent capture; if resilience holds, the republic absorbs the shock and recovers. The Dante layer is what makes those transitions legible. Early institutional decay shows up as heresy. Phases of manipulation and information control push actors into fraud. Acute emergencies push them into violence. When the crisis passes and the law comes back, some drift upward again and others stay exactly where they fell.
+
+In the run I show here the republic survives a long deceptive phase, falls into a violent wartime episode, and partially recovers. The autocrat does not. He ends in treachery and stays there.
+
+I find the combination useful because the quantitative output on its own is hard to read. The model produces effective power weights, faction support, legal barrier strength, crisis severity and long-run entrenchment, which is a lot of curves. The Inferno mapping turns those curves into something with a shape: not only who held power, but what kind of moral order that holding produced.
+
+It also makes a point about how republics fail that I did not put in deliberately and now cannot unsee. Collapse is almost never a single event. Norms weaken first, quietly and without anyone objecting. Then the law starts bending to accommodate the practice. Then deception becomes routine, then violence becomes thinkable, and treachery only arrives at the end, when it is obvious and too late to be informative. Dante supplies the vocabulary for that descent. The simulation lets you watch it happen at a speed a human can follow.
 
 ![](/images/2026/04/dashboard-1.png)
 
@@ -24,79 +30,79 @@ The main dashboard. The upper left panel shows the effective power spectrum, whe
 
 ## Why combine Rome, Dante, and numerics?
 
-The Roman dictatorship is a useful constitutional archetype because it separates ordinary collegiate rule from exceptional concentration of power. Modern scholarship stresses that the office was an emergency magistracy constrained by appointment, task, and expected abdication, even though its historical uses varied across the Republic[2][3]. Dante’s _Inferno_ offers a second architecture, not institutional but moral. Its descent from lighter sins to treachery provides a vivid language for representing how political systems corrode from appetite and vanity into deception, coercion, and betrayal[1]. 
+The Roman dictatorship is a good constitutional archetype precisely because it draws a line between ordinary collegiate rule and exceptional concentration of power. It was an emergency magistracy, bounded by how it was appointed, what it was appointed for, and the expectation that the holder would step down, although what happened in practice varied a great deal across the Republic[2][3]. That gives a clean switch to model, with a historically attested failure mode attached to it.
 
-The simulation joins those two structures. The Roman layer determines who governs. The Dantean layer describes what kind of moral order that government produces. This is an interpretive model rather than a theological claim. The goal is not to classify real people metaphysically. The goal is to make institutional drift visible through a symbolic and numerically explicit moral geometry. 
+Dante supplies the second structure, which is moral rather than institutional. The descent from appetite and vanity through deception and coercion to outright betrayal is a ready-made ordering of political pathologies, and a more discriminating one than any scale I could have invented[1]. The Roman layer decides who governs. The Dantean layer describes what sort of order that government produces. The aim is not to classify anybody metaphysically; it is to give institutional drift a geometry you can see.
 
 ## Model overview
 
-The system tracks one autocrat and $N=100$ council members. Each member belongs to a faction with its own distribution of legalism, fear, susceptibility to manipulation, reform capacity, and security preference. The global state at time step $t$ is 
+The system tracks one autocrat and $N=100$ council members. Each member belongs to a faction with its own distribution of legalism, fear, susceptibility to manipulation, reform capacity, and security preference. The global state at time step $t$ is
 
-$$ \mathbf{x}_t = \big(P_t, M_t, R_t, X_t, z_t, \mathbf{s}_t, \mathbf{b}_t\big), $$ 
+$$ \mathbf{x}_t = \big(P_t, M_t, R_t, X_t, z_t, \mathbf{s}_t, \mathbf{b}_t\big), $$
 
-Here $P_t$ is entrenched autocrat power, $M_t$ is the manipulation apparatus, $R_t$ is constitutional resilience, $X_t$ is social stress, $z_t$ is the crisis state, $\mathbf{s}_t\in[0,1]^N$ is member support for the executive, and $\mathbf{b}_t\in[0,1]^N$ is member level barrier strength. 
+where $P_t$ is entrenched autocrat power, $M_t$ is the manipulation apparatus, $R_t$ is constitutional resilience, $X_t$ is social stress, $z_t$ is the crisis state, $\mathbf{s}_t\in[0,1]^N$ is member support for the executive, and $\mathbf{b}_t\in[0,1]^N$ is member level barrier strength.
 
-A key design decision is to avoid hand tuning dozens of unrelated coefficients. Instead, the simulation derives internal rates from five interpretable controls, 
+The design decision I care most about is that none of the internal rates are set by hand. Tuning several dozen unrelated coefficients produces a model that does whatever you want it to, which is worthless. Instead everything derives from five interpretable controls,
 
-$$ (I, A, C, T, V) = \big(\text{institutional strength},\ \text{autocrat skill},\ \text{crisis proneness},\ \text{transparency},\ \text{social volatility}\big). $$ 
+$$ (I, A, C, T, V) = \big(\text{institutional strength},\ \text{autocrat skill},\ \text{crisis proneness},\ \text{transparency},\ \text{social volatility}\big). $$
 
-This reduction makes the model easier to steer while still producing rich dynamics. 
+so there are five knobs to argue about rather than forty, and the dynamics stay rich enough to be worth running.
 
 ### Delayed perception and legislative latency
 
-The senate does not observe the executive in real time. Member $i$ reacts to a delayed and noisy signal, 
+The senate does not see the executive in real time, which matters more than almost anything else in the model. Member $i$ reacts to a delayed and noisy signal,
 
-$$ \tilde{P}_{i,t} = P_{t-\tau},\exp!\big[-\kappa M_{t-\tau}\eta_i\big] + 0.30,C_{t-\tau} + 0.12,X_{t-\tau} + \varepsilon_{i,t}, $$ 
+$$ \tilde{P}_{i,t} = P_{t-\tau},\exp!\big[-\kappa M_{t-\tau}\eta_i\big] + 0.30,C_{t-\tau} + 0.12,X_{t-\tau} + \varepsilon_{i,t}, $$
 
-where $\tau$ is legislative latency, $\kappa$ controls obfuscation, $\eta_i$ is factional bias, and $\varepsilon_{i,t}$ is observation noise. This follows the logic of explicit numerical stepping in stochastic settings, though the present model is discrete and interpretive rather than directly estimated[4]. 
+where $\tau$ is legislative latency, $\kappa$ controls obfuscation, $\eta_i$ is factional bias, and $\varepsilon_{i,t}$ is observation noise. The stepping follows the usual logic for stochastic systems, though this model is discrete and interpretive rather than estimated from data[4].
 
 ### Member updates
 
-Member support $s_{i,t}$ and member barrier $b_{i,t}$ evolve under patronage, conformity, fear, legalism, and perceived threat. In simplified form, 
+Member support $s_{i,t}$ and member barrier $b_{i,t}$ evolve under patronage, conformity, fear, legalism, and perceived threat. In simplified form,
 
-$$ s_{i,t+1} = \Pi_{[0,1]}\Big(s_{i,t} + \Delta t,[g_i(M_t,C_t,\bar{s}_{f(i),t}) - \ell_i(P_t,R_t,b_{i,t})]\Big), $$ $$ b_{i,t+1} = \Pi_{[0,1]}\Big(b_{i,t} + \Delta t,[r_i(\tilde{P}_{i,t},R_t) - c_i(M_t,P_t,C_t)]\Big). $$ 
+$$ s_{i,t+1} = \Pi_{[0,1]}\Big(s_{i,t} + \Delta t,[g_i(M_t,C_t,\bar{s}_{f(i),t}) - \ell_i(P_t,R_t,b_{i,t})]\Big), $$ $$ b_{i,t+1} = \Pi_{[0,1]}\Big(b_{i,t} + \Delta t,[r_i(\tilde{P}_{i,t},R_t) - c_i(M_t,P_t,C_t)]\Big). $$
 
-The operator $\Pi_{[0,1]}$ clips values to the unit interval. The first update rewards order and patronage. The second punishes norm breaking, corruption, and fatigue. 
+The operator $\Pi_{[0,1]}$ clips values to the unit interval. The first update rewards order and patronage. The second punishes norm breaking, corruption, and fatigue.
 
 ### Macro updates
 
-The macro variables are then updated from the member field, 
+The macro variables are then updated from the member field,
 
-$$ R_{t+1} = \Pi_{[0,1]}\Big(R_t + \Delta t,[\rho L_t(1-R_t) - \chi(P_t + 0.5M_t + 0.4X_t)R_t]\Big), $$ $$ X_{t+1} = \Pi_{[0,1]}\Big(X_t + \Delta t,[\sigma C_t(1-X_t) + \psi F_t(1-X_t) + \beta P_t(1-L_t)(1-X_t) - \omega(R_t+0.5L_t)X_t]\Big), $$ $$ M_{t+1} = \Pi_{[0,1]}\Big(M_t + \Delta t,[\mu P_t(1-M_t) + \nu \bar{s}_tP_t(1-M_t) + \zeta C_t(1-L_t)(1-M_t) - \lambda L_tM_t]\Big), $$ $$ P_{t+1} = \Pi_{[0,1]}\Big(P_t + \Delta t,[\alpha P_t(1-P_t) + \xi C_t(1-L_t)(1-P_t) + \phi \bar{s}_t(1-P_t) + \gamma M_t(1-P_t) - \delta L_tP_t - \rho_R R_t(1-\bar{s}_t)P_t]\Big). $$ 
+$$ R_{t+1} = \Pi_{[0,1]}\Big(R_t + \Delta t,[\rho L_t(1-R_t) - \chi(P_t + 0.5M_t + 0.4X_t)R_t]\Big), $$ $$ X_{t+1} = \Pi_{[0,1]}\Big(X_t + \Delta t,[\sigma C_t(1-X_t) + \psi F_t(1-X_t) + \beta P_t(1-L_t)(1-X_t) - \omega(R_t+0.5L_t)X_t]\Big), $$ $$ M_{t+1} = \Pi_{[0,1]}\Big(M_t + \Delta t,[\mu P_t(1-M_t) + \nu \bar{s}_tP_t(1-M_t) + \zeta C_t(1-L_t)(1-M_t) - \lambda L_tM_t]\Big), $$ $$ P_{t+1} = \Pi_{[0,1]}\Big(P_t + \Delta t,[\alpha P_t(1-P_t) + \xi C_t(1-L_t)(1-P_t) + \phi \bar{s}_t(1-P_t) + \gamma M_t(1-P_t) - \delta L_tP_t - \rho_R R_t(1-\bar{s}_t)P_t]\Big). $$
 
-Here $L_t$ is effective legal strength aggregated from barriers and $F_t$ is factional fragmentation. 
+Here $L_t$ is effective legal strength aggregated from barriers and $F_t$ is factional fragmentation.
 
 ### Formal and informal power
 
-A crisis does not automatically hand total control to the autocrat. Instead, emergency power is activated through a sigmoid transfer, 
+A crisis does not hand the autocrat total control automatically. Emergency power is activated through a sigmoid transfer,
 
-$$ \alpha_t = \sigma!\Big(k,[C_t + 0.25M_t + 0.15\bar{s}_t - 0.55L_t - \theta]\Big), $$ $$ w^{\mathrm{formal}}_{a,t} = P_t + (1-P_t)\alpha_t. $$ 
+$$ \alpha_t = \sigma!\Big(k,[C_t + 0.25M_t + 0.15\bar{s}_t - 0.55L_t - \theta]\Big), $$ $$ w^{\mathrm{formal}}_{a,t} = P_t + (1-P_t)\alpha_t. $$
 
-This captures the Roman idea that constitutional emergency can shift power rapidly without guaranteeing permanent entrenchment. 
+which is the Roman arrangement written down: constitutional emergency can shift power very fast without that shift becoming permanent.
 
-But formal rules are not the whole story. The council also forms an informal influence network $K_t$ whose edges depend on factional similarity, ideological proximity, susceptibility, and executive pull. We use the stationary distribution of $K_t$ as a compact measure of long run centrality, following the general logic of network centrality analysis[5]. The final effective weight is then a convex blend, 
+Formal rules are not the whole story, though, and in most runs they are not even the larger part of it. The council also forms an informal influence network $K_t$ whose edges depend on factional similarity, ideological proximity, susceptibility, and executive pull. The stationary distribution of $K_t$ serves as a compact measure of long-run centrality, in the standard way[5]. The final effective weight is a convex blend of the two,
 
-$$ \mathbf{w}^{\mathrm{eff}}_t = (1-\chi_t),\mathbf{w}^{\mathrm{formal}}_t + \chi_t,\boldsymbol{\pi}(K_t), $$ 
+$$ \mathbf{w}^{\mathrm{eff}}_t = (1-\chi_t),\mathbf{w}^{\mathrm{formal}}_t + \chi_t,\boldsymbol{\pi}(K_t), $$
 
-The capture weight $\chi_t$ rises when manipulation, crisis, fragmentation, and support for the executive jointly increase. 
+with the capture weight $\chi_t$ rising when manipulation, crisis, fragmentation and support for the executive increase together. That co-occurrence is the dangerous combination, and the model is built so that no single one of them is enough on its own.
 
 ## The Dante layer
 
-The moral layer assigns every person to one station of Dante’s hell at every time step. The upper circles represent lighter political corruptions such as vanity, appetite, greed, wrath, and constitutional heresy. The lower levels represent harder pathologies. 
+The moral layer assigns every person to one station at every time step. The upper circles hold the lighter political corruptions: vanity, appetite, greed, wrath and constitutional heresy. Below them sit the harder pathologies.
 
 - **Violence** is split into three stations: against others, against self, and against God or nature.
 - **Fraud** is split into ten stations in the spirit of the _Malebolge_ : panders and seducers, flatterers, simoniacs, sorcerers, barrators, hypocrites, thieves, fraudulent counselors, sowers of discord, and liars or falsifiers.
 - **Treachery** marks deep betrayal of faction, republic, or constitutional order.
 
-For each actor $i$ and station $m$, the code computes an interpretive score 
+For each actor $i$ and station $m$, the code computes an interpretive score
 
-$$ q_{i,m,t} = h_m\big(P_t,M_t,R_t,X_t,C_t,L_t,s_{i,t},b_{i,t},\tilde{P}_{i,t},\bar{s}_{f(i),t}\big), $$ 
+$$ q_{i,m,t} = h_m\big(P_t,M_t,R_t,X_t,C_t,L_t,s_{i,t},b_{i,t},\tilde{P}_{i,t},\bar{s}_{f(i),t}\big), $$
 
-then assigns the deepest active station whose score exceeds a threshold, with special precedence rules for Treachery, Fraud, and the Violence subrings. 
+and then assigns the deepest active station whose score clears a threshold, with precedence rules for Treachery, Fraud and the Violence subrings so that an actor who qualifies for several does not end up filed under the mildest.
 
-## How to read the Figures
+## How to read the figures
 
-The first figure is the central dashboard (above). It shows the shifting power spectrum, state variables, faction support, faction barriers, and decision path. The second shows the Dante station for each person over time. The third aggregates the same information into a station-by-time population profile. The fourth and fifth place the final population back onto the funnel of hell. Together, the figures allow the reader to move from institutions to numbers to moral interpretation.
+The dashboard above carries the institutional story: power spectrum, state variables, faction support, faction barriers, decision path. The figures below carry the moral one, first per actor, then aggregated, then placed back onto the funnel itself.
 
 ![](/images/2026/04/inferno_heatmap-1.png)The Inferno heat map. Each horizontal track is one actor. Time runs left to right. Color encodes the Dante station occupied at that moment. This figure makes moral descent legible as a collective process rather than a single moment of collapse.![](/images/2026/04/station_counts.png)
 
@@ -114,11 +120,13 @@ Final placement of all simulated actors on the Inferno map. The autocrat is mark
 
 Final station counts placed directly on the Inferno diagram. This is the cleanest summary of the simulation’s terminal moral distribution.
 
-## Results in words
+## What happens in the default run
 
-In the default seed, the republic experiences a strong early authoritarian surge, then partially recovers as the legal barrier rebuilds. The moral layer is especially revealing. Early decay appears as constitutional heresy, followed by a long phase dominated by fraud-related stations, especially the deceptive classes. A wartime shock then drives many actors into violence against others. The later decades cool somewhat, with some council members moving back toward lighter stations. The autocrat, however, ends in treachery and remains dominated by treachery across the second half of the run.   
+The republic takes a strong authoritarian surge early, then partially recovers as the legal barrier rebuilds, which is the kind of result the institutional variables alone would have told me.
 
-This work is meant to emphasize both a technical note and a public-facing essay. It contains the equations needed to understand the mechanics, the figures needed to tell the story, and code toggles for readers who want implementation details without breaking the flow of the main text. That makes it suitable for a blog post, a project note, a computational humanities piece, or a short appendix to a larger methods paper. 
+The moral layer says more. Decay appears first as constitutional heresy, before anything illegal has happened. That is followed by a long stretch dominated by the fraud stations, mostly the deceptive classes, and then a wartime shock drives a large part of the council into violence against others. The later decades cool, and some members climb back towards the lighter stations. The autocrat does not move. He is in treachery for the whole second half of the run, which is the detail I keep coming back to: the institution recovered and the person who broke it did not.
+
+The equations are here because the mechanics do not make sense without them, the figures because the argument is visual, and the full source is folded away at the bottom for anyone who wants to run it with different numbers. I would be curious what a historian makes of the station assignments, which are the part I am least confident in.
 
 ## References
 
